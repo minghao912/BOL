@@ -1,3 +1,6 @@
 # GAMERSOfExcelSpreadsheetLine30
 
-The BEST instant messaging app known to mankind
+CS35L Group Project
+
+
+The BEST instant messaging app known to mankind.
