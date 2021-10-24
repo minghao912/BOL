@@ -21,3 +21,4 @@
 2. In the root folder `./GAMERSOfExcelSpreadsheetLine30`, run `docker-compose up`. The first time you do this it will take a bit of time
 3. Delete the file `tsconfig.json` in the folder `./GAMERSOfExcelSpreadsheetLine30/frontend`. You have to do this every time you launch the app because of a bug with React and Typescript
 4. In a different terminal window, go to `./GAMERSOfExcelSpreadsheetLine30/frontend` and run `npm start`. It should automatically open your browser window and show a webpage
+5. To close the app, do Ctrl+C in both terminal windows and the app will stop
