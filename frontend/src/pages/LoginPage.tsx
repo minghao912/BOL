@@ -17,8 +17,10 @@ function responseReceived(response: any): void {
 
 export class LoginPage extends React.Component {
     render() {
+        console.log(process.env.REACT_APP_GOOGLE_KEY);
+
         const LOGINPROPS = {
-            clientId: "",
+            clientId: process.env.REACT_APP_GOOGLE_KEY,
             buttonText: "Sign in with Google",
             onSuccess: responseReceived,
             onFailure: responseReceived,
