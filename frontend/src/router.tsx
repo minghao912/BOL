@@ -1,18 +1,9 @@
-import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import Homepage from './pages/Homepage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
-
-// Default 404 Page Not Found page
-class PageNotFoundPage extends React.Component {
-    render() {
-        return(
-            <p>404 Not Found</p>
-        );
-    }
-}
+import PageNotFoundPage from './pages/PageNotFoundPage';
 
 // Handles which URLs go to which pages
 function AppRouter() {
