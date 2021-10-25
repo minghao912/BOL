@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { GoogleLogin } from 'react-google-login';
 
+import "./LoginPage.css";
+
 interface GoogleLoginProps {
     clientId: string,
     buttonText: string,
@@ -27,19 +29,23 @@ export class LoginPage extends React.Component {
             cookiePolicy: "single_host_origin"
         } as GoogleLoginProps;
 
-        return (<>
-            <GoogleLogin
-                clientId={LOGINPROPS.clientId}
-                buttonText={LOGINPROPS.buttonText}
-                onSuccess={LOGINPROPS.onSuccess}
-                onFailure={LOGINPROPS.onFailure}
-                cookiePolicy={LOGINPROPS.cookiePolicy}
-            />
-
-            <Link to="/home">
-                <h1>Home</h1>
-            </Link>
-        </>);
+        return (
+            <div className="container">
+                <div className="sub-container">
+                    <GoogleLogin
+                        clientId={LOGINPROPS.clientId}
+                        buttonText={LOGINPROPS.buttonText}
+                        onSuccess={LOGINPROPS.onSuccess}
+                        onFailure={LOGINPROPS.onFailure}
+                        cookiePolicy={LOGINPROPS.cookiePolicy}
+                    />
+                    <div className="break"></div>
+                    <Link to="/home">
+                        <h1>Skip Google Login</h1>
+                    </Link>
+                </div>
+            </div>
+        );
     }
 }
 
