@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { GoogleLogin } from 'react-google-login';
 
 import "./LoginPage.css";
+import { COLORS } from "../commons/constants";
 
 interface GoogleLoginProps {
     clientId: string,
@@ -19,8 +19,6 @@ function responseReceived(response: any): void {
 
 export class LoginPage extends React.Component {
     render() {
-        console.log(process.env.REACT_APP_GOOGLE_KEY);
-
         const LOGINPROPS = {
             clientId: process.env.REACT_APP_GOOGLE_KEY,
             buttonText: "Sign in with Google",
@@ -30,7 +28,11 @@ export class LoginPage extends React.Component {
         } as GoogleLoginProps;
 
         return (
-            <div className="container">
+            <div className="container" style={{backgroundColor: COLORS.OFF_BLACK}}>
+                <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
+                    <h1>&#x1F171;iscord️</h1>
+                </div>
+                <div className="break"></div>
                 <div className="sub-container">
                     <GoogleLogin
                         clientId={LOGINPROPS.clientId}
@@ -41,7 +43,7 @@ export class LoginPage extends React.Component {
                     />
                     <div className="break"></div>
                     <Link to="/home">
-                        <h1>Skip Google Login</h1>
+                        <h3>Skip Google Login</h3>
                     </Link>
                 </div>
             </div>
