@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
 import "./LoginPage.css";
@@ -13,21 +13,53 @@ interface GoogleLoginProps {
     cookiePolicy: string
 }
 
+// DEV
 function responseReceived(response: any): void {
     console.log(response);
 }
 
-export class LoginPage extends React.Component {
+export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oauthResponse?: any}> {
+    constructor(props: any) {
+        super(props)
+
+        this.state = {
+            loginAuthorized: false
+        }
+    }
+
+    // Runs when OAUTH works, response JSON in response
+    loginSuccess = (response: any): void => {
+        this.setState({
+            loginAuthorized: true,
+            oauthResponse: response
+        });
+    }
+    
+    // Runs when OAUTH fails
+    loginFailure = (response: any): void => {
+        alert("There was an error with your Google sign-in")
+    }
+
     render() {
         const LOGINPROPS = {
             clientId: process.env.REACT_APP_GOOGLE_KEY,
             buttonText: "Sign in with Google",
-            onSuccess: responseReceived,
-            onFailure: responseReceived,
+            onSuccess: this.loginSuccess,
+            onFailure: this.loginFailure,
             cookiePolicy: "single_host_origin"
         } as GoogleLoginProps;
 
-        return (
+        if (this.state.loginAuthorized) {
+            return (
+                <Redirect 
+                    to={{
+                        pathname: "/home",
+                        state: { oauthResponse: this.state.oauthResponse }
+                    }} 
+                />
+            );
+        } else {
+            return (
             <div className="container" style={{backgroundColor: COLORS.OFF_BLACK}}>
                 <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
                     <h1>&#x1F171;iscord️</h1>
@@ -47,7 +79,8 @@ export class LoginPage extends React.Component {
                     </Link>
                 </div>
             </div>
-        );
+            );
+        }
     }
 }
 
