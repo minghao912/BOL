@@ -8,7 +8,8 @@ import { faPlus, faUserFriends } from '@fortawesome/free-solid-svg-icons';
 
 import Main from '../components/main.tsx';
 
-function Homepage() {
+function Homepage(props) {
+
     // ALL_SOURCES: 1, ADD_SOURCE: 2, EDIT_SOURCE: 3, DELETE_SOURCE: 4
     let [pageToLoad, setPageToLoad] = useState(1);  // Automatically start with all sources loaded
     let [sourceToEdit, setSourceToEdit] = useState(-1);
@@ -50,6 +51,8 @@ function Homepage() {
             return faUserFriends;   // This shouldn't happen
         }
     }
+
+    console.log(props.location.state.oauthResponse);
 
     return (<Container style={{alignContent: "center"}}>
         <header className={"text-center mt-4 mb-3"}>
