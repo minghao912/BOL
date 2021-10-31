@@ -73,7 +73,6 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
                         onFailure={LOGINPROPS.onFailure}
                         cookiePolicy={LOGINPROPS.cookiePolicy}
                     />
-                    <div className="break"></div>
 
                     {/* DEV
                     <Link to="/home">
