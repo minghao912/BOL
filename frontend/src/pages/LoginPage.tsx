@@ -14,7 +14,7 @@ interface GoogleLoginProps {
 }
 
 // DEV
-function responseReceived(response: any): void {
+function skipGoogleLogin(response: any): void {
     console.log(response);
 }
 
@@ -60,7 +60,7 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
             );
         } else {
             return (
-            <div className="container" style={{backgroundColor: COLORS.OFF_BLACK}}>
+            <div className="container" style={{backgroundColor: COLORS.BACKGROUND}}>
                 <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
                     <h1>&#x1F171;iscord️</h1>
                 </div>
@@ -74,9 +74,11 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
                         cookiePolicy={LOGINPROPS.cookiePolicy}
                     />
                     <div className="break"></div>
+
+                    {/* DEV
                     <Link to="/home">
                         <h3>Skip Google Login</h3>
-                    </Link>
+                    </Link>*/}
                 </div>
             </div>
             );

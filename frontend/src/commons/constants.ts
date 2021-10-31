@@ -5,4 +5,5 @@ export enum COLORS {
     OFF_GREY = "#2C2F33",
     OFF_BLACK = "#23272A",
     FULL_WHITE = "#FFFFFF",
+    BACKGROUND = "#3a2c3a",
 }
