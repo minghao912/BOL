@@ -5,6 +5,9 @@ import { GoogleLogin } from 'react-google-login';
 import "./LoginPage.css";
 import { COLORS } from "../commons/constants";
 import { GlobalContext } from "../context/GlobalState";
+import logo from './BOL_logo.svg' ;
+import { FontStyle } from '@mui/material/styles/createTypography';
+import { fontSize } from '@mui/system';
 
 interface GoogleLoginProps {
     clientId: string,
@@ -63,10 +66,15 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
                 />
             );
         } else {
+            document.body.style.background = COLORS.BACKGROUND3;
             return (
             <div className="container" style={{backgroundColor: COLORS.BACKGROUND}}>
                 <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
-                    <h1>&#x1F171;iscord️</h1>
+                    <img src={logo} alt= 'BOL logo' width = "1024" height = "576"/>
+                </div>
+                <div className="break"></div>
+                <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
+                    <h1 style = {{fontSize:20 ,fontFamily:'verdana'}}> By <i><b>GAMERS</b>OfExcelSpreadsheetLine30.</i> </h1>
                 </div>
                 <div className="break"></div>
                 <div className="sub-container">

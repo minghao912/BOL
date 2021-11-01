@@ -11,7 +11,8 @@ function AppRouter() {
     <Switch>
         <Route path="/" exact component={ LoginPage } />
         <Route path="/home" exact render={(props) => <Homepage {...props}/>} />
-        <Route path="/profile/:username" component={ ProfilePage } />
+        <Route path="/profile/:username" component={ ProfilePage }/>
+        {/*<Route path="/profile/:username" component={ ProfilePage } />*/}        
 
         {/* This is the default case */}
         <Route path="/" component={ PageNotFoundPage } />
