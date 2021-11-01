@@ -57,7 +57,6 @@ function Homepage(props) {
         <header className={"text-center mt-4 mb-3"}>
             <h1>Sources</h1>
         </header>
-        <Link to="/profile/minghao912">test</Link>
         <Button className={"float-bottom-right pointer-hover"} onClick={renderPage}>
             <FontAwesomeIcon icon={getIconType()} size={"2x"} className={"centered-item"} />
         </Button>
