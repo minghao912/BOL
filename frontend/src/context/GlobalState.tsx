@@ -2,7 +2,7 @@ import { createContext, useEffect, useReducer } from 'react';
 import AppReducer, { ACTION_TYPES } from './AppReducer';
 
 const initialState = {
-   OAuthResponse: {},
+   OAuthResponse: {} as any,
    updateOAuth: (oauth: any) => {}
 }
 
