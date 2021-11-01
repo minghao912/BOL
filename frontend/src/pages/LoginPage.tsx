@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
 import "./LoginPage.css";
 import { COLORS } from "../commons/constants";
+import { GlobalContext } from "../context/GlobalState";
 
 interface GoogleLoginProps {
     clientId: string,
@@ -19,6 +20,8 @@ function skipGoogleLogin(response: any): void {
 }
 
 export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oauthResponse?: any}> {
+    static contextType = GlobalContext;
+
     constructor(props: any) {
         super(props)
 
@@ -31,8 +34,9 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
     loginSuccess = (response: any): void => {
         this.setState({
             loginAuthorized: true,
-            oauthResponse: response
         });
+
+        this.context.updateOAuth(response);
     }
     
     // Runs when OAUTH fails
