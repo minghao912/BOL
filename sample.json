@@ -1,0 +1,54 @@
+{
+    "wa": "100864841868118824730",
+    "Zb": {
+        "token_type": "Bearer",
+        "access_token": "ya29.a0ARrdaM_uyG0Z-P1ZiVj3hGd49nwmjr9ukuzVNYI3U1lEq6C2cQlQsVnVW7ZLMO31g22HaooYYRh5DfSPg8gD7VqCmBf8WCTRXlPGc9Go7ggwHZ1gOeJ6H44CwdBZ0i396AVSFAQyVGxZW6E8aucRFzPFcijqVw",
+        "scope": "email profile https://www.googleapis.com/auth/userinfo.profile openid https://www.googleapis.com/auth/userinfo.email",
+        "login_hint": "AJDLj6JUa8yxXrhHdWRHIV0S13cAq6dz0dGXSgfJhVXWyqbyWvLVkGHwMNMXotv01HZmQiPG2IsZtjCYRydKGw-H4JPElAYaqg",
+        "expires_in": 3599,
+        "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1ODI4YzU5Mjg0YTY5YjU0YjI3NDgzZTQ4N2MzYmQ0NmNkMmEyYjMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNzQ4ODQ5NTg1NDkzLTFjdnJhb24wbTBoaGwwYTRmazZyZ283MzNzNjB2MXJoLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNzQ4ODQ5NTg1NDkzLTFjdnJhb24wbTBoaGwwYTRmazZyZ283MzNzNjB2MXJoLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAwODY0ODQxODY4MTE4ODI0NzMwIiwiaGQiOiJnLnVjbGEuZWR1IiwiZW1haWwiOiJtaW5naGFvOTEyQGcudWNsYS5lZHUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlJaWU9ZSl9LLTFzaE82ZkZVMHp2ZnciLCJuYW1lIjoiTUlOR0hBTyBDSEVOIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdpMEdua2FiT2FubDJPb0w2VUVTekI5OVlpd3dLM0VBOHAwNnloYVlRPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6Ik1JTkdIQU8iLCJmYW1pbHlfbmFtZSI6IkNIRU4iLCJsb2NhbGUiOiJlbiIsImlhdCI6MTYzNTcyNTMxNiwiZXhwIjoxNjM1NzI4OTE2LCJqdGkiOiJjYTQxOTRmYzgxOTcxMTQ2NmQxNDE3NDMyYTdiZWM5ZjU1MDcxODEzIn0.eAGN-v8NNouaHTMIm_EjR7N9T1ZxOHyYAc0ZPXJ7uaw4m0mN-ql8WWtcgUPHE0fVcuhgAfCsHZ1UoGVs8LQa4rLh2wTGFOz2VMs-rFQHmRPSGC0pZL4rlPSZLkFnH0gLCrOl3iWzkGL1qVzOe4Zxk5dzqm92X3DzD-4xYcfsHkiSAvShpBLbedP2Je9ce93j7q020ylng3qFg73sQnSsmUT3ySkRCKt18yBjWTx3OIzsBbibzleomGYlpDKfi_R-LNYVkjVyjhd_LN5a68t86iskU4dJvBZ0pmVhpxgotjNXwek64-6bJgNrdHx3v0-X_QAP64iZ0BKgdsk_UspJjA",
+        "session_state": {
+            "extraQueryParams": {
+                "authuser": "1"
+            }
+        },
+        "first_issued_at": 1635725316050,
+        "expires_at": 1635728915050,
+        "idpId": "google"
+    },
+    "nt": {
+        "uT": "100864841868118824730",
+        "Se": "MINGHAO CHEN",
+        "JU": "MINGHAO",
+        "$S": "CHEN",
+        "nK": "https://lh3.googleusercontent.com/a-/AOh14Gi0GnkabOanl2OoL6UESzB99YiwwK3EA8p06yhaYQ=s96-c",
+        "Yt": "minghao912@g.ucla.edu"
+    },
+    "googleId": "100864841868118824730",
+    "tokenObj": {
+        "token_type": "Bearer",
+        "access_token": "ya29.a0ARrdaM_uyG0Z-P1ZiVj3hGd49nwmjr9ukuzVNYI3U1lEq6C2cQlQsVnVW7ZLMO31g22HaooYYRh5DfSPg8gD7VqCmBf8WCTRXlPGc9Go7ggwHZ1gOeJ6H44CwdBZ0i396AVSFAQyVGxZW6E8aucRFzPFcijqVw",
+        "scope": "email profile https://www.googleapis.com/auth/userinfo.profile openid https://www.googleapis.com/auth/userinfo.email",
+        "login_hint": "AJDLj6JUa8yxXrhHdWRHIV0S13cAq6dz0dGXSgfJhVXWyqbyWvLVkGHwMNMXotv01HZmQiPG2IsZtjCYRydKGw-H4JPElAYaqg",
+        "expires_in": 3599,
+        "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1ODI4YzU5Mjg0YTY5YjU0YjI3NDgzZTQ4N2MzYmQ0NmNkMmEyYjMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNzQ4ODQ5NTg1NDkzLTFjdnJhb24wbTBoaGwwYTRmazZyZ283MzNzNjB2MXJoLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNzQ4ODQ5NTg1NDkzLTFjdnJhb24wbTBoaGwwYTRmazZyZ283MzNzNjB2MXJoLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAwODY0ODQxODY4MTE4ODI0NzMwIiwiaGQiOiJnLnVjbGEuZWR1IiwiZW1haWwiOiJtaW5naGFvOTEyQGcudWNsYS5lZHUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlJaWU9ZSl9LLTFzaE82ZkZVMHp2ZnciLCJuYW1lIjoiTUlOR0hBTyBDSEVOIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdpMEdua2FiT2FubDJPb0w2VUVTekI5OVlpd3dLM0VBOHAwNnloYVlRPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6Ik1JTkdIQU8iLCJmYW1pbHlfbmFtZSI6IkNIRU4iLCJsb2NhbGUiOiJlbiIsImlhdCI6MTYzNTcyNTMxNiwiZXhwIjoxNjM1NzI4OTE2LCJqdGkiOiJjYTQxOTRmYzgxOTcxMTQ2NmQxNDE3NDMyYTdiZWM5ZjU1MDcxODEzIn0.eAGN-v8NNouaHTMIm_EjR7N9T1ZxOHyYAc0ZPXJ7uaw4m0mN-ql8WWtcgUPHE0fVcuhgAfCsHZ1UoGVs8LQa4rLh2wTGFOz2VMs-rFQHmRPSGC0pZL4rlPSZLkFnH0gLCrOl3iWzkGL1qVzOe4Zxk5dzqm92X3DzD-4xYcfsHkiSAvShpBLbedP2Je9ce93j7q020ylng3qFg73sQnSsmUT3ySkRCKt18yBjWTx3OIzsBbibzleomGYlpDKfi_R-LNYVkjVyjhd_LN5a68t86iskU4dJvBZ0pmVhpxgotjNXwek64-6bJgNrdHx3v0-X_QAP64iZ0BKgdsk_UspJjA",
+        "session_state": {
+            "extraQueryParams": {
+                "authuser": "1"
+            }
+        },
+        "first_issued_at": 1635725316050,
+        "expires_at": 1635728915050,
+        "idpId": "google"
+    },
+    "tokenId": "eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg1ODI4YzU5Mjg0YTY5YjU0YjI3NDgzZTQ4N2MzYmQ0NmNkMmEyYjMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiNzQ4ODQ5NTg1NDkzLTFjdnJhb24wbTBoaGwwYTRmazZyZ283MzNzNjB2MXJoLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiNzQ4ODQ5NTg1NDkzLTFjdnJhb24wbTBoaGwwYTRmazZyZ283MzNzNjB2MXJoLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAwODY0ODQxODY4MTE4ODI0NzMwIiwiaGQiOiJnLnVjbGEuZWR1IiwiZW1haWwiOiJtaW5naGFvOTEyQGcudWNsYS5lZHUiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlJaWU9ZSl9LLTFzaE82ZkZVMHp2ZnciLCJuYW1lIjoiTUlOR0hBTyBDSEVOIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hLS9BT2gxNEdpMEdua2FiT2FubDJPb0w2VUVTekI5OVlpd3dLM0VBOHAwNnloYVlRPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6Ik1JTkdIQU8iLCJmYW1pbHlfbmFtZSI6IkNIRU4iLCJsb2NhbGUiOiJlbiIsImlhdCI6MTYzNTcyNTMxNiwiZXhwIjoxNjM1NzI4OTE2LCJqdGkiOiJjYTQxOTRmYzgxOTcxMTQ2NmQxNDE3NDMyYTdiZWM5ZjU1MDcxODEzIn0.eAGN-v8NNouaHTMIm_EjR7N9T1ZxOHyYAc0ZPXJ7uaw4m0mN-ql8WWtcgUPHE0fVcuhgAfCsHZ1UoGVs8LQa4rLh2wTGFOz2VMs-rFQHmRPSGC0pZL4rlPSZLkFnH0gLCrOl3iWzkGL1qVzOe4Zxk5dzqm92X3DzD-4xYcfsHkiSAvShpBLbedP2Je9ce93j7q020ylng3qFg73sQnSsmUT3ySkRCKt18yBjWTx3OIzsBbibzleomGYlpDKfi_R-LNYVkjVyjhd_LN5a68t86iskU4dJvBZ0pmVhpxgotjNXwek64-6bJgNrdHx3v0-X_QAP64iZ0BKgdsk_UspJjA",
+    "accessToken": "ya29.a0ARrdaM_uyG0Z-P1ZiVj3hGd49nwmjr9ukuzVNYI3U1lEq6C2cQlQsVnVW7ZLMO31g22HaooYYRh5DfSPg8gD7VqCmBf8WCTRXlPGc9Go7ggwHZ1gOeJ6H44CwdBZ0i396AVSFAQyVGxZW6E8aucRFzPFcijqVw",
+    "profileObj": {
+        "googleId": "100864841868118824730",
+        "imageUrl": "https://lh3.googleusercontent.com/a-/AOh14Gi0GnkabOanl2OoL6UESzB99YiwwK3EA8p06yhaYQ=s96-c",
+        "email": "minghao912@g.ucla.edu",
+        "name": "MINGHAO CHEN",
+        "givenName": "MINGHAO",
+        "familyName": "CHEN"
+    }
+}
