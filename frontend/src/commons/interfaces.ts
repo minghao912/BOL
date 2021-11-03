@@ -10,6 +10,10 @@ export interface MessageID {
     id: string
 }
 
+export interface MessageList {
+    messages: string[]
+}
+
 export interface UserInfo {
     groups: GroupID[],
     user: User

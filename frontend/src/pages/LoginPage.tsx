@@ -1,13 +1,11 @@
-import React, { useContext, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
 import "./LoginPage.css";
 import { COLORS } from "../commons/constants";
 import { GlobalContext } from "../context/GlobalState";
 import logo from '../images/bakugo2-transparent-red.svg';
-import { FontStyle } from '@mui/material/styles/createTypography';
-import { fontSize } from '@mui/system';
 
 interface GoogleLoginProps {
     clientId: string,
@@ -17,10 +15,12 @@ interface GoogleLoginProps {
     cookiePolicy: string
 }
 
+/*
 // DEV
 function skipGoogleLogin(response: any): void {
     console.log(response);
 }
+*/
 
 export class LoginPage extends React.Component<{}, {loginAuthorized: boolean}> {
     static contextType = GlobalContext; // Establishes the this.context variable to access global context

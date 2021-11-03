@@ -55,3 +55,10 @@ def deleteSource(request, id):
     return JsonResponse({
         "id": deletedID
     })
+
+# GAMERS
+@api_view(['GET'])
+def getMessages(request):
+    return JsonResponse({
+        "payload": ["test1", "test2", "test3"]
+    })

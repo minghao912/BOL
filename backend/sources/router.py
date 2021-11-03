@@ -8,5 +8,8 @@ urlpatterns = [
     path('sources/get/all', views.getAll),
     path('sources/create/', views.createSource),
     path('sources/update/<int:id>', views.updateSource),
-    path('sources/delete/<int:id>', views.deleteSource)
+    path('sources/delete/<int:id>', views.deleteSource),
+
+    # GAMERS
+    path('sources/getMessages', views.getMessages)
 ]

@@ -26,7 +26,7 @@ export const GlobalProvider = ({ children }: any) => {
 
     // Check if the JSON was updated
     useEffect(() => {
-        console.log("Updated OAuth JSON: " + JSON.stringify(state.OAuthResponse));
+        console.log("Updated OAuth JSON");
     }, [state.OAuthResponse]);
 
     return(
@@ -40,17 +40,17 @@ export const GlobalProvider = ({ children }: any) => {
 function getLocalOAuthResponse(): any {
     let localJSON = localStorage.getItem("OAuthResponse");
 
-    if (localJSON == null || localJSON == undefined)
+    if (localJSON === null || localJSON === undefined)
         return {};
     else {
         let parsedJSON: any;
         try {
             parsedJSON = JSON.parse(localJSON);
         } catch (e) {
-            return {}
+            return {};
         }
 
-        if (parsedJSON == {})
+        if (parsedJSON === {})
             return {};
         else return parsedJSON;
     }
