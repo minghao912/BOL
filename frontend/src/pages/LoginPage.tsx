@@ -5,7 +5,7 @@ import { GoogleLogin } from 'react-google-login';
 import "./LoginPage.css";
 import { COLORS } from "../commons/constants";
 import { GlobalContext } from "../context/GlobalState";
-import logo from './BOL_logo.svg' ;
+import logo from '../images/bakugo2-transparent-red.svg';
 import { FontStyle } from '@mui/material/styles/createTypography';
 import { fontSize } from '@mui/system';
 
@@ -22,8 +22,8 @@ function skipGoogleLogin(response: any): void {
     console.log(response);
 }
 
-export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oauthResponse?: any}> {
-    static contextType = GlobalContext;
+export class LoginPage extends React.Component<{}, {loginAuthorized: boolean}> {
+    static contextType = GlobalContext; // Establishes the this.context variable to access global context
 
     constructor(props: any) {
         super(props)
@@ -39,12 +39,14 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
             loginAuthorized: true,
         });
 
+        // Updates the OAuth response globally
         this.context.updateOAuth(response);
     }
     
     // Runs when OAUTH fails
     loginFailure = (response: any): void => {
-        alert("There was an error with your Google sign-in")
+        alert("There was an error with your Google sign-in");
+        console.error("Error: Google OAuth failed\n" + response);
     }
 
     render() {
@@ -56,21 +58,17 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
             cookiePolicy: "single_host_origin"
         } as GoogleLoginProps;
 
+        // If login authorized go to home page, else show the login page
         if (this.state.loginAuthorized) {
             return (
-                <Redirect 
-                    to={{
-                        pathname: "/home",
-                        state: { oauthResponse: this.state.oauthResponse }
-                    }} 
-                />
+                <Redirect to={{pathname: "/home"}} />
             );
         } else {
             document.body.style.background = COLORS.BACKGROUND3;
             return (
             <div className="container" style={{backgroundColor: COLORS.BACKGROUND}}>
                 <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
-                    <img src={logo} alt= 'BOL logo' width = "1024" height = "576"/>
+                    <img src={logo} alt= 'BOL logo' width = "960" height = "564"/>
                 </div>
                 <div className="break"></div>
                 <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
@@ -91,6 +89,8 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
                         <h3>Skip Google Login</h3>
                     </Link>*/}
                 </div>
+                <div className="break"></div>
+                <div className="sub-container" style={{height:"50px"}}></div>
             </div>
             );
         }

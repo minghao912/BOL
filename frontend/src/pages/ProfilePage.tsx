@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Container, Box, Paper } from '@mui/material';
-import { COLORS } from '../commons/constants';
-import {GlobalContext} from '../context/GlobalState';
-import CssBaseline from '@mui/material/CssBaseline';
 import { RouteChildrenProps } from 'react-router';
+import { Container, Box, Paper } from '@mui/material';
+import CssBaseline from '@mui/material/CssBaseline';
+
+import { COLORS } from '../commons/constants';
+import { GlobalContext } from "../context/GlobalState";
 
 interface RouteParams {
     username: string
