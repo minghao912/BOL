@@ -7,7 +7,7 @@ interface StateDispatchAction {
     payload: any
 }
  
-export default (state: any, action: StateDispatchAction) => {
+export default function AppReducer(state: any, action: StateDispatchAction) {
     switch(action.type) {
         case ACTION_TYPES.UPDATE_STATE:     // Returns the new state with updated OAuthResponse
             return {

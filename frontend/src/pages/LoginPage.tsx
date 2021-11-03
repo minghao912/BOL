@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
 import "./LoginPage.css";
+import logo from '../images/logo192.png';   // It's OK if this is red
 import { COLORS } from "../commons/constants";
 import { GlobalContext } from "../context/GlobalState";
 
@@ -19,8 +20,8 @@ function skipGoogleLogin(response: any): void {
     console.log(response);
 }
 
-export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oauthResponse?: any}> {
-    static contextType = GlobalContext;
+export class LoginPage extends React.Component<{}, {loginAuthorized: boolean}> {
+    static contextType = GlobalContext; // Establishes the this.context variable to access global context
 
     constructor(props: any) {
         super(props)
@@ -36,12 +37,14 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
             loginAuthorized: true,
         });
 
+        // Updates the OAuth response globally
         this.context.updateOAuth(response);
     }
     
     // Runs when OAUTH fails
     loginFailure = (response: any): void => {
-        alert("There was an error with your Google sign-in")
+        alert("There was an error with your Google sign-in");
+        console.error("Error: Google OAuth failed\n" + response);
     }
 
     render() {
@@ -53,20 +56,20 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
             cookiePolicy: "single_host_origin"
         } as GoogleLoginProps;
 
+        // If login authorized go to home page, else show the login page
         if (this.state.loginAuthorized) {
-            return (
-                <Redirect 
-                    to={{
-                        pathname: "/home",
-                        state: { oauthResponse: this.state.oauthResponse }
-                    }} 
-                />
-            );
+            return <Redirect to={{pathname: "/home"}} />
         } else {
             return (
             <div className="container" style={{backgroundColor: COLORS.BACKGROUND}}>
+                <div className="sub-container" style={{minHeight:"50px"}}></div>
+                <div className="break"></div>
                 <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
                     <h1>&#x1F171;iscord️</h1>
+                </div>
+                <div className="break"></div>
+                <div className="sub-container" style={{maxHeight:"20vh"}}>
+                    <img src={logo} alt="logo"></img>
                 </div>
                 <div className="break"></div>
                 <div className="sub-container">
@@ -84,6 +87,8 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean, oa
                         <h3>Skip Google Login</h3>
                     </Link>*/}
                 </div>
+                <div className="break"></div>
+                <div className="sub-container" style={{minHeight:"50px"}}></div>
             </div>
             );
         }
