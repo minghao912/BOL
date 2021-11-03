@@ -2,8 +2,8 @@ import { createContext, useEffect, useReducer } from 'react';
 import AppReducer, { ACTION_TYPES } from './AppReducer';
 
 const initialState = {
-   OAuthResponse: getLocalOAuthResponse(),
-   updateOAuth: (oauth: any) => {}
+    OAuthResponse: getLocalOAuthResponse(),
+    updateOAuth: (oauth: any) => {}
 }
 
 export const GlobalContext = createContext(initialState);

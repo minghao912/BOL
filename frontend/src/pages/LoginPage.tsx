@@ -1,11 +1,13 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
 
 import "./LoginPage.css";
-import logo from '../images/logo192.png';   // It's OK if this is red
 import { COLORS } from "../commons/constants";
 import { GlobalContext } from "../context/GlobalState";
+import logo from '../images/bakugo2-transparent-red.svg';
+import { FontStyle } from '@mui/material/styles/createTypography';
+import { fontSize } from '@mui/system';
 
 interface GoogleLoginProps {
     clientId: string,
@@ -58,18 +60,19 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean}> {
 
         // If login authorized go to home page, else show the login page
         if (this.state.loginAuthorized) {
-            return <Redirect to={{pathname: "/home"}} />
+            return (
+                <Redirect to={{pathname: "/home"}} />
+            );
         } else {
+            document.body.style.background = COLORS.BACKGROUND3;
             return (
             <div className="container" style={{backgroundColor: COLORS.BACKGROUND}}>
-                <div className="sub-container" style={{minHeight:"50px"}}></div>
-                <div className="break"></div>
                 <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
-                    <h1>&#x1F171;iscord️</h1>
+                    <img src={logo} alt= 'BOL logo' width = "960" height = "564"/>
                 </div>
                 <div className="break"></div>
-                <div className="sub-container" style={{maxHeight:"20vh"}}>
-                    <img src={logo} alt="logo"></img>
+                <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
+                    <h1 style = {{fontSize:20 ,fontFamily:'verdana'}}> By <i><b>GAMERS</b>OfExcelSpreadsheetLine30.</i> </h1>
                 </div>
                 <div className="break"></div>
                 <div className="sub-container">
@@ -80,7 +83,6 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean}> {
                         onFailure={LOGINPROPS.onFailure}
                         cookiePolicy={LOGINPROPS.cookiePolicy}
                     />
-                    <div className="break"></div>
 
                     {/* DEV
                     <Link to="/home">
@@ -88,7 +90,7 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean}> {
                     </Link>*/}
                 </div>
                 <div className="break"></div>
-                <div className="sub-container" style={{minHeight:"50px"}}></div>
+                <div className="sub-container" style={{height:"50px"}}></div>
             </div>
             );
         }
