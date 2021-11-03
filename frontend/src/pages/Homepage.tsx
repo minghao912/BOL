@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Container } from '@mui/material';
+import { Container, Box } from '@mui/material';
 
 import './Homepage.css';
 import { COLORS } from '../commons/constants';
@@ -28,18 +28,21 @@ export default function Homepage(props: HomepageProps) {
     }, []);
 
     return(
-        <Container 
+    <React.Fragment>
+        <Box 
             sx={{
                 bgcolor: COLORS.BACKGROUND,
                 width: '100vw',
                 height: '100vh',
                 margin: '0 0 0 0',
+                padding: '0 0 0 0',
                 boxSizing: 'border-box',
                 display: 'flex'
             }}
         >
             <CardGenerator messages={messages} />
-        </Container>
+        </Box>
+    </React.Fragment>
     );
 }
 
