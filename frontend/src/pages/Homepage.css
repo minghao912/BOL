@@ -1,5 +1,12 @@
-p {
-    color: #ffffff
+.container {
+    display: flex; 
+    flex-wrap: wrap;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+    min-width: 100vw;
+    min-height: 100vh;
+    margin: 0 0 0 0
 }
 
 .sub-container {
