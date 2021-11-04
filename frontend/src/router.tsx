@@ -1,6 +1,7 @@
 import { Route, Switch } from 'react-router-dom';
 
-import Homepage from './pages/Homepage';
+// import Homepage from './pages/Homepage';
+import DebugHomepage from './pages/DebugHomepage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
 import PageNotFoundPage from './pages/PageNotFoundPage';
@@ -10,7 +11,7 @@ function AppRouter() {
     return (
     <Switch>
         <Route path="/" exact component={ LoginPage } />
-        <Route path="/home" exact render={(props) => <Homepage {...props}/>} />
+        <Route path="/home" exact render={(props) => <DebugHomepage {...props}/>} />
         <Route path="/profile/:username" component={ ProfilePage }/>
         {/*<Route path="/profile/:username" component={ ProfilePage } />*/}        
 
