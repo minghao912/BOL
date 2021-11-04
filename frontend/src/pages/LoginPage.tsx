@@ -5,7 +5,7 @@ import { GoogleLogin } from 'react-google-login';
 import "./LoginPage.css";
 import { COLORS } from "../commons/constants";
 import { GlobalContext } from "../context/GlobalState";
-import logo from '../images/bakugo2-transparent-white.svg';
+import logo from '../images/bakugo2-transparent-white.svg'; // OK if there is red underline
 
 interface GoogleLoginProps {
     clientId: string,

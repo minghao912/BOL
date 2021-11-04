@@ -11,9 +11,7 @@ interface HomepageProps {
 }
 
 export default function Homepage(props: HomepageProps) {
-    const messageListInitializer = {
-        messages: ["a", "b", "c"]
-    } as MessageList;
+    const messageListInitializer = {} as MessageList;
     const [messages, setMessages] = useState<MessageList>(messageListInitializer);
 
     // Get data

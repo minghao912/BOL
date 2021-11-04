@@ -1,5 +1,6 @@
 from django.urls import path, include
 from . import views
+from . import messaging
 
 urlpatterns = [
     path('test/', views.test),
@@ -11,5 +12,6 @@ urlpatterns = [
     path('sources/delete/<int:id>', views.deleteSource),
 
     # GAMERS
-    path('sources/getMessages', views.getMessages)
+    path('sources/getMessages/<str:userID>', messaging.getMessages),
+    path('sources/addMessage', messaging.addMessage)
 ]

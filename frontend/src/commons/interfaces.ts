@@ -10,8 +10,15 @@ export interface MessageID {
     id: string
 }
 
+export interface Message {
+    messageID: string,
+    sender: string,
+    timestamp: string,
+    content: string
+}
+
 export interface MessageList {
-    messages: string[]
+    messages: Message[]
 }
 
 export interface UserInfo {

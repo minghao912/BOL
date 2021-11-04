@@ -6,3 +6,9 @@ class Source(models.Model):
     phone = models.TextField(blank=True)
     email = models.TextField(blank=True)
     remarks = models.TextField(blank=True)
+
+class Message(models.Model):
+    messageID = models.CharField(max_length=256)
+    sender = models.CharField(max_length=256)
+    timestamp = models.CharField(max_length=64)
+    content = models.TextField(blank=True)
