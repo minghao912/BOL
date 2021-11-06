@@ -6,6 +6,6 @@ export enum COLORS {
     OFF_BLACK = "#23272A",
     FULL_WHITE = "#FFFFFF",
     BACKGROUND = "#3a2c3a",
-    BACKGROUND2 = "#4b3e4b",
-    BACKGROUND3 = "#171217",
+    BACKGROUND2 = "#4b3e4b", //lighter purple
+    BACKGROUND3 = "#171217", 
 }

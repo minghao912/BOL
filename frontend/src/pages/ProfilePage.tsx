@@ -18,24 +18,19 @@ export function ProfilePage (props: any){
         setImageUrl(OAuthResponse.profileObj.imageUrl);
         
     }, [OAuthResponse])
-    
     document.body.style.background = COLORS.BACKGROUND3;
-    
-
-    console.log(imageUrl);
-
-    return (<React.Fragment> 
-    <CssBaseline />
-    <Container maxWidth="sm">
+    return (
+    <div className="container">
+        <div className="box"> 
+        <div className="logoContainer" style={{color: COLORS.FULL_WHITE}}>
+            <img id='123' src= {imageUrl} alt = "Profile Picture" width = "100" height = "100" />
+        </div>
         <p>Profile</p>
-        <p>Your username is {(props.match!.params as RouteParams).username}</p>
-        <img id='123' src= {imageUrl} alt = "Profile Picture" width = "100" height = "100" />
-        <script>
-            document.getElementById('123').src=imageUrl;
-        </script>
-        <Box sx={{ bgcolor: COLORS.BACKGROUND, height: '100vh' }} />
-    </Container>
-    </React.Fragment>
+        <div className="break">
+            <p>Your username is {(props.match!.params as RouteParams).username}</p>
+        </div>
+        </div>
+    </div>
     );
 }
 
