@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
-import { Container, Box, Paper } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
-
 import { COLORS } from '../commons/constants';
 import { GlobalContext } from "../context/GlobalState";
+import "./LoginPage.css";
+import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 
 interface RouteParams {
     username: string
@@ -18,19 +17,32 @@ export function ProfilePage (props: any){
         setImageUrl(OAuthResponse.profileObj.imageUrl);
         
     }, [OAuthResponse])
+
+    
     document.body.style.background = COLORS.BACKGROUND3;
     return (
-    <div className="container">
-        <div className="box"> 
-        <div className="logoContainer" style={{color: COLORS.FULL_WHITE}}>
-            <img id='123' src= {imageUrl} alt = "Profile Picture" width = "100" height = "100" />
+        <div className="profileContainer">
+            <div className="profileBox"> 
+                <div className="profileSpace_top"></div>
+                <div className="profilelogoContainer" > 
+                    <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
+                </div>
+                <div className="profile_space_Between_Logo_and_UserProfile">
+                    <p><b>User Profile</b></p>
+                </div>
+                <div className="profileSpaceSmall"></div>
+                <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
+                    <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
+                </div>
+                <div className="profileBreak">
+                    <p> {(props.match!.params as RouteParams).username} </p>
+                </div>
+                <div className="profileSpace_middle"></div>  
+                <div className="profileBreak">
+                    <p> Hi! I am {(props.match!.params as RouteParams).username} and I love BOL! </p>
+                </div>         
+            </div>
         </div>
-        <p>Profile</p>
-        <div className="break">
-            <p>Your username is {(props.match!.params as RouteParams).username}</p>
-        </div>
-        </div>
-    </div>
     );
 }
 

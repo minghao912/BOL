@@ -72,10 +72,10 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean}> {
                 <div className="logoContainer" style={{color: COLORS.FULL_WHITE}}> 
                     <img src={BOL} alt= 'BOL logo' width = "768" height = "306.6"/>
                 </div>
-                {/* After messing around with the CSS for a while I realized it looks better if I use the logo container instead of the subcontainer for Bakugo too*/}
-                <div className="logoContainer" style={{color: COLORS.FULL_WHITE}}>
+                {/* LogoContainer fits better here too, normal one has too much vertical space */}
+                {/* <div className="logoContainer" style={{color: COLORS.FULL_WHITE}}>
                     <img src={logo} alt= 'Kacchan' width = "960" height = "564"/>
-                </div>
+                </div> */}
                 <div className="break"></div>*
                 <div className="sub-container">
                     <GoogleLogin
