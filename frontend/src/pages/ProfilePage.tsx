@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Redirect, useParams } from 'react-router';
 import { RouteChildrenProps } from 'react-router';
 import { COLORS } from '../commons/constants';
 import { GlobalContext } from "../context/GlobalState";
@@ -9,21 +10,36 @@ interface RouteParams {
     googleID: string
 }
 
-interface ProfilePageProps {
+interface ProfilepageProps{
     match: any,
     hasID: boolean
 }
 
-export function ProfilePage (props: ProfilePageProps){
+export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     const {OAuthResponse} = useContext(GlobalContext);
     let [imageUrl, setImageUrl] = useState<string>("" as string);
+    let [newGoogleID, setnewGoogleID] = useState<string>("" as string);
+    let [name, setName] = useState<string>("" as string);
 
     useEffect(() => {
         setImageUrl(OAuthResponse.profileObj.imageUrl);
-        
-    }, [OAuthResponse])
+        setnewGoogleID(OAuthResponse.profileObj.email);
+        setName(OAuthResponse.profileObj.name)
+    }, [OAuthResponse]);
 
-    console.log(props.hasID);
+    const myArray = newGoogleID.split("@");
+    newGoogleID = myArray[0];
+
+    // console.log("Reached redirect statement 1");
+    // console.log(OAuthResponse.profileObj.googleId);
+    // console.log(newGoogleID);
+
+    if (!props.hasID)
+    {
+        console.log("Reached redirect statement 2");
+        return (<Redirect to ={"/profile/" + newGoogleID} />);
+    }
+
     
     document.body.style.background = COLORS.BACKGROUND3;
     return (
@@ -41,12 +57,13 @@ export function ProfilePage (props: ProfilePageProps){
                     <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
                 </div>
                 <div className="profileBreak">
-                    <p> {(props.match!.params as RouteParams).googleID} </p>
+                    <p> {name} </p>
                 </div>
                 <div className="profileSpace_middle"></div>  
                 <div className="profileBreak">
-                    <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p>
-                </div>         
+                    {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
+                    <p> Hi! I am {name} and I love BOL! </p>
+                </div>
             </div>
         </div>
     );

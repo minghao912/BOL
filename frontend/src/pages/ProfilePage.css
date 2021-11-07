@@ -1,6 +1,3 @@
-/*ProfilePage.tsx refuses to use a different .css file, it keeps using this one*/
-/*Everything below this is for ProfilePage.tsx*/
-
 .profileContainer {
     background-color: #3A2C3A;
     background-image: url("../images/Background5_hflip_1.jpg");
