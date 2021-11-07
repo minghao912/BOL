@@ -39,7 +39,6 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
         console.log("Reached redirect statement 2");
         return (<Redirect to ={"/profile/" + newGoogleID} />);
     }
-
     
     document.body.style.background = COLORS.BACKGROUND3;
     return (
@@ -64,6 +63,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                     {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
                     <p> Hi! I am {name} and I love BOL! </p>
                 </div>
+                
             </div>
         </div>
     );
