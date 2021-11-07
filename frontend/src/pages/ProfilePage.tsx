@@ -6,7 +6,7 @@ import "./ProfilePage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 
 interface RouteParams {
-    username: string
+    googleID: string
 }
 
 export function ProfilePage (props: any){
@@ -35,11 +35,11 @@ export function ProfilePage (props: any){
                     <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
                 </div>
                 <div className="profileBreak">
-                    <p> {(props.match!.params as RouteParams).username} </p>
+                    <p> {(props.match!.params as RouteParams).googleID} </p>
                 </div>
                 <div className="profileSpace_middle"></div>  
                 <div className="profileBreak">
-                    <p> Hi! I am {(props.match!.params as RouteParams).username} and I love BOL! </p>
+                    <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p>
                 </div>         
             </div>
         </div>
