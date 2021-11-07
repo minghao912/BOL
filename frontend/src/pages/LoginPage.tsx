@@ -6,6 +6,7 @@ import "./LoginPage.css";
 import { COLORS } from "../commons/constants";
 import { GlobalContext } from "../context/GlobalState";
 import logo from '../images/bakugo2-transparent-white.svg'; // OK if there is red underline
+import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 
 interface GoogleLoginProps {
     clientId: string,
@@ -67,14 +68,15 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean}> {
             document.body.style.background = COLORS.BACKGROUND3;
             return (
             <div className="container" style={{backgroundColor: COLORS.BACKGROUND}}>
-                <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
-                    <img src={logo} alt= 'BOL logo' width = "960" height = "564"/>
+                {/* using a different container for the logo here because it needs margins*/}
+                <div className="logoContainer" style={{color: COLORS.FULL_WHITE}}> 
+                    <img src={BOL} alt= 'BOL logo' width = "768" height = "306.6"/>
                 </div>
-                <div className="break"></div>
-                <div className="sub-container" style={{color: COLORS.FULL_WHITE}}>
-                    <h1 style = {{fontSize:20 ,fontFamily:'verdana'}}> By <i><b>GAMERS</b>OfExcelSpreadsheetLine30.</i> </h1>
-                </div>
-                <div className="break"></div>
+                {/* LogoContainer fits better here too, normal one has too much vertical space */}
+                {/* <div className="logoContainer" style={{color: COLORS.FULL_WHITE}}>
+                    <img src={logo} alt= 'Kacchan' width = "960" height = "564"/>
+                </div> */}
+                <div className="break"></div>*
                 <div className="sub-container">
                     <GoogleLogin
                         clientId={LOGINPROPS.clientId}
@@ -83,7 +85,6 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean}> {
                         onFailure={LOGINPROPS.onFailure}
                         cookiePolicy={LOGINPROPS.cookiePolicy}
                     />
-
                     {/* DEV
                     <Link to="/home">
                         <h3>Skip Google Login</h3>

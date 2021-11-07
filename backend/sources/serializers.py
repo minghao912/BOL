@@ -9,4 +9,4 @@ class SourceSerializer(serializers.ModelSerializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ["id", "messageID", "sender", "timestamp", "content"]
+        fields = ["id", "messageID", "sender", "timestamp", "content", "isImage"]
