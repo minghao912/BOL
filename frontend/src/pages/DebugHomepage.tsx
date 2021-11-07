@@ -24,7 +24,8 @@ export default function DebugHomepage(props: HomepageProps) {
             messageID: "random-message-id",
             sender: OAuthResponse.profileObj.googleId,
             timestamp: new Date().toISOString(),
-            content: content
+            content: content,
+            isImage: false
         } as Message).then(response => {
             console.log(response)
         }).catch(err => console.error(err));
@@ -55,7 +56,7 @@ export default function DebugHomepage(props: HomepageProps) {
         </div>
         <div className="break"></div>
         <div className="sub-container">
-            <TextField id="userID-box" label="Enter user ID here" onChange={(e) => setUserIDtoSearch(e.target.value)} />
+            <TextField id="userID-box" label="Enter user ID here" defaultValue={OAuthResponse.profileObj.googleId} onChange={(e) => setUserIDtoSearch(e.target.value)} />
             <Button style={{marginLeft:"10px"}} variant="contained" onClick={getMessages}>Get Messages</Button>
             <div className="break"></div>
             <Paper style={{minWidth:"50vw", height:"50vh", overflow:"auto", padding:"20px 20px 20px 20px"}}>
