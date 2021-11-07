@@ -12,3 +12,4 @@ class Message(models.Model):
     sender = models.CharField(max_length=256)
     timestamp = models.CharField(max_length=64)
     content = models.TextField(blank=True)
+    isImage = models.BooleanField()
