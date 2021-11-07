@@ -18,6 +18,7 @@ export default function DebugHomepage(props: HomepageProps) {
     const [response, setResponse] = useState<MessageList>({messages: []} as MessageList);
     const { OAuthResponse } = useContext(GlobalContext);
 
+    // Sends content of text field to backend
     function submit() {
         axios.post('http://localhost:5000/sources/addMessage', {
             messageID: "random-message-id",
@@ -29,6 +30,7 @@ export default function DebugHomepage(props: HomepageProps) {
         }).catch(err => console.error(err));
     }
 
+    // Gets all the messages that were made by userID
     function getMessages() {
         axios.get(`http://localhost:5000/sources/getMessages/${userIDtoSearch}`).then(response => {
             setResponse(response.data);
@@ -67,6 +69,7 @@ function MessageOutputter(props: any): JSX.Element {
     let out = [] as JSX.Element[];
     let messages = {messages: props.messages} as MessageList;
     
+    // Loops through array of messages and formats each one
     for (let i = 0; i < messages.messages.length; i++) {
         const message = messages.messages[i];
 
