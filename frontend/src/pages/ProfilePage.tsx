@@ -9,7 +9,12 @@ interface RouteParams {
     googleID: string
 }
 
-export function ProfilePage (props: any){
+interface ProfilePageProps {
+    match: any,
+    hasID: boolean
+}
+
+export function ProfilePage (props: ProfilePageProps){
     const {OAuthResponse} = useContext(GlobalContext);
     let [imageUrl, setImageUrl] = useState<string>("" as string);
 
@@ -18,6 +23,7 @@ export function ProfilePage (props: any){
         
     }, [OAuthResponse])
 
+    console.log(props.hasID);
     
     document.body.style.background = COLORS.BACKGROUND3;
     return (

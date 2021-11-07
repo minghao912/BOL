@@ -12,7 +12,8 @@ function AppRouter() {
     <Switch>
         <Route path="/" exact component={ LoginPage } />
         <Route path="/home" exact render={(props) => <DebugHomepage {...props}/>} />
-        <Route path="/profile/:googleID" component={ ProfilePage }/>
+        <Route path="/profile/:googleID" render={(props) =>  <ProfilePage {...props} hasID={true} /> } />
+        <Route path="/profile" render={(props) => <ProfilePage {...props} hasID={false} /> } />
         {/*<Route path="/profile/:username" component={ ProfilePage } />*/}        
 
         {/* This is the default case */}
