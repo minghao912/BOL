@@ -22,8 +22,6 @@ export function ProfilePage (props: ProfilePageProps){
         setImageUrl(OAuthResponse.profileObj.imageUrl);
         
     }, [OAuthResponse])
-
-    console.log(props.hasID);
     
     document.body.style.background = COLORS.BACKGROUND3;
     return (
