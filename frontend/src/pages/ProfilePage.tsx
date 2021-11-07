@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { RouteChildrenProps } from 'react-router';
 import { COLORS } from '../commons/constants';
 import { GlobalContext } from "../context/GlobalState";
-import "./LoginPage.css";
+import "./ProfilePage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 
 interface RouteParams {
