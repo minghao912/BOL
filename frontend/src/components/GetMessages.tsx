@@ -1,6 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 
-export default function GetMessages(props: any): JSX.Element {
-    return <p>Test</p>
+interface GetMessagesProps {
+    groupToDisplay: string
+}
+
+export default function GetMessages(props: GetMessagesProps): JSX.Element {
+    return <p>{props.groupToDisplay}</p>
 }

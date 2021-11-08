@@ -6,7 +6,6 @@ import './Homepage.css';
 import { COLORS } from '../commons/constants';
 import { Message, MessageList } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
-import { setEnvironmentData } from 'worker_threads';
 
 interface HomepageProps {
 
@@ -56,7 +55,13 @@ export default function DebugHomepage(props: HomepageProps) {
         </div>
         <div className="break"></div>
         <div className="sub-container">
-            <TextField id="userID-box" label="Enter user ID here" defaultValue={OAuthResponse.profileObj.googleId} onChange={(e) => setUserIDtoSearch(e.target.value)} />
+            <TextField 
+                id="userID-box" 
+                label="Enter user ID here" 
+                defaultValue={OAuthResponse.profileObj.googleId} 
+                onClick={(e) => setUserIDtoSearch((e.target as any).value)} 
+                onChange={(e) => setUserIDtoSearch(e.target.value)} 
+            />
             <Button style={{marginLeft:"10px"}} variant="contained" onClick={getMessages}>Get Messages</Button>
             <div className="break"></div>
             <Paper style={{minWidth:"50vw", height:"50vh", overflow:"auto", padding:"20px 20px 20px 20px"}}>

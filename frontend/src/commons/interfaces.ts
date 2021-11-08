@@ -1,38 +1,25 @@
-export interface GroupID {
-    id: string
-}
-
-export interface UserID {
-    id: string
-}
-
-export interface MessageID {
-    id: string
-}
-
 export interface Message {
-    messageID: string,
-    sender: string,
-    timestamp: string,
-    content: string
+    messageID: string,  
+    sender: string,     // Google ID
+    timestamp: string,  // Date in ISO format
+    content: string     // Actual content
 }
 
 export interface MessageList {
     messages: Message[]
 }
 
-export interface UserInfo {
-    groups: GroupID[],
-    user: User
+export interface GroupList {
+    groups: Group[]
 }
 
 export interface User {
-    id: UserID,
-    profilePicPath: string,
-    username: string
+    id: string,                 // Google ID
+    friendList: string[],       // List of Google IDs
+    groupsList: string[]        // List of group IDs
 }
 
 export interface Group {
-    members: UserID[],
-    messages: MessageID[]
+    memberIDs: string[]
+    messageIDs: string[]
 }
