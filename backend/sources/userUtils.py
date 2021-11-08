@@ -18,7 +18,7 @@ def getUser(request, userID):
 def addUser(request):
     requestData = json.loads(request.body.decode('utf-8'))
     userID = requestData.get("userID")
-    print(requestData)
+    print("Received request to add user with ID " + str(requestData))
 
     # If the userID does not exist in the database then create it
     userAlreadyExisted = False
