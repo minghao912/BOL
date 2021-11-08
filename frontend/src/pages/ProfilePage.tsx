@@ -63,7 +63,10 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                     {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
                     <p> Hi! I am {name} and I love BOL! </p>
                 </div>
-                
+                <div className="profileSpace_bottom"></div>
+                <div className="profilefriendButton">
+                <span style={{color:"#ffffff"}} >Add Friend </span>
+                </div>
             </div>
         </div>
     );
