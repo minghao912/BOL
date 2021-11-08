@@ -1,42 +1,54 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse, QueryDict
 from django.views.decorators import csrf
 from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
-from .models import Message, User, Group, Friend
+from .models import User, Group
 from .serializers import MessageSerializer, GroupSerializer
+import uuid
 
 @csrf_exempt
 @api_view(['GET'])
-def getMessages(request, userID, GroupID):
-    # Get all messages where the sender is equal to userID
-    messageList = Message.objects.filter(sender=userID, group=GroupID)
+def getGroupsOfUser(request, userID):
+    # Get all groups where the list of users contains userID
+    user = User.objects.filter(userID=userID)
+    groupList = Group.objects.filter(users__in=user)
 
     # Use the serializer to change it to JSON format
-    serializer = MessageSerializer(messageList, many=True)               
-    return JsonResponse(serializer.data, safe=False)
-
-@api_view(['GET'])
-def getGroupUsers(request, GroupID):
-    # Get all messages where the sender is equal to userID
-    UserList = Message.objects.filter(group=GroupID)
-
-    # Use the serializer to change it to JSON format
-    serializer = GroupSerializer(UserList, many=True)               
+    serializer = GroupSerializer(groupList, many=True)               
     return JsonResponse(serializer.data, safe=False)
 
 @api_view(['POST'])
-def addMessage(request, GroupID):
-    serializer = MessageSerializer(data=request.data)
+def createNewGroup(request):
+    userIDs = request.POST.get("userIDs")  # The request JSON should include an array of userIDs to add to this group
 
-    # Return 400 Error if the request has invalid data
-    if not serializer.is_valid():
-        return JsonResponse(serializer.errors, status=400)
+    newGroupID = uuid.uuid4().hex   # UUID creates a random unique ID
+    newGroup = Group.objects.create(groupID=newGroupID)
 
-    try:
-        savedMessage = serializer.save()
-    except:
-        return JsonResponse({"message":"An error occurred internally"}, status=500)
+    for userID in userIDs:
+        user = User.objects.get(userID=userID)
+        newGroup.users.add(user)
+
+
+@api_view(['PUT'])
+def addUsersToGroup(request):
+    requestData = QueryDict(request.body)
+
+    userIDs = requestData.userIDs  # The request JSON should include an array of userIDs to add to this group
+    groupID = requestData.groupID
     
-    return JsonResponse({
-        "messageID": savedMessage.messageID
-    })
+    group = Group.objects.get(groupID=groupID)
+
+    for userID in userIDs:
+        user = User.objects.get(userID=userID)
+        group.users.add(user)
+
+
+@api_view(['GET'])
+def getUsersInGroup(request, groupID):
+    # Get all users under the groupID
+    group = Group.objects.get(groupID=groupID)
+    userList = group.users.all()
+
+    # Use the serializer to change it to JSON format
+    serializer = GroupSerializer(userList, many=True)               
+    return JsonResponse(serializer.data, safe=False)

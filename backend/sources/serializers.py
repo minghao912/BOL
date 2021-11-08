@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from .models import Source, Message, User, Group
-from .serializers import Serializer
 
 class SourceSerializer(serializers.ModelSerializer):
     class Meta:

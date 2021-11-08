@@ -21,6 +21,7 @@ export default function DebugHomepage(props: HomepageProps) {
     function submit() {
         axios.post('http://localhost:5000/sources/addMessage', {
             messageID: "random-message-id",
+            group: "1", // Debug group is 1
             sender: OAuthResponse.profileObj.googleId,
             timestamp: new Date().toISOString(),
             content: content,

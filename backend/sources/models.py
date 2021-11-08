@@ -11,12 +11,12 @@ class User(models.Model):
     userID = models.CharField(max_length=256)
 
 class Friend(models.Model):
-    fromUser = models.ForeignKey(User, on_delete=models.CASCADE)
-    toUser = models.ForeignKey(User, on_delete=models.CASCADE)
+    fromUser = models.ForeignKey(User, related_name="from_user", on_delete=models.CASCADE)
+    toUser = models.ForeignKey(User, related_name="to_user", on_delete=models.CASCADE)
 
 class Group(models.Model):
     groupID = models.CharField(max_length=256)
-    users = models.ManyToManyField(User)
+    users = models.ManyToManyField(User, related_name="users")
 
 class Message(models.Model):
     messageID = models.CharField(max_length=256)

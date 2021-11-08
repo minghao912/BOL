@@ -1,6 +1,8 @@
 from django.urls import path, include
 from . import views
 from . import messaging
+from . import groupmsg
+from . import userUtils
 
 urlpatterns = [
     path('test/', views.test),
@@ -13,5 +15,11 @@ urlpatterns = [
 
     # GAMERS
     path('sources/getMessages/<str:userID>', messaging.getMessages),
-    path('sources/addMessage', messaging.addMessage)
+    path('sources/addMessage', messaging.addMessage),
+    path('sources/getGroupsOfUser/<str:userID>', groupmsg.getGroupsOfUser),
+    path('sources/createNewGroup', groupmsg.createNewGroup),
+    path('sources/addUsersToGroup', groupmsg.addUsersToGroup),
+    path('sources/getUsersInGroup/<str:groupID>', groupmsg.getUsersInGroup),
+    path('sources/addUser', userUtils.addUser),
+    path('sources/getUser/<str:userID>', userUtils.getUser)
 ]
