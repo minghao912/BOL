@@ -12,10 +12,10 @@ interface HomepageProps {
 }
 
 export default function DebugHomepage(props: HomepageProps) {
-    const [content, setContent] = useState<string>("");
-    const [userIDtoSearch, setUserIDtoSearch] = useState<string>("");
-    const [response, setResponse] = useState<MessageList>({messages: []} as MessageList);
     const { OAuthResponse } = useContext(GlobalContext);
+    const [content, setContent] = useState<string>("");
+    const [userIDtoSearch, setUserIDtoSearch] = useState<string>(OAuthResponse.profileObj.googleId);
+    const [response, setResponse] = useState<MessageList>({messages: []} as MessageList);
 
     // Sends content of text field to backend
     function submit() {
