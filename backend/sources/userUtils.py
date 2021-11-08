@@ -2,7 +2,7 @@ from django.http import JsonResponse, QueryDict
 from django.views.decorators import csrf
 from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
-from .models import User, Group, Friend
+from .models import User
 from .serializers import UserSerializer
 import json
 
@@ -26,7 +26,11 @@ def addUser(request):
         user = User.objects.get(userID=userID)
         userAlreadyExisted = True
     except User.DoesNotExist:
-        user = User.objects.create(userID=userID)
+        serializer = UserSerializer(data = request.data)
+        if not serializer.is_valid():
+            return JsonResponse(serializer.errors, status=400)
+        
+        user = serializer.save()
 
     return JsonResponse({
         "alreadyExisted": userAlreadyExisted,

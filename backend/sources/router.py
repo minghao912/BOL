@@ -3,6 +3,7 @@ from . import views
 from . import messaging
 from . import groupmsg
 from . import userUtils
+from . import friendUtils
 
 urlpatterns = [
     path('test/', views.test),
@@ -21,5 +22,7 @@ urlpatterns = [
     path('sources/addUsersToGroup', groupmsg.addUsersToGroup),
     path('sources/getUsersInGroup/<str:groupID>', groupmsg.getUsersInGroup),
     path('sources/addUser', userUtils.addUser),
-    path('sources/getUser/<str:userID>', userUtils.getUser)
+    path('sources/getUser/<str:userID>', userUtils.getUser),
+    path('sources/getFriends/<str:userID>', friendUtils.getFriends),
+    path('sources/addFriend', friendUtils.addFriend)
 ]
