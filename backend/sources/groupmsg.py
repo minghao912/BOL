@@ -3,8 +3,11 @@ from django.views.decorators import csrf
 from rest_framework.decorators import api_view
 from django.views.decorators.csrf import csrf_exempt
 from .models import User, Group
-from .serializers import MessageSerializer, GroupSerializer
+from .serializers import MessageSerializer, GroupSerializer, UserSerializer
+
+import json
 import uuid
+import traceback
 
 @csrf_exempt
 @api_view(['GET'])
@@ -19,28 +22,78 @@ def getGroupsOfUser(request, userID):
 
 @api_view(['POST'])
 def createNewGroup(request):
-    userIDs = request.POST.get("userIDs")  # The request JSON should include an array of userIDs to add to this group
+    requestData = json.loads(request.body.decode('utf-8'))
+    userIDs = requestData.get("userIDs")  # The request JSON should include an array of userIDs to add to this group
 
-    newGroupID = uuid.uuid4().hex   # UUID creates a random unique ID
-    newGroup = Group.objects.create(groupID=newGroupID)
+    print(userIDs)
 
-    for userID in userIDs:
-        user = User.objects.get(userID=userID)
-        newGroup.users.add(user)
+    # Create the group first
+    try:
+        newGroupID = uuid.uuid4().hex   # UUID creates a random unique ID
+        newGroup = Group.objects.create(groupID=newGroupID)
+        print("New group created with ID ", str(newGroupID))
+    except Exception as e:
+        return JsonResponse({
+            "error": traceback.format_exc()
+        }, status=500)
+
+    # Then add the users to the group
+    addedUsers = []
+    try:
+        for userID in userIDs:
+            user = User.objects.get(userID=userID)
+            newGroup.users.add(user)
+            addedUsers.append(user)
+            print("Added user ", str(userID))
+    except Exception as e:
+        return JsonResponse({
+            "error": traceback.format_exc()
+        }, status=500)
+
+    newUsersData = []
+    for user in addedUsers:
+        newUsersData.append(UserSerializer(user).data)
+
+    # Return a success
+    return JsonResponse({
+        "newGroupID": newGroupID,
+        "members": newUsersData
+    }, status=200)
 
 
 @api_view(['PUT'])
 def addUsersToGroup(request):
-    requestData = QueryDict(request.body)
+    requestData = json.loads(request.body.decode('utf-8'))
 
-    userIDs = requestData.userIDs  # The request JSON should include an array of userIDs to add to this group
-    groupID = requestData.groupID
+    # The request JSON should include an array of userIDs to add to this group
+    userIDs = requestData.get("userIDs")  
+    groupID = requestData.get("groupID")
     
-    group = Group.objects.get(groupID=groupID)
+    # Retreive group from db
+    try:
+        group = Group.objects.get(groupID=groupID)
+    except Group.DoesNotExist:
+        return JsonResponse({
+            "error": "The specified group does not exist"
+        }, status=400)
 
-    for userID in userIDs:
-        user = User.objects.get(userID=userID)
-        group.users.add(user)
+    # Add the users
+    addedUsers = []
+    try: 
+        for userID in userIDs:
+            user = User.objects.get(userID=userID)
+            group.users.add(user)
+            addedUsers.append(user)
+    except Exception as e:
+        return JsonResponse({
+            "error": traceback.format_exc()
+        }, status=500)
+
+    # Return a success
+    return JsonResponse({
+        "newGroupID": groupID,
+        "members": UserSerializer(addedUsers)
+    }, status=200)
 
 
 @api_view(['GET'])
@@ -50,5 +103,5 @@ def getUsersInGroup(request, groupID):
     userList = group.users.all()
 
     # Use the serializer to change it to JSON format
-    serializer = GroupSerializer(userList, many=True)               
+    serializer = UserSerializer(userList, many=True)               
     return JsonResponse(serializer.data, safe=False)
