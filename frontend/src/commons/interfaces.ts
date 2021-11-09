@@ -33,3 +33,8 @@ export interface UpdateGroup {
     groupID: string,
     userIDs: string[]
 }
+
+export interface Friendship {
+    fromUser: User,
+    toUser: User
+}
