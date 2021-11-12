@@ -4,6 +4,7 @@ from . import messaging
 from . import groupmsg
 from . import userUtils
 from . import friendUtils
+from . import emojiUtils
 
 urlpatterns = [
     path('test/', views.test),
@@ -15,8 +16,9 @@ urlpatterns = [
     path('sources/delete/<int:id>', views.deleteSource),
 
     # GAMERS
-    path('sources/getMessages/<str:userID>', messaging.getMessages),
+    path('sources/getMessagesOfUser/<str:userID>', messaging.getMessagesOfUser),
     path('sources/addMessage', messaging.addMessage),
+    path('sources/deleteMessage', messaging.deleteMessage),
     path('sources/getGroupsOfUser/<str:userID>', groupmsg.getGroupsOfUser),
     path('sources/createNewGroup', groupmsg.createNewGroup),
     path('sources/addUsersToGroup', groupmsg.addUsersToGroup),
@@ -24,5 +26,8 @@ urlpatterns = [
     path('sources/addUser', userUtils.addUser),
     path('sources/getUser/<str:userID>', userUtils.getUser),
     path('sources/getFriends/<str:userID>', friendUtils.getFriends),
-    path('sources/addFriend', friendUtils.addFriend)
+    path('sources/addFriend', friendUtils.addFriend),
+    path('sources/getEmojiReactions/<str:messageID>', emojiUtils.getEmojiReactions),
+    path('sources/addEmojiReaction', emojiUtils.addEmojiReaction),
+    path('sources/deleteEmojiReaction/<str:emojiReactionID>', emojiUtils.deleteEmojiReaction)
 ]

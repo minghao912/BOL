@@ -38,3 +38,11 @@ export interface Friendship {
     fromUser: User,
     toUser: User
 }
+
+export interface EmojiReaction {
+    messageID: string,
+    emojiReactionID: string,
+    sender: string,
+    timestamp: string,
+    emoji: string
+}

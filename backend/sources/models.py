@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.deletion import CASCADE
 
 class Source(models.Model):
     name = models.CharField(max_length=256)
@@ -23,6 +24,13 @@ class Group(models.Model):
 class Message(models.Model):
     messageID = models.CharField(max_length=256)
     group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    sender = models.CharField(max_length=256)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.CharField(max_length=64)
     content = models.TextField(blank=True)
+
+class EmojiReaction(models.Model):
+    messageID = models.ForeignKey(Message, on_delete=models.CASCADE)
+    emojiReactionID = models.CharField(max_length=256)
+    sender = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.CharField(max_length=64)
+    emoji = models.CharField(max_length=4)
