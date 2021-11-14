@@ -6,22 +6,22 @@ import './Homepage.css';
 import { COLORS } from '../commons/constants';
 import { Message, MessageList } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
-import { setEnvironmentData } from 'worker_threads';
 
 interface HomepageProps {
 
 }
 
 export default function DebugHomepage(props: HomepageProps) {
-    const [content, setContent] = useState<string>("");
-    const [userIDtoSearch, setUserIDtoSearch] = useState<string>("");
-    const [response, setResponse] = useState<MessageList>({messages: []} as MessageList);
     const { OAuthResponse } = useContext(GlobalContext);
+    const [content, setContent] = useState<string>("");
+    const [userIDtoSearch, setUserIDtoSearch] = useState<string>(OAuthResponse.profileObj.googleId);
+    const [response, setResponse] = useState<MessageList>({messages: []} as MessageList);
 
     // Sends content of text field to backend
     function submit() {
         axios.post('http://localhost:5000/sources/addMessage', {
             messageID: "random-message-id",
+            group: "1", // Debug group is 1
             sender: OAuthResponse.profileObj.googleId,
             timestamp: new Date().toISOString(),
             content: content,
@@ -56,7 +56,13 @@ export default function DebugHomepage(props: HomepageProps) {
         </div>
         <div className="break"></div>
         <div className="sub-container">
-            <TextField id="userID-box" label="Enter user ID here" defaultValue={OAuthResponse.profileObj.googleId} onChange={(e) => setUserIDtoSearch(e.target.value)} />
+            <TextField 
+                id="userID-box" 
+                label="Enter user ID here" 
+                defaultValue={OAuthResponse.profileObj.googleId} 
+                onClick={(e) => setUserIDtoSearch((e.target as any).value)} 
+                onChange={(e) => setUserIDtoSearch(e.target.value)} 
+            />
             <Button style={{marginLeft:"10px"}} variant="contained" onClick={getMessages}>Get Messages</Button>
             <div className="break"></div>
             <Paper style={{minWidth:"50vw", height:"50vh", overflow:"auto", padding:"20px 20px 20px 20px"}}>

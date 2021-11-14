@@ -7,6 +7,7 @@ import { COLORS } from "../commons/constants";
 import { GlobalContext } from "../context/GlobalState";
 import logo from '../images/bakugo2-transparent-white.svg'; // OK if there is red underline
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
+import axios from 'axios';
 
 interface GoogleLoginProps {
     clientId: string,
@@ -42,6 +43,22 @@ export class LoginPage extends React.Component<{}, {loginAuthorized: boolean}> {
 
         // Updates the OAuth response globally
         this.context.updateOAuth(response);
+        const userID = response.profileObj.googleId;
+        const pfpic = response.profileObj.imageUrl;
+        const username = response.profileObj.email.split("@")[0];
+
+        // Tell the database to add the user, backend handles duplicates
+        axios.post('http://localhost:5000/sources/addUser', {
+            "userID": userID,
+            "profilePicPath": pfpic,
+            "username": username
+        }).then(response => {
+            if (response.data.alreadyExisted)
+                console.log(`The user ${userID} already exists in the backend, welcome back`);
+            else console.log(`The user ${userID} has been added to the backend`);
+        }).catch(err => {
+            console.error(err);
+        });
     }
     
     // Runs when OAUTH fails
