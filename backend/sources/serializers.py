@@ -90,7 +90,7 @@ class MessageSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "userID", "profilePicPath", "username"]
+        fields = ["id", "userID", "profilePicPath", "username", "bio"]
 
 class GroupSerializer(serializers.ModelSerializer):
     users = UserSerializer(many=True)

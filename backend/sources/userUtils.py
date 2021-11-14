@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import User
 from .serializers import UserSerializer
 import json
+import traceback
 
 @csrf_exempt
 @api_view(['GET'])
@@ -35,4 +36,38 @@ def addUser(request):
     return JsonResponse({
         "alreadyExisted": userAlreadyExisted,
         "user": user.userID
+    }, status=200)
+
+
+@api_view(['PUT'])
+def updateUser(request, userID):
+    requestData = json.loads(request.body.decode('utf-8'))
+    user = User.objects.get(userID=userID)
+
+    newProfilePicPath = requestData.get('newProfilePicPath')
+    newUsername = requestData.get('newUsername')
+    newBio = requestData.get('newBio')
+
+    userObj = {
+        "id": user.values('id'),
+        "userID": userID,
+        "profilePicPath": newProfilePicPath,
+        "username": newUsername,
+        "bio": newBio
+    }
+
+    serializer = UserSerializer(data = userObj)
+    if not serializer.is_valid():
+        return JsonResponse(serializer.errors, status=400)
+
+    try:
+        saved_user = serializer.save()
+    except:
+        return JsonResponse({"message":traceback.format_exc}, status=500)
+
+
+    return JsonResponse({
+        "profilePicPath": saved_user.profilePicPath,
+        "username": saved_user.username,
+        "bio": saved_user.bio
     }, status=200)
