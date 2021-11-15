@@ -90,9 +90,13 @@ def addUsersToGroup(request):
         }, status=500)
 
     # Return a success
+    newUsersData = []
+    for user in group.users.all():
+        newUsersData.append(UserSerializer(user).data)
+
     return JsonResponse({
         "newGroupID": groupID,
-        "members": UserSerializer(addedUsers)
+        "members": newUsersData
     }, status=200)
 
 

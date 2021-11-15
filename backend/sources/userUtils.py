@@ -7,6 +7,12 @@ from .serializers import UserSerializer
 import json
 
 @csrf_exempt
+def getAllUsers(request):
+    userList = User.objects.all()
+
+    serializer = UserSerializer(userList, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
 @api_view(['GET'])
 def getUser(request, userID):
     user = User.objects.get(userID=userID)
