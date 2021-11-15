@@ -7,11 +7,23 @@ from .serializers import UserSerializer
 import json
 
 @csrf_exempt
+@api_view(['GET'])
 def getAllUsers(request):
     userList = User.objects.all()
 
     serializer = UserSerializer(userList, many=True)
     return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def getUserByUsername(request, username):
+    try:    
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        return JsonResponse({"message": "User does not exist"}, status=400)
+    
+    serializer = UserSerializer(user)
+    return JsonResponse(serializer.data)
+
 
 @api_view(['GET'])
 def getUser(request, userID):
