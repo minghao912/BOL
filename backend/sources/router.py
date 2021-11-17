@@ -19,6 +19,7 @@ urlpatterns = [
     path('sources/getMessagesOfUser/<str:userID>', messaging.getMessagesOfUser),
     path('sources/addMessage', messaging.addMessage),
     path('sources/deleteMessage', messaging.deleteMessage),
+    path('sources/getLatestMessageByGroup', messaging.getLatestMessageByGroup),
     path('sources/getGroupsOfUser/<str:userID>', groupmsg.getGroupsOfUser),
     path('sources/createNewGroup', groupmsg.createNewGroup),
     path('sources/addUsersToGroup', groupmsg.addUsersToGroup),

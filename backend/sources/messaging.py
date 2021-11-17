@@ -73,3 +73,14 @@ def deleteMessage(request, messageID):
     return JsonResponse({
         "messageID": messageID
     })
+
+@api_view(['GET'])
+def getLatestMessageByGroup(request, groupID):
+    try:
+        group = Group.objects.filter(groupID=groupID)
+        message = Message.objects.filter(group__in=group).latest()
+    except Group.DoesNotExist:
+        return JsonResponse({"error": "Group does not exist"}, status=400)
+    
+    serializer = MessageSerializer(message)
+    return JsonResponse(serializer.data)
