@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { RouteChildrenProps } from 'react-router';
 import { COLORS } from '../commons/constants';
+import { User } from '../commons/interfaces';
 import { GlobalContext } from "../context/GlobalState";
 import "./ProfilePage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 import Axios from 'axios';
 
 interface RouteParams {
+    //id from link that was passed by router
     googleID: string
 }
 
@@ -18,41 +20,57 @@ interface ProfilepageProps{
 
 export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     const {OAuthResponse} = useContext(GlobalContext);
+    
+    //image url from database
     let [imageUrl, setImageUrl] = useState<string>("" as string);
+    
+    //google id of person viewing page
     let [newGoogleID, setnewGoogleID] = useState<string>("" as string);
+    
+    //name of person on profile
     let [name, setName] = useState<string>("" as string);
 
+    //nameof person viewing the page
+    let [username, setUsername] = useState<string>("" as string);
+    
+    //google id of person on page
+    let [profileID, setProfileID] = useState<string>("" as string);
+
     useEffect(() => {
-        setImageUrl(OAuthResponse.profileObj.imageUrl);
-        setnewGoogleID(OAuthResponse.profileObj.email);
-        setName(OAuthResponse.profileObj.name)
+        setImageUrl("not found");
+        setnewGoogleID(OAuthResponse.profileObj.googleId);
+        setUsername((OAuthResponse.profileObj.email).split("@")[0]);
+        let s = 'http://localhost:5000/sources/getUserByUsername/' + props.match.params.googleID;
+        Axios.get(s).then(response => {
+            let userObj = response.data as User;
+            setImageUrl(userObj.profilePicPath)
+            setName(userObj.username)
+            setProfileID(userObj.userID)
+        }).catch(err => console.error(err));
     }, [OAuthResponse]);
 
-    let s = 'http://localhost:5000/sources/getUser/' + props.match.params.googleID;
-    //let ImageUrl = Axios.get(s).then(response => {profilePicPath}).catch(err => console.error(err));
-
-    const myArray = newGoogleID.split("@");
-    newGoogleID = myArray[0];
-
-    console.log(props.match.params.googleID);
-    console.log(props.match.params.googleID);
+    // console.log(s);
+    // console.log(props.match.params.googleID);
 
     // console.log("Reached redirect statement 1");
     // console.log(OAuthResponse.profileObj.googleId);
     // console.log(newGoogleID);
 
+    console.log(name);
+
     if (!props.hasID)
     {
-        console.log("Reached redirect statement 2");
-        return (<Redirect to ={"/profile/" + newGoogleID} />);
+        //console.log("Reached redirect statement 2");
+        console.log(name);
+        return (<Redirect to ={"/profile/" + username} />);
     }
     
     document.body.style.background = COLORS.BACKGROUND3;
     
-    // if(props.match.params.googleID != )
-    // {
-    //     r
-    // }
+    if(newGoogleID != profileID)
+    {
+        
+    }
     
     return (
         <div className="profileContainer">
