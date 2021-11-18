@@ -33,10 +33,14 @@ export default function GroupSelector(props: GroupSelectorProps) {
 }
 
 function CardsGenerator(props: {groupList: GroupList, currentUserID: string}): JSX.Element {
+    // Sort the groups
+    let sortedGroupList = sortGroup(props.groupList);
+
+    // The resulting JSX elements, will be returned later
     let jsxArray = [];
 
     // For each group in the list, generate a card for it
-    for (let iterator of Object.keys(props.groupList))
+    for (let iterator of Object.keys(sortedGroupList))
         jsxArray.push(singleCardGenerator(props.groupList[iterator as any], props.currentUserID));
 
     return (
@@ -82,4 +86,10 @@ function groupnameGenerator(users: User[], currentUserID: string): string {
     groupname = groupname.substr(0, groupname.lastIndexOf(","));
 
     return groupname;
+}
+
+// Sort the groups based on how recent their most recent message was (more recent => earlier in the list)
+function sortGroup(groupList: GroupList): GroupList {
+    // CHANGE ME
+    return groupList;
 }
