@@ -17,7 +17,7 @@ interface HomepageProps {
 }
 
 export default function Homepage(props: HomepageProps) {
-    const [groupToDisplay, setGroupToDisplay] = useState<string>("default" as string);
+    const [groupToDisplayMessagesFor, setGroupToDisplayMessagesFor] = useState<string>("default" as string);
     // For the profile page redirect button:
     const history = useHistory();
     const routeChange = () =>{ 
@@ -70,7 +70,7 @@ export default function Homepage(props: HomepageProps) {
                 }}
                 className="homepage-chat-selection-bar"
             >
-                <GroupSelector setGroupToDisplay={setGroupToDisplay} />
+                <GroupSelector setGroupToDisplayMessagesFor={setGroupToDisplayMessagesFor} />
             </Box>
             <Box
                 sx={{
@@ -98,7 +98,7 @@ export default function Homepage(props: HomepageProps) {
             className="right-sidebar"
             style={{backgroundColor: COLORS.BACKGROUND}}
         >
-            <GetMessages groupToDisplay={groupToDisplay} />
+            <GetMessages groupToDisplay={groupToDisplayMessagesFor} />
         </Box>
     </Box>);
 }

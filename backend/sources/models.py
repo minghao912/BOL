@@ -28,6 +28,10 @@ class Message(models.Model):
     timestamp = models.CharField(max_length=64)
     content = models.TextField(blank=True)
 
+    class Meta:
+        ordering = ['timestamp', 'sender']
+        get_latest_by = 'timestamp'
+
 class EmojiReaction(models.Model):
     messageID = models.ForeignKey(Message, on_delete=models.CASCADE)
     emojiReactionID = models.CharField(max_length=256)
