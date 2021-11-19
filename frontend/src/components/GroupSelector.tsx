@@ -4,7 +4,7 @@ import { Box, Paper } from '@mui/material';
 
 import { User, Group, Message, GroupList } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
-import { group } from 'console';
+import { COLORS } from '../commons/constants';
 
 interface GroupSelectorProps {
     setGroupToDisplayMessagesFor: (arg0: string) => void
@@ -12,7 +12,7 @@ interface GroupSelectorProps {
 
 export default function GroupSelector(props: GroupSelectorProps) {
     // Set up variables
-    const [groupList, setGroupList] = useState<GroupList>({} as GroupList);
+    const [groupList, setGroupList] = useState<GroupList>([] as GroupList);
     const { OAuthResponse } = useContext(GlobalContext);
 
     // Set up user's googleID
@@ -27,6 +27,10 @@ export default function GroupSelector(props: GroupSelectorProps) {
     const [userID, setUserID] = useState(defaultUserID);
 
     useEffect(() => {
+        // Make sure that OAuthResponse actually exists
+        if (!OAuthResponse)
+            return;
+
         // Make sure the user has logged in and it is working
         if (OAuthResponse == {}) {
             console.error("There was an error with the Google OAuth JSON");
@@ -50,7 +54,9 @@ export default function GroupSelector(props: GroupSelectorProps) {
         }).catch(err => console.error(err));
     }, [OAuthResponse]);
 
-    return(
+    if (groupList.length < 1)
+        return <></>;
+    else return(
         <CardsGenerator groupList={groupList} currentUserID={userID} displayMessageCallback={props.setGroupToDisplayMessagesFor}></CardsGenerator>
     );
 }
@@ -61,43 +67,56 @@ function CardsGenerator(props: {
         displayMessageCallback: (arg0: string) => void
     }): JSX.Element {
 
-    // Sort the groups
-    let sortedGroupList = sortGroup(props.groupList);
+    const [cardArray, setCardArray] = useState<JSX.Element[]>([]);
 
-    // The resulting JSX elements, will be returned later
-    let jsxArray = [];
+    useEffect(() => {
+        // Create the array of cards for each group. Awaits for the request to finish before setting the card array, which triggers a render
+        async function populateCardArray() {
+            for (let iterator of Object.keys(props.groupList))
+                await singleCardGenerator(props.groupList[iterator as any], props.currentUserID, props.displayMessageCallback).then(card => cardArray.push(card));
+            setCardArray([...cardArray]);
+        }
+        populateCardArray();
+    }, []);
 
-    // For each group in the list, generate a card for it
-    for (let iterator of Object.keys(sortedGroupList))
-        jsxArray.push(singleCardGenerator(props.groupList[iterator as any], props.currentUserID, props.displayMessageCallback));
+    console.log(cardArray);
 
-    return (
+    if (cardArray.length < 1) {
+        return (<p>No groups to show</p>);
+    }
+    else return (
     <div style={{margin: "3% 2% 3% 2%", overflow:"auto", maxHeight:"100%"}}>
-        {jsxArray}
+        {cardArray}
     </div>);
 }
 
-function singleCardGenerator(group: Group, currentUserID: string, displayMessageCallback: (arg0: string) => void): JSX.Element {
+function singleCardGenerator(group: Group, currentUserID: string, displayMessageCallback: (arg0: string) => void): Promise<JSX.Element> {
     // Generate group name and most recent message
     let groupName = groupnameGenerator(group.users, currentUserID);
-    let mostRecentMessage = "most recent chat message";
 
-    return (
-        <div onClick={(e) => displayMessageCallback(group.groupID)}>
-            <Box
-                sx={{
-                    marginTop: "2%",
-                    marginBottom: "2%"
-                }}
-                key={group.groupID}
-            >
-                <Paper elevation={2} style={{padding: "2% 2% 2% 2%"}}>
-                    <b>{groupName}</b>
-                    <p>{mostRecentMessage}</p>
-                </Paper>
-            </Box>
-        </div>
-    );
+    let mostRecentMessage = "";
+
+    return new Promise((resolve, reject) => {
+        getMostRecentMessage(group).then(message => {
+             mostRecentMessage = message.content;
+
+            resolve(
+            <div onClick={(e) => displayMessageCallback(group.groupID)}>
+                <Box
+                    sx={{
+                        marginTop: "2%",
+                        marginBottom: "2%"
+                    }}
+                    key={group.groupID}
+                >
+                    <Paper elevation={2} style={{padding: "2% 2% 2% 2%"}}>
+                        <b>{groupName}</b>
+                        <p style={{color:"black"}}>{mostRecentMessage}</p>
+                    </Paper>
+                </Box>
+            </div>);
+        }).catch(err => reject(err));
+    });
 }
 
 function groupnameGenerator(users: User[], currentUserID: string): string {
@@ -117,6 +136,27 @@ function groupnameGenerator(users: User[], currentUserID: string): string {
     groupname = groupname.substr(0, groupname.lastIndexOf(","));
 
     return groupname;
+}
+
+function getMostRecentMessage(group: Group): Promise<Message> {
+    const defaultMessage = {
+        messageID: "0",  
+        groupID: group.groupID,    
+        userID: "0",    
+        timestamp: "0", 
+        content: "There are no messages in this group"
+    };
+
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:5000/sources/getLatestMessageByGroup/${group.groupID}`).then(response => {
+            if (response.data == {})
+                resolve(defaultMessage);
+            else resolve(response.data as Message);
+        }).catch(err => {
+            console.error(err);
+            reject({});
+        });
+    });
 }
 
 // Sort the groups based on how recent their most recent message was (more recent => earlier in the list)
