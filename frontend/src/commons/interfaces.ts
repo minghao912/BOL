@@ -1,7 +1,7 @@
 export interface Message {
     messageID: string,  
-    group: string,      // Group ID
-    sender: string,     // Google ID
+    groupID: string,    // Group ID
+    userID: string,     // Google ID
     timestamp: string,  // Date in ISO format
     content: string     // Actual content
 }
