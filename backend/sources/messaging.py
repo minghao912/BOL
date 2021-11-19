@@ -92,6 +92,8 @@ def getLatestMessageByGroup(request, groupID):
         message = Message.objects.filter(group__in=group).latest()
     except Group.DoesNotExist:
         return JsonResponse({"error": "Group does not exist"}, status=400)
+    except Message.DoesNotExist:
+        return JsonResponse({})
     
     serializer = MessageSerializer(message)
     return JsonResponse(serializer.data)
