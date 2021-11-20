@@ -6,6 +6,8 @@ import { User, Group, Message, GroupList } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 import { COLORS } from '../commons/constants';
 
+import './GroupSelector.css';
+
 interface GroupSelectorProps {
     setGroupToDisplayMessagesFor: (arg0: string) => void
 }
@@ -95,11 +97,22 @@ function singleCardGenerator(group: Group, currentUserID: string, displayMessage
     let groupName = groupnameGenerator(group.users, currentUserID);
 
     let mostRecentMessage = "";
+    let mostRecentMessageTimestamp = "";
 
     return new Promise((resolve, reject) => {
         getMostRecentMessage(group).then(message => {
-             mostRecentMessage = message.content;
+            mostRecentMessage = message.content;
 
+            // For timestamp, show the time if same day as today, show date otherwise
+            if (message.timestamp) {
+                let mostRecentMessageTimestampDate = new Date(message.timestamp);
+                if (mostRecentMessageTimestampDate.getDate() == new Date().getDate()) {
+                    mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getTime().toLocaleString();
+                }
+                else mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getFullYear() + "/" + mostRecentMessageTimestampDate.getMonth() + "/" + mostRecentMessageTimestampDate.getDate();
+            }
+
+            // Generate card and return
             resolve(
             <div onClick={(e) => displayMessageCallback(group.groupID)}>
                 <Box
@@ -110,8 +123,14 @@ function singleCardGenerator(group: Group, currentUserID: string, displayMessage
                     key={group.groupID}
                 >
                     <Paper elevation={2} style={{padding: "2% 2% 2% 2%"}}>
-                        <b>{groupName}</b>
-                        <p style={{color:"black"}}>{mostRecentMessage}</p>
+                        <div className="group_card_first_line">
+                            <p style={{color:"black"}}><b>{groupName}</b></p>
+                            {!mostRecentMessageTimestamp || mostRecentMessageTimestamp == "0" ?    // Donn't place the timestamp if there was no most recent message
+                                <></> : 
+                                <p style={{color:"black"}}>{mostRecentMessageTimestamp}</p>
+                            }
+                        </div>
+                        <p style={{color:"black", textAlign:"left"}}>{mostRecentMessage}</p>
                     </Paper>
                 </Box>
             </div>);
