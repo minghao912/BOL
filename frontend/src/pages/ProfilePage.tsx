@@ -10,6 +10,8 @@ import "./ProfilePage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 import profileIcon from '../images/homepage-profile-icon-white.png'
 import Axios from 'axios';
+import LinkButton from '../components/LinkButton'
+import { useHistory } from "react-router-dom";
 
 interface RouteParams {
     //id from link that was passed by router
@@ -22,6 +24,7 @@ interface ProfilepageProps{
 }
 
 export function ProfilePage (props: ProfilepageProps, param: RouteParams){
+
     const {OAuthResponse} = useContext(GlobalContext);
 
     //image url from database
@@ -58,10 +61,35 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
         );
     }, [OAuthResponse]);
 
+    const history = useHistory();
+    const routeChange = () =>{ 
+        let path = "/home"; 
+        history.push(path);
+    }
+
+    if (!props.hasID)
+    {
+        //console.log("Reached redirect statement 2");
+        // console.log(name);
+        // //return (<BrowserRouter> <Redirect to ={"/profile/" + username} /> </BrowserRouter>);
+        
+        // return (
+        //     <BrowserRouter>
+        //         {/* <Switch> */}
+        //         <Redirect to={{pathname: "/profile/"+username}} />
+        //         {/* </Switch> */}
+        //     </BrowserRouter>
+        // )
+        history.push("/profile/"+username);
+        history.go(0)
+    }
+
     // console.log(props.match.params.googleID);
     // console.log("Reached redirect statement 1");
     // console.log(OAuthResponse.profileObj.googleId);
     // console.log(newGoogleID);
+    
+    
 
     console.log(imageUrl);
     if (imageUrl === "Error")
@@ -108,20 +136,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
 
     console.log(name);
 
-    if (!props.hasID)
-    {
-        //console.log("Reached redirect statement 2");
-        console.log(name);
-        //return (<BrowserRouter> <Redirect to ={"/profile/" + username} /> </BrowserRouter>);
-        
-        return (
-            <BrowserRouter>
-                {/* <Switch> */}
-                <Redirect to={{pathname: "/profile/"+username}} />
-                {/* </Switch> */}
-            </BrowserRouter>
-        )
-    }
+    
 
     document.body.style.background = COLORS.BACKGROUND3;
 
@@ -136,7 +151,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                     </div>
                     <div className="profile_space_Between_Logo_and_UserProfile">
                         <p><b>User Profile</b></p>
-                    </div>
+                    </div> 
                     <div className="profileSpaceSmall"></div>
                     <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
                         <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
@@ -181,9 +196,11 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                     <p> Hi! I am {name} and I love BOL! </p>
                 </div>
                 <div className="profileSpace_bottom"></div>
-                <div className="profilefriendButton">
+                
+                <div className="profilefriendButton" onClick = {routeChange}>
                 <span style={{color:"#ffffff"}} >Home </span>
                 </div>
+                                
             </div>
         </div>
     );
