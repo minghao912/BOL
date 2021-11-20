@@ -1,10 +1,96 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
+import { Box } from "@mui/material";
+
+import MessageSender from "./MessageSender";
+import { Message, MessageList } from '../commons/interfaces';
 
 interface GetMessagesProps {
     groupToDisplay: string
 }
 
 export default function GetMessages(props: GetMessagesProps): JSX.Element {
-    return <p>{props.groupToDisplay}</p>
+    let [groupID, setGroupID] = useState("");
+
+    useEffect(() => {
+        console.log("Group ID: " + props.groupToDisplay);
+        setGroupID(props.groupToDisplay);
+    }, [props.groupToDisplay])
+
+    return (
+    <Box
+        sx={{
+            width: '100%',
+            height: '100%',
+            paddingTop: '2%',
+        }}
+    >
+        <Box
+            sx={{
+                width: '100%',
+                height: '80%',
+                paddingTop: '2%',
+            }}
+            className="get-messages-message-display"
+        >
+            <CardsGenerator groupID={groupID} />
+        </Box>
+        <Box
+            sx={{
+                width: '100%',
+                height: '20%',
+                paddingTop: '2%',
+            }}
+            className="get-messages-message-sender"
+        >
+            <MessageSender groupID={groupID} />
+        </Box>
+    </Box>
+    );
+}
+
+function CardsGenerator(props: {groupID: string}): JSX.Element {
+    const [cardArray, setCardArray] = useState<JSX.Element[]>([]);
+
+    useEffect(() => {
+        // Create the array of cards for each message. Awaits for the request to finish before setting the card array, which triggers a render
+        async function populateCardArray() {
+            // Clear out old group messages
+            let newCardArray = [] as JSX.Element[]
+
+            await getMessageList(props.groupID).then(list => {
+                for (let message of list)
+                    singleCardGenerator(message).then(card => newCardArray.push(card));
+            });
+
+            setCardArray([...newCardArray]);
+        }
+        populateCardArray();
+    }, [props.groupID]);
+
+    if (cardArray.length < 1) {
+        return (<p>There are no messages in this chat.</p>);
+    }
+    else return (
+    <div style={{margin: "3% 2% 3% 2%", overflow:"auto", maxHeight:"100%"}}>
+        {cardArray}
+    </div>);
+}
+
+function singleCardGenerator(message: Message): Promise<JSX.Element> {
+    return new Promise((resolve, reject) => {
+        resolve(<p>{message.content}</p>);
+    });
+}
+
+function getMessageList(groupID: string): Promise<MessageList>{
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:5000/sources/getMessagesOfGroup/${groupID}`).then(response => {
+            console.log(response.data);
+            resolve(response.data as MessageList);
+        }).catch(err => {
+            console.error(err);
+            reject([] as MessageList);
+        });
+    });
 }

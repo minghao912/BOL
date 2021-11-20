@@ -81,8 +81,6 @@ function CardsGenerator(props: {
         populateCardArray();
     }, []);
 
-    console.log(cardArray);
-
     if (cardArray.length < 1) {
         return (<p>No groups to show</p>);
     }
@@ -107,7 +105,7 @@ function singleCardGenerator(group: Group, currentUserID: string, displayMessage
             if (message.timestamp) {
                 let mostRecentMessageTimestampDate = new Date(message.timestamp);
                 if (mostRecentMessageTimestampDate.getDate() == new Date().getDate()) {
-                    mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getTime().toLocaleString();
+                    mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getHours() + ":" + mostRecentMessageTimestampDate.getMinutes();
                 }
                 else mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getFullYear() + "/" + mostRecentMessageTimestampDate.getMonth() + "/" + mostRecentMessageTimestampDate.getDate();
             }
