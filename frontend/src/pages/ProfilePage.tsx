@@ -10,7 +10,6 @@ import "./ProfilePage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 import profileIcon from '../images/homepage-profile-icon-white.png'
 import Axios from 'axios';
-import LinkButton from '../components/LinkButton'
 import { useHistory } from "react-router-dom";
 
 interface RouteParams {
@@ -62,9 +61,17 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     }, [OAuthResponse]);
 
     const history = useHistory();
+    
     const routeChange = () =>{ 
         let path = "/home"; 
         history.push(path);
+        
+    }
+
+    const routeChangeProfile = () =>{ 
+        let path = "/profile/"+username; 
+        history.push(path);
+        history.go(0);
     }
 
     if (!props.hasID)
@@ -121,11 +128,11 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                     {/* <p> Hi! I am {name} and I love BOL! </p> */}
                 {/* </div> */}
                 <div className="profile_space_Between_Logo_and_UserProfile"></div>
-                <div className="profilefriendButton">
+                <div className="profilefriendButton" onClick = {routeChange}>
                 <span style={{color:"#ffffff"}} >Home </span>
                 </div>
                 <div className="profileSpaceSmall"></div>
-                <div className="profilefriendButton">
+                <div className="profilefriendButton" onClick = {routeChangeProfile}>
                 <span style={{color:"#ffffff"}} >My Profile </span>
                 </div>
             </div>
