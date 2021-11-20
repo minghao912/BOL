@@ -74,6 +74,15 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
         history.go(0);
     }
 
+    const friender = () =>{
+        Axios.post("http://localhost:5000/sources/addFriend", {
+            "fromUser": newGoogleID,
+            "toUser": profileID
+            }).then(response => {
+                console.log(response.data)
+            }).catch(err => console.error(err))
+    }
+
     if (!props.hasID)
     {
         //console.log("Reached redirect statement 2");
@@ -172,7 +181,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                         <p> Hi! I am {name} and I love BOL! </p>
                     </div>
                     <div className="profileSpace_bottom"></div>
-                    <div className="profilefriendButton">
+                    <div className="profilefriendButton" onClick={friender} >
                     <span style={{color:"#ffffff"}} >Add Friend </span>
                     </div>
                 </div>
