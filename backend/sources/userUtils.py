@@ -62,19 +62,19 @@ def updateUser(request, userID):
     requestData = json.loads(request.body.decode('utf-8'))
     user = User.objects.get(userID=userID)
 
-    newProfilePicPath = requestData.get('newProfilePicPath')
-    newUsername = requestData.get('newUsername')
-    newBio = requestData.get('newBio')
+    newProfilePicPath = requestData.get('profilePicPath')
+    newUsername = requestData.get('username')
+    newBio = requestData.get('bio')
 
     userObj = {
-        "id": user.values('id'),
+        "id": user.id,
         "userID": userID,
         "profilePicPath": newProfilePicPath,
         "username": newUsername,
         "bio": newBio
     }
 
-    serializer = UserSerializer(data = userObj)
+    serializer = UserSerializer(user, data = userObj)
     if not serializer.is_valid():
         return JsonResponse(serializer.errors, status=400)
 
