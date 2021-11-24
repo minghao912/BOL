@@ -18,12 +18,19 @@ interface HomepageProps {
 
 export default function Homepage(props: HomepageProps) {
     const [groupToDisplayMessagesFor, setGroupToDisplayMessagesFor] = useState<string>("default" as string);
+    const [refresh, setRefresh] = useState<boolean>(false); // For the message sender to change whenever it sends a message - forces rerender
+
     // For the profile page redirect button:
     const history = useHistory();
     const routeChange = () =>{ 
         let path = "/profile"; 
         history.push(path);
     }
+
+    function forceUpdateCallback(): void {
+        setRefresh(!refresh);
+    }
+
     return (
     <Box 
         sx={{
@@ -70,7 +77,7 @@ export default function Homepage(props: HomepageProps) {
                 }}
                 className="homepage-chat-selection-bar"
             >
-                <GroupSelector setGroupToDisplayMessagesFor={setGroupToDisplayMessagesFor} />
+                <GroupSelector setGroupToDisplayMessagesFor={setGroupToDisplayMessagesFor} refresh={refresh} />
             </Box>
             <Box
                 sx={{
@@ -98,7 +105,7 @@ export default function Homepage(props: HomepageProps) {
             className="right-sidebar"
             style={{backgroundColor: COLORS.BACKGROUND}}
         >
-            <GetMessages groupToDisplay={groupToDisplayMessagesFor} />
+            <GetMessages groupToDisplay={groupToDisplayMessagesFor} refresh={refresh} forceUpdateCallback={forceUpdateCallback} />
         </Box>
     </Box>);
 }

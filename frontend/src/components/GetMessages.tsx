@@ -6,7 +6,9 @@ import MessageSender from "./MessageSender";
 import { Message, MessageList } from '../commons/interfaces';
 
 interface GetMessagesProps {
-    groupToDisplay: string
+    groupToDisplay: string,
+    refresh: boolean,
+    forceUpdateCallback: () => void
 }
 
 export default function GetMessages(props: GetMessagesProps): JSX.Element {
@@ -15,7 +17,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
     useEffect(() => {
         console.log("Group ID: " + props.groupToDisplay);
         setGroupID(props.groupToDisplay);
-    }, [props.groupToDisplay])
+    }, [props.groupToDisplay, props.refresh])
 
     return (
     <Box
@@ -33,7 +35,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
             }}
             className="get-messages-message-display"
         >
-            <CardsGenerator groupID={groupID} />
+            <CardsGenerator groupID={groupID} refresh={props.refresh} />
         </Box>
         <Box
             sx={{
@@ -43,13 +45,13 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
             }}
             className="get-messages-message-sender"
         >
-            <MessageSender groupID={groupID} />
+            <MessageSender groupID={groupID} forceUpdateCallback={props.forceUpdateCallback} />
         </Box>
     </Box>
     );
 }
 
-function CardsGenerator(props: {groupID: string}): JSX.Element {
+function CardsGenerator(props: {groupID: string, refresh: boolean}): JSX.Element {
     const [cardArray, setCardArray] = useState<JSX.Element[]>([]);
 
     useEffect(() => {
@@ -65,8 +67,8 @@ function CardsGenerator(props: {groupID: string}): JSX.Element {
 
             setCardArray([...newCardArray]);
         }
-        populateCardArray();
-    }, [props.groupID]);
+        setTimeout(populateCardArray, 500); // Timeout to let the backend update first
+    }, [props.groupID, props.refresh]);
 
     if (cardArray.length < 1) {
         return (<p>There are no messages in this chat.</p>);

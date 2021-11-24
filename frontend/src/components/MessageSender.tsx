@@ -6,7 +6,8 @@ import { Message, MessageList } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 
 interface MessageSenderProps {
-    groupID: string
+    groupID: string,
+    forceUpdateCallback: () => void
 }
 
 export default function MessageSender(props: MessageSenderProps): JSX.Element {
@@ -34,6 +35,9 @@ export default function MessageSender(props: MessageSenderProps): JSX.Element {
         } as Message).then(response => {
             console.log(response)
         }).catch(err => console.error(err));
+
+        // Force the parent to rerender
+        props.forceUpdateCallback();
     }
 
     function handleEnterPress(e: React.KeyboardEvent) {
