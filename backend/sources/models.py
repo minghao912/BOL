@@ -12,6 +12,7 @@ class User(models.Model):
     userID = models.CharField(max_length=256)
     profilePicPath = models.TextField(default="https://i.imgur.com/TmnuTk2.png")    # default profile picture
     username = models.CharField(max_length=256, default="default_username")
+    bio = models.TextField(blank=True)
 
 class Friendship(models.Model):
     fromUser = models.ForeignKey(User, related_name="from_user", on_delete=models.CASCADE)
