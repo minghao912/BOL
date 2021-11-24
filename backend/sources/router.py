@@ -25,6 +25,7 @@ urlpatterns = [
     path('sources/getUsersInGroup/<str:groupID>', groupmsg.getUsersInGroup),
     path('sources/addUser', userUtils.addUser),
     path('sources/getUser/<str:userID>', userUtils.getUser),
+    path('sources/updateUser/<str:userID>', userUtils.updateUser),
     path('sources/getFriends/<str:userID>', friendUtils.getFriends),
     path('sources/addFriend', friendUtils.addFriend),
     path('sources/getEmojiReactions/<str:messageID>', emojiUtils.getEmojiReactions),
