@@ -43,12 +43,14 @@ export default function MessageSender(props: MessageSenderProps): JSX.Element {
     function handleEnterPress(e: React.KeyboardEvent) {
         if(e.key === 'Enter'){
             send_msg()
-          }
+        }
     }
 
     return (
-        <div className="sub-container">
-            <TextField id="message-box" label="Type message here..." variant="outlined" onChange={(e) => setContent(e.target.value)} onKeyDown={handleEnterPress} />
+        <div className="sub-container" style={{backgroundColor:"gray", padding: "10px"}}>
+            <TextField id="message-box" label="Type message here..." variant="outlined"
+                style={{width: '100%', marginLeft:'10px', marginRight:'10px'}}
+                onChange={(e) => setContent(e.target.value)} onKeyDown={handleEnterPress} />
         </div>
     );
 }
