@@ -60,6 +60,21 @@ def createNewGroup(request):
         "members": newUsersData
     }, status=200)
 
+@api_view(['DELETE'])
+def deleteGroup(request, groupID):
+    group = Group.objects.get(groupID=groupID)
+
+    try:
+        group.delete()
+    except Group.DoesNotExist:
+        return JsonResponse({"error": "Group does not exist"}, status=400)
+    except:
+        return JsonResponse({"error": traceback.format_exc()}, status=500)
+    
+    return JsonResponse({
+        "groupID": groupID
+    })
+
 
 @api_view(['PUT'])
 def addUsersToGroup(request):
@@ -90,9 +105,13 @@ def addUsersToGroup(request):
         }, status=500)
 
     # Return a success
+    newUsersData = []
+    for user in group.users.all():
+        newUsersData.append(UserSerializer(user).data)
+
     return JsonResponse({
         "newGroupID": groupID,
-        "members": UserSerializer(addedUsers)
+        "members": newUsersData
     }, status=200)
 
 

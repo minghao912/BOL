@@ -15,14 +15,14 @@ export default function DebugHomepage(props: HomepageProps) {
     const { OAuthResponse } = useContext(GlobalContext);
     const [content, setContent] = useState<string>("");
     const [userIDtoSearch, setUserIDtoSearch] = useState<string>(OAuthResponse.profileObj.googleId);
-    const [response, setResponse] = useState<MessageList>({messages: []} as MessageList);
+    const [response, setResponse] = useState<MessageList>([] as MessageList);
 
     // Sends content of text field to backend
     function submit() {
         axios.post('http://localhost:5000/sources/addMessage', {
             messageID: "random-message-id",
-            group: "1", // Debug group is 1
-            sender: OAuthResponse.profileObj.googleId,
+            groupID: "1", // Debug group is 1
+            userID: OAuthResponse.profileObj.googleId,
             timestamp: new Date().toISOString(),
             content: content,
             isImage: false
@@ -74,11 +74,11 @@ export default function DebugHomepage(props: HomepageProps) {
 
 function MessageOutputter(props: any): JSX.Element {
     let out = [] as JSX.Element[];
-    let messages = {messages: props.messages} as MessageList;
+    let messages = props.messages as MessageList;
     
     // Loops through array of messages and formats each one
-    for (let i = 0; i < messages.messages.length; i++) {
-        const message = messages.messages[i];
+    for (let i = 0; i < messages.length; i++) {
+        const message = messages[i];
 
         let dt = new Date(message.timestamp)
         let datestamp = dt.toLocaleDateString('zh-CN')

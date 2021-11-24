@@ -1,0 +1,16 @@
+.group_card_first_line:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.group_card_first_line p {
+    float: left;
+}
+.group_card_first_line p:last-child {
+    float: right;
+}
+
+.group_card_first_line p:first-child {
+    float: left !important;
+}

@@ -5,6 +5,7 @@ import { COLORS } from '../commons/constants';
 import { GlobalContext } from "../context/GlobalState";
 import "./ProfilePage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
+import Axios from 'axios';
 
 interface RouteParams {
     googleID: string
@@ -27,8 +28,14 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
         setName(OAuthResponse.profileObj.name)
     }, [OAuthResponse]);
 
+    let s = 'http://localhost:5000/sources/getUser/' + props.match.params.googleID;
+    //let ImageUrl = Axios.get(s).then(response => {profilePicPath}).catch(err => console.error(err));
+
     const myArray = newGoogleID.split("@");
     newGoogleID = myArray[0];
+
+    console.log(props.match.params.googleID);
+    console.log(props.match.params.googleID);
 
     // console.log("Reached redirect statement 1");
     // console.log(OAuthResponse.profileObj.googleId);
@@ -41,6 +48,12 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     }
     
     document.body.style.background = COLORS.BACKGROUND3;
+    
+    // if(props.match.params.googleID != )
+    // {
+    //     r
+    // }
+    
     return (
         <div className="profileContainer">
             <div className="profileBox"> 

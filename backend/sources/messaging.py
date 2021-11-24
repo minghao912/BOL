@@ -13,7 +13,18 @@ import traceback
 @api_view(['GET'])
 def getMessagesOfUser(request, userID):
     # Get all messages where the sender is equal to userID
-    messageList = Message.objects.filter(sender=userID)
+    sender = User.objects.filter(userID=userID)
+    messageList = Message.objects.filter(sender__in=sender).all()
+
+    # Use the serializer to change it to JSON format
+    serializer = MessageSerializer(messageList, many=True)      
+    return JsonResponse(serializer.data, safe=False)
+
+@api_view(['GET'])
+def getMessagesOfGroup(request, groupID):
+    # Get all messages where the group is equal to groupID
+    group = Group.objects.filter(groupID=groupID)
+    messageList = Message.objects.filter(group__in=group).all()
 
     # Use the serializer to change it to JSON format
     serializer = MessageSerializer(messageList, many=True)      
@@ -73,3 +84,16 @@ def deleteMessage(request, messageID):
     return JsonResponse({
         "messageID": messageID
     })
+
+@api_view(['GET'])
+def getLatestMessageByGroup(request, groupID):
+    try:
+        group = Group.objects.filter(groupID=groupID)
+        message = Message.objects.filter(group__in=group).latest()
+    except Group.DoesNotExist:
+        return JsonResponse({"error": "Group does not exist"}, status=400)
+    except Message.DoesNotExist:
+        return JsonResponse({})
+    
+    serializer = MessageSerializer(message)
+    return JsonResponse(serializer.data)
