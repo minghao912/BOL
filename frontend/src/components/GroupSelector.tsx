@@ -53,6 +53,7 @@ export default function GroupSelector(props: GroupSelectorProps) {
 
         // Retreive the user's list of groups from backend
         axios.get(`http://localhost:5000/sources/getGroupsOfUser/${userID}?timestamp=${(new Date()).getTime()}`).then(response => {
+            console.log(response.data);
             setGroupList(response.data as GroupList);
         }).catch(err => console.error(err));
     }, [OAuthResponse]);
