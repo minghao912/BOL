@@ -24,7 +24,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
         sx={{
             width: '100%',
             height: '100%',
-            paddingTop: '2%',
+            padding: '0 0 0 0',
         }}
     >
         <Box
@@ -32,6 +32,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
                 width: '100%',
                 height: '80%',
                 paddingTop: '2%',
+                paddingBottom: '2%'
             }}
             className="get-messages-message-display"
         >
@@ -41,7 +42,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
             sx={{
                 width: '100%',
                 height: '20%',
-                paddingTop: '2%',
+                marginTop: '2%',
             }}
             className="get-messages-message-sender"
         >

@@ -47,9 +47,9 @@ export default function MessageSender(props: MessageSenderProps): JSX.Element {
     }
 
     return (
-        <div className="sub-container" style={{backgroundColor:"gray", padding: "10px"}}>
+        <div className="sub-container" style={{backgroundColor:"gray", padding: "10px", height: "100%"}}>
             <TextField id="message-box" label="Type message here..." variant="outlined"
-                style={{width: '100%', marginLeft:'10px', marginRight:'10px'}}
+                style={{width: '100%', height: '100%', marginLeft:'10px', marginRight:'10px'}}
                 onChange={(e) => setContent(e.target.value)} onKeyDown={handleEnterPress} />
         </div>
     );
