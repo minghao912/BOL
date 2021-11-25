@@ -11,7 +11,12 @@ import traceback
 @api_view(['GET'])
 def getAllUsers(request):
     userList = User.objects.all()
+    serializer = UserSerializer(userList, many=True)
+    return JsonResponse(serializer.data, safe=False)
 
+@api_view(['GET'])
+def searchUsers(request, input_str):
+    userList = User.objects.filter(username__contains=input_str)
     serializer = UserSerializer(userList, many=True)
     return JsonResponse(serializer.data, safe=False)
 

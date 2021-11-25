@@ -31,6 +31,7 @@ urlpatterns = [
     path('sources/updateUser/<str:userID>', userUtils.updateUser),
     path('sources/getUserByUsername/<str:username>', userUtils.getUserByUsername),
     path('sources/getAllUsers', userUtils.getAllUsers),
+    path('sources/searchUsers/<str:input_str>', userUtils.searchUsers),
     path('sources/getFriends/<str:userID>', friendUtils.getFriends),
     path('sources/addFriend', friendUtils.addFriend),
     path('sources/getEmojiReactions/<str:messageID>', emojiUtils.getEmojiReactions),
