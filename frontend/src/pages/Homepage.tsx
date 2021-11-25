@@ -35,7 +35,7 @@ export default function Homepage(props: HomepageProps) {
                 path = "/profile";
                 break;
             case REDIRECT_DESTINATIONS.NEW_GROUP_PAGE:
-                path = "/newGroup";
+                path = "/creategroup";
                 break;
             default:
                 path = "/home";
