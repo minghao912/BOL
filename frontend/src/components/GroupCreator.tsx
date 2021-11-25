@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Box, Checkbox, Button } from '@mui/material';
 
-import { User, Friendship } from '../commons/interfaces';
+import { User, Friendship, NewGroup, GroupList } from '../commons/interfaces';
 import { arrayOf } from 'prop-types';
 
 export default function GroupCreator(props: any): JSX.Element {
@@ -39,6 +39,25 @@ export default function GroupCreator(props: any): JSX.Element {
     function createGroup(): void {
         // Create the final list of users to add
         // Do the actual db request
+        let final_list: string[] = [];
+        for (var i = 0; i < listOfUsersToAdd.length; i++){
+            final_list.push(listOfUsersToAdd[i].userID);
+        }
+        for (var i = 0; i < listOfUsersToRem.length; i++){
+            let rem_index: number = final_list.indexOf(listOfUsersToRem[i].userID);
+            final_list.splice(rem_index, 1);
+        }
+        axios.post('http://localhost:5000/sources/createNewGroup', {
+            userIDs: final_list,
+        } as NewGroup).then(response => {
+            console.log(response)
+        }).catch(err => console.error(err));
+        /*
+        example json:
+        {
+            "userIDs": ["2", "123"]
+        }
+        */
     }
 
     return (<Box>
