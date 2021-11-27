@@ -84,21 +84,30 @@ function CardsGenerator(props: {groupID: string, refresh: boolean}): JSX.Element
 }
 
 function singleCardGenerator(message: Message): Promise<JSX.Element> {
+    //const [Username, setUsername] = useState("Your Mom");
+    //let userID = message.userID;
+    //useEffect(() => {
+    //    axios.get(`http://localhost:5000/sources/getUser/${userID}`).then(response => {
+    //        console.log(response.data);
+    //        let userObj = (response.data) as User;
+    //        setUsername(userObj.username)
+    //    }).catch(err => console.error(err));
+    //}) 
     let userID = message.userID;
     var username:string = "DummyUsernameHere"; //Placeholder
     getUsernameOfSender(userID).then(response => {(username = response)}); //Potential Issue
     return new Promise((resolve, reject) => {
         resolve( <React.Fragment>
-                <Card sx={{ minWidth: 10 }}>
-                    <CardContent style ={{backgroundColor: "black"}}>
-                    <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
-                        <p>{username} says:</p>
+                <Card sx={{ maxWidth: 900, maxHeight: 200 }}>
+                    <CardContent style ={{backgroundColor: "#06332c"}}>
+                    <Typography variant="h6" display="inline" color="white">
+                        {username}{" "}
                     </Typography>
-                    <Typography variant="h5" component="div">
-                        <p>{message.content}</p>
+                    <Typography variant="subtitle2" display="inline" color="#858d99">
+                    {splitTimestamp(message.timestamp)}{" "}
                     </Typography>
-                    <Typography variant="body2">
-                        <p>{splitTimestamp(message.timestamp)}</p>
+                    <Typography variant="body1" component="div" align='left' color="#c1cad9">
+                        {message.content}
                     </Typography>
                 </CardContent>
             </Card>
@@ -161,7 +170,7 @@ function splitTimestamp(timestamp: string): string{
     let time:string = hourStr + ":" + timeArray[1];
 
     //create final string
-    var humanReadableTime:string = date + " at " + time + timeSuffix;
+    var humanReadableTime:string = "on " + date + " at " + time + timeSuffix;
 
     return humanReadableTime;
 }
