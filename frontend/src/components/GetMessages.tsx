@@ -1,9 +1,12 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Box } from "@mui/material";
+import { Card } from "@mui/material";
+import { CardContent } from '@mui/material';
+import { Typography } from '@mui/material';
 
 import MessageSender from "./MessageSender";
-import { Message, MessageList } from '../commons/interfaces';
+import { Message, MessageList, User } from '../commons/interfaces';
 
 interface GetMessagesProps {
     groupToDisplay: string
@@ -78,8 +81,26 @@ function CardsGenerator(props: {groupID: string}): JSX.Element {
 }
 
 function singleCardGenerator(message: Message): Promise<JSX.Element> {
+    let userID = message.userID;
+    var username:string = "DummyUsernameHere"; //Placeholder
+    getUsernameOfSender(userID).then(response => {(username = response)}); //Potential Issue
     return new Promise((resolve, reject) => {
-        resolve(<p>{message.content}</p>);
+        resolve( <React.Fragment>
+                <Card sx={{ minWidth: 10 }}>
+                    <CardContent style ={{backgroundColor: "black"}}>
+                    <Typography sx={{ fontSize: 20 }} color="text.secondary" gutterBottom>
+                        <p>{username} says:</p>
+                    </Typography>
+                    <Typography variant="h5" component="div">
+                        <p>{message.content}</p>
+                    </Typography>
+                    <Typography variant="body2">
+                        <p>{message.timestamp}</p>
+                    </Typography>
+                </CardContent>
+            </Card>
+          </React.Fragment>
+        );
     });
 }
 
@@ -91,6 +112,19 @@ function getMessageList(groupID: string): Promise<MessageList>{
         }).catch(err => {
             console.error(err);
             reject([] as MessageList);
+        });
+    });
+}
+
+function getUsernameOfSender(sender: string): Promise<string>{
+    return new Promise((resolve, reject) => { //fix later
+        axios.get(`http://localhost:5000/sources/getUser/${sender}`).then(response => {
+            console.log(response.data);
+            let userObj = (response.data) as User;
+            resolve(userObj.username as string);
+        }).catch(err => {
+            console.error(err);
+            reject("" as string);
         });
     });
 }
