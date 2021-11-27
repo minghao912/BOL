@@ -84,37 +84,58 @@ function CardsGenerator(props: {groupID: string, refresh: boolean}): JSX.Element
 }
 
 function singleCardGenerator(message: Message): Promise<JSX.Element> {
-    //const [Username, setUsername] = useState("Your Mom");
-    //let userID = message.userID;
-    //useEffect(() => {
-    //    axios.get(`http://localhost:5000/sources/getUser/${userID}`).then(response => {
-    //        console.log(response.data);
-    //        let userObj = (response.data) as User;
-    //        setUsername(userObj.username)
-    //    }).catch(err => console.error(err));
-    //}) 
     let userID = message.userID;
-    var username:string = "DummyUsernameHere"; //Placeholder
+    let username:string = "DummyUsernameHere"; //Placeholder
     getUsernameOfSender(userID).then(response => {(username = response)}); //Potential Issue
     return new Promise((resolve, reject) => {
-        resolve( <React.Fragment>
-                <Card sx={{ maxWidth: 900, maxHeight: 200 }}>
+        resolve( 
+            <React.Fragment>
+                <Card sx={{ maxWidth: 900, maxHeight: 400 }}>
                     <CardContent style ={{backgroundColor: "#06332c"}}>
-                    <Typography variant="h6" display="inline" color="white">
-                        {username}{" "}
-                    </Typography>
-                    <Typography variant="subtitle2" display="inline" color="#858d99">
-                    {splitTimestamp(message.timestamp)}{" "}
-                    </Typography>
-                    <Typography variant="body1" component="div" align='left' color="#c1cad9">
-                        {message.content}
-                    </Typography>
-                </CardContent>
-            </Card>
-          </React.Fragment>
+                        <Typography variant="h6" display="inline" color="white">
+                            {username}{" "}
+                        </Typography>
+                        <Typography variant="subtitle2" display="inline" color="#858d99">
+                        {splitTimestamp(message.timestamp)}{" "}
+                        </Typography>
+                        <Typography variant="body1" component="div" align='left' color="#c1cad9">
+                            {message.content}
+                        </Typography>
+                    </CardContent>
+                </Card>
+            </React.Fragment>
         );
     });
 }
+
+/*
+function singleCardGenerator(message: Message): Promise<JSX.Element> {
+    let userID = message.userID;
+    let username:string = "DummyUsernameHere"; //Placeholder
+    return new Promise((resolve, reject) => {
+        getUsernameOfSender(userID).then(response => {
+            username = response;
+            // Generate card and return
+            resolve( 
+                <React.Fragment>
+                    <Card sx={{ maxWidth: 900, maxHeight: 200 }}>
+                        <CardContent style ={{backgroundColor: "#06332c"}}>
+                            <Typography variant="h6" display="inline" color="white">
+                                {username}{" "}
+                            </Typography>
+                            <Typography variant="subtitle2" display="inline" color="#858d99">
+                            {splitTimestamp(message.timestamp)}{" "}
+                            </Typography>
+                            <Typography variant="body1" component="div" align='left' color="#c1cad9">
+                                {message.content}
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </React.Fragment>);
+        }).catch(err => reject(err));
+    });
+}
+*/
 
 function getMessageList(groupID: string): Promise<MessageList>{
     return new Promise((resolve, reject) => {
