@@ -98,7 +98,7 @@ function singleCardGenerator(message: Message): Promise<JSX.Element> {
                         <p>{message.content}</p>
                     </Typography>
                     <Typography variant="body2">
-                        <p>{message.timestamp}</p>
+                        <p>{splitTimestamp(message.timestamp)}</p>
                     </Typography>
                 </CardContent>
             </Card>
@@ -130,4 +130,38 @@ function getUsernameOfSender(sender: string): Promise<string>{
             reject("" as string);
         });
     });
+}
+
+function splitTimestamp(timestamp: string): string{
+    //split the string into a manageable format
+    var divTime:string = timestamp.replace("T", ".");
+    let timestamps:string[] = divTime.split(".");
+
+    //get the date and convert into human readable format
+    let dateString:string = timestamps[0];
+    let dateArray:string[] = dateString.split("-");
+    let date:string = dateArray[1] + "/" + dateArray[2] + "/" + dateArray[0];
+
+    //get the time and convert to AM/PM format
+    let timeString:string = timestamps[1];
+    let timeArray:string[] = timeString.split(":");
+
+    //convert hour to a number
+    var hour:number = Number(timeArray[0]);
+    var timeSuffix:string = "AM";
+
+    if (hour > 11) {
+        timeSuffix = "PM";
+        hour = hour - 12;
+    }
+    if (hour == 0) { //change 00 to 12 
+        hour = 12;
+    }
+    var hourStr:string = hour.toString();
+    let time:string = hourStr + ":" + timeArray[1];
+
+    //create final string
+    var humanReadableTime:string = date + " at " + time + timeSuffix;
+
+    return humanReadableTime;
 }
