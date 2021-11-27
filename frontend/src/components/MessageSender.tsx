@@ -5,6 +5,8 @@ import { Container, Box, TextField, Button, Paper, List } from '@mui/material';
 import { Message, MessageList } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 
+import './MessageSender.css';
+
 interface MessageSenderProps {
     groupID: string,
     forceUpdateCallback: () => void
@@ -42,14 +44,15 @@ export default function MessageSender(props: MessageSenderProps): JSX.Element {
 
     function handleEnterPress(e: React.KeyboardEvent) {
         if(e.key === 'Enter'){
-            send_msg()
+            send_msg();
+            setContent("");
         }
     }
 
     return (
-        <div className="sub-container" style={{backgroundColor:"gray", padding: "10px", height: "100%"}}>
-            <TextField id="message-box" label="Type message here..." variant="outlined"
-                style={{width: '100%', height: '100%', marginLeft:'10px', marginRight:'10px'}}
+        <div className="sub-container" style={{backgroundColor:"gray", padding: "5px", height: "90px"}}>
+            <input type="text" id="message-box" className="send-msg-box" value={content} 
+                placeholder="Type message here... | Press Enter to send"
                 onChange={(e) => setContent(e.target.value)} onKeyDown={handleEnterPress} />
         </div>
     );
