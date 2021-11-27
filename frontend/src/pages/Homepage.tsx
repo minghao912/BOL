@@ -4,7 +4,8 @@ import { Container, Box, Button} from '@mui/material';
 
 import './Homepage.css';
 import BOL from '../images/BOL_light.png';
-import toProfilePage from '../images/homepage-profile-icon.png';
+import ProfilePageButtonIcon from '../images/homepage-profile-icon-white.png';
+import NewGroupButtonIcon from '../images/plus-square-regular-white.png';
 
 import { COLORS } from '../commons/constants';
 import { MessageList } from '../commons/interfaces'
@@ -18,12 +19,35 @@ interface HomepageProps {
 
 export default function Homepage(props: HomepageProps) {
     const [groupToDisplayMessagesFor, setGroupToDisplayMessagesFor] = useState<string>("default" as string);
-    // For the profile page redirect button:
+    const [refresh, setRefresh] = useState<boolean>(false); // For the message sender to change whenever it sends a message - forces rerender
+
+    // For the redirect buttons:
+    enum REDIRECT_DESTINATIONS {
+        PROFILE_PAGE,
+        NEW_GROUP_PAGE
+    }
+
     const history = useHistory();
-    const routeChange = () =>{ 
-        let path = "/profile"; 
+    const routeChange = (destination: REDIRECT_DESTINATIONS) => { 
+        let path: string; 
+        switch(destination) {
+            case REDIRECT_DESTINATIONS.PROFILE_PAGE:
+                path = "/profile";
+                break;
+            case REDIRECT_DESTINATIONS.NEW_GROUP_PAGE:
+                path = "/creategroup";
+                break;
+            default:
+                path = "/home";
+        }
+        
         history.push(path);
     }
+
+    function forceUpdateCallback(): void {
+        setRefresh(!refresh);
+    }
+
     return (
     <Box 
         sx={{
@@ -70,20 +94,65 @@ export default function Homepage(props: HomepageProps) {
                 }}
                 className="homepage-chat-selection-bar"
             >
-                <GroupSelector setGroupToDisplayMessagesFor={setGroupToDisplayMessagesFor} />
+                <GroupSelector setGroupToDisplayMessagesFor={setGroupToDisplayMessagesFor} refresh={refresh} />
             </Box>
             <Box
                 sx={{
                     width: '100%',
                     height: '8%',
-                    paddingTop: '0%',
+                    paddingTop: '0 0 0 0',
+                    display: 'flex'
                 }}
-                className="homepage-profile-page-box"
-                style = {{backgroundColor: COLORS.BACKGROUND4}}
+                className="homepage-bottom-button-bar"
             >
-                <Button sx = {{paddingTop: '0%'}} onClick = {routeChange}>
-                    <img src = {toProfilePage} style = {{maxWidth: '18%',}} />
-                </Button>
+                <Box
+                    sx={{
+                        width: '50%',
+                        height: '100%',
+                        padding: '0 0 0 0',
+                    }}
+                    className="homepage-profile-button-wrapper"
+                    style = {{backgroundColor: COLORS.BACKGROUND4}}
+                >
+                    <Button 
+                        sx={{
+                            paddingTop: '0%'
+                        }} 
+                        onClick={(e) => {routeChange(REDIRECT_DESTINATIONS.PROFILE_PAGE)}}
+                        style={{
+                            height: '100%',
+                            maxHeight:'100%',
+                            margin:'0 auto',
+                            display:'block'
+                        }}
+                    >
+                        <img src={ProfilePageButtonIcon} style={{maxHeight: '100%'}} />
+                    </Button>
+                </Box>
+                <Box
+                    sx={{
+                        width: '50%',
+                        height: '100%',
+                        paddingTop: '0 0 0 0',
+                    }}
+                    className="homepage-new-group-button-wrapper"
+                    style = {{backgroundColor: COLORS.BACKGROUND4}}
+                >
+                    <Button 
+                        sx={{
+                            paddingTop: '0%'
+                        }} 
+                        onClick={(e) => {routeChange(REDIRECT_DESTINATIONS.NEW_GROUP_PAGE)}}
+                        style={{
+                            height: '100%',
+                            maxHeight:'100%',
+                            margin:'0 auto',
+                            display:'block'
+                        }}
+                    >
+                        <img src={NewGroupButtonIcon} style={{maxHeight: '50%'}} />
+                    </Button>
+                </Box>
             </Box>
         </Box>
         <Box 
@@ -98,7 +167,7 @@ export default function Homepage(props: HomepageProps) {
             className="right-sidebar"
             style={{backgroundColor: COLORS.BACKGROUND}}
         >
-            <GetMessages groupToDisplay={groupToDisplayMessagesFor} />
+            <GetMessages groupToDisplay={groupToDisplayMessagesFor} refresh={refresh} forceUpdateCallback={forceUpdateCallback} />
         </Box>
     </Box>);
 }

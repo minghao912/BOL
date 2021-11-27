@@ -9,6 +9,7 @@ import { COLORS } from '../commons/constants';
 import './GroupSelector.css';
 
 interface GroupSelectorProps {
+    refresh: boolean,
     setGroupToDisplayMessagesFor: (arg0: string) => void
 }
 
@@ -52,6 +53,7 @@ export default function GroupSelector(props: GroupSelectorProps) {
 
         // Retreive the user's list of groups from backend
         axios.get(`http://localhost:5000/sources/getGroupsOfUser/${userID}?timestamp=${(new Date()).getTime()}`).then(response => {
+            console.log(response.data);
             setGroupList(response.data as GroupList);
         }).catch(err => console.error(err));
     }, [OAuthResponse]);
@@ -59,14 +61,15 @@ export default function GroupSelector(props: GroupSelectorProps) {
     if (groupList.length < 1)
         return <></>;
     else return(
-        <CardsGenerator groupList={groupList} currentUserID={userID} displayMessageCallback={props.setGroupToDisplayMessagesFor}></CardsGenerator>
+        <CardsGenerator groupList={groupList} currentUserID={userID} displayMessageCallback={props.setGroupToDisplayMessagesFor} refresh={props.refresh}></CardsGenerator>
     );
 }
 
 function CardsGenerator(props: {
         groupList: GroupList, 
         currentUserID: string, 
-        displayMessageCallback: (arg0: string) => void
+        displayMessageCallback: (arg0: string) => void,
+        refresh: boolean
     }): JSX.Element {
 
     const [cardArray, setCardArray] = useState<JSX.Element[]>([]);
@@ -74,12 +77,15 @@ function CardsGenerator(props: {
     useEffect(() => {
         // Create the array of cards for each group. Awaits for the request to finish before setting the card array, which triggers a render
         async function populateCardArray() {
+            let newCardArray = [] as JSX.Element[];
+
             for (let iterator of Object.keys(props.groupList))
-                await singleCardGenerator(props.groupList[iterator as any], props.currentUserID, props.displayMessageCallback).then(card => cardArray.push(card));
-            setCardArray([...cardArray]);
+                await singleCardGenerator(props.groupList[iterator as any], props.currentUserID, props.displayMessageCallback).then(card => newCardArray.push(card));
+            
+            setCardArray([...newCardArray]);
         }
         populateCardArray();
-    }, []);
+    }, [props.refresh]);
 
     if (cardArray.length < 1) {
         return (<p>No groups to show</p>);
@@ -105,7 +111,7 @@ function singleCardGenerator(group: Group, currentUserID: string, displayMessage
             if (message.timestamp) {
                 let mostRecentMessageTimestampDate = new Date(message.timestamp);
                 if (mostRecentMessageTimestampDate.getDate() == new Date().getDate()) {
-                    mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getHours() + ":" + mostRecentMessageTimestampDate.getMinutes();
+                    mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getHours().toLocaleString(undefined, {minimumIntegerDigits: 2}) + ":" + mostRecentMessageTimestampDate.getMinutes().toLocaleString(undefined, {minimumIntegerDigits: 2});
                 }
                 else mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getFullYear() + "/" + mostRecentMessageTimestampDate.getMonth() + "/" + mostRecentMessageTimestampDate.getDate();
             }
