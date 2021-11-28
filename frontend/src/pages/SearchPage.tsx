@@ -30,9 +30,9 @@ export function SearchPage (){
                 <div className="profile_space_Between_Logo_and_UserProfile">
                     <p><b>User Search</b></p>
                 </div>
-                <div className="sub-container" style={{backgroundColor:"gray", padding: "10px"}}>
-                <input id="message-box" 
-                    style={{width: '80%', height:'25px', marginLeft:'40px', marginRight:'40px'}}
+                <div className="sub-container" style={{backgroundColor:"silver", padding: "10px"}}>
+                <input type="text" id="message-box" className="user-search-bar" autoComplete="off"
+                    placeholder="Enter a username here"
                     onChange={(e) => setName(e.target.value)} onKeyDown={handleEnterPress}
                 />
                 </div>
@@ -66,12 +66,22 @@ function GenerateResults(props: {nameToSearch: string}): JSX.Element {
     }, [props.nameToSearch])
 
     // if that array is empty, we know there is no match
-    if (user_elements.length == 0)
-        return (<div> no user matches</div>);
+    if (props.nameToSearch == "")
+        return (<div></div>);
+
     // otherwise render the list of elemments
-    return (<div style={{margin: "3% 2% 3% 2%", overflow:"auto", maxHeight:"100%"}}>
-        {user_elements}
-    </div>);
+    if (user_elements.length != 0){
+        return (<div style={{margin: "3% 2% 3% 2%", overflow:"auto", maxHeight:"100%"}}> 
+            {user_elements};
+            </div>);
+    }
+    else {
+        return (<div style={{textAlign: "center"}}> 
+            <b> <h3 style={{fontFamily: "monospace", color: "white"}}>no user matches :(</h3> </b>
+            </div>);
+    }
+
+
 }
 
 // search for matching users

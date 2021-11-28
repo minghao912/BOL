@@ -97,6 +97,18 @@ p {
     height: 9%
 }
 
+.user-search-bar {
+    border: none;
+    background-color: silver;
+    border-bottom: 2px solid black;
+    font-family: monospace;
+    font-size: 14pt;
+    width: 80%;
+    height: 30px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
 .user-search-entry {
     height: 50px;
     background-color: rgba(165, 208, 223, 0.6);
