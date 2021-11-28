@@ -12,6 +12,7 @@ class User(models.Model):
     userID = models.CharField(max_length=256)
     profilePicPath = models.TextField(default="https://i.imgur.com/TmnuTk2.png")    # default profile picture
     username = models.CharField(max_length=256, default="default_username")
+    bio = models.TextField(blank=True, default="I love BOL!")
 
 class Friendship(models.Model):
     fromUser = models.ForeignKey(User, related_name="from_user", on_delete=models.CASCADE)
@@ -27,6 +28,10 @@ class Message(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.CharField(max_length=64)
     content = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ['timestamp', 'sender']
+        get_latest_by = 'timestamp'
 
 class EmojiReaction(models.Model):
     messageID = models.ForeignKey(Message, on_delete=models.CASCADE)

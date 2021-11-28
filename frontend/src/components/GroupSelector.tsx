@@ -2,67 +2,144 @@ import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { Box, Paper } from '@mui/material';
 
-import { User, Group, GroupList } from '../commons/interfaces';
+import { User, Group, Message, GroupList } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
-import { group } from 'console';
+import { COLORS } from '../commons/constants';
+
+import './GroupSelector.css';
 
 interface GroupSelectorProps {
-    setGroupToDisplay: (arg0: string) => void
+    refresh: boolean,
+    setGroupToDisplayMessagesFor: (arg0: string) => void
 }
 
 export default function GroupSelector(props: GroupSelectorProps) {
     // Set up variables
-    const [groupList, setGroupList] = useState<GroupList>({} as GroupList);
-    const [userID, setUserID] = useState<string>("");
+    const [groupList, setGroupList] = useState<GroupList>([] as GroupList);
     const { OAuthResponse } = useContext(GlobalContext);
 
+    // Set up user's googleID
+    const DEBUG_MODE = true;
+    let defaultUserID: string;
+    if (DEBUG_MODE)
+        defaultUserID = "2";
+    else if (!OAuthResponse.profileObj || !OAuthResponse.profileObj.googleId)
+        defaultUserID = "";
+    else defaultUserID = OAuthResponse.profileObj.googleId;
+
+    const [userID, setUserID] = useState(defaultUserID);
+
     useEffect(() => {
+        // Make sure that OAuthResponse actually exists
+        if (!OAuthResponse)
+            return;
+
+        // Make sure the user has logged in and it is working
+        if (OAuthResponse == {}) {
+            console.error("There was an error with the Google OAuth JSON");
+            return;
+        }
+
+        if (!OAuthResponse.profileObj || !OAuthResponse.profileObj.googleId) {
+            console.error("There was an error with the Google OAuth JSON");
+            return;
+        }
+
         // Get user ID from global context
-        let id = OAuthResponse.profileObj.googleId;
-        setUserID(id);
+        if (!DEBUG_MODE) {
+            let id = OAuthResponse.profileObj.googleId;
+            setUserID(id);
+        }
 
         // Retreive the user's list of groups from backend
-        axios.get(`http://localhost:5000/sources/getGroupsOfUser/${id}`).then(response => {
+        axios.get(`http://localhost:5000/sources/getGroupsOfUser/${userID}?timestamp=${(new Date()).getTime()}`).then(response => {
+            console.log(response.data);
             setGroupList(response.data as GroupList);
         }).catch(err => console.error(err));
     }, [OAuthResponse]);
 
-    return(
-        <CardsGenerator groupList={groupList} currentUserID={userID}></CardsGenerator>
+    if (groupList.length < 1)
+        return <></>;
+    else return(
+        <CardsGenerator groupList={groupList} currentUserID={userID} displayMessageCallback={props.setGroupToDisplayMessagesFor} refresh={props.refresh}></CardsGenerator>
     );
 }
 
-function CardsGenerator(props: {groupList: GroupList, currentUserID: string}): JSX.Element {
-    let jsxArray = [];
+function CardsGenerator(props: {
+        groupList: GroupList, 
+        currentUserID: string, 
+        displayMessageCallback: (arg0: string) => void,
+        refresh: boolean
+    }): JSX.Element {
 
-    // For each group in the list, generate a card for it
-    for (let iterator of Object.keys(props.groupList))
-        jsxArray.push(singleCardGenerator(props.groupList[iterator as any], props.currentUserID));
+    const [cardArray, setCardArray] = useState<JSX.Element[]>([]);
 
-    return (
-    <div style={{margin: "3% 2% 3% 2%"}}>
-        {jsxArray}
+    useEffect(() => {
+        // Create the array of cards for each group. Awaits for the request to finish before setting the card array, which triggers a render
+        async function populateCardArray() {
+            let newCardArray = [] as JSX.Element[];
+
+            for (let iterator of Object.keys(props.groupList))
+                await singleCardGenerator(props.groupList[iterator as any], props.currentUserID, props.displayMessageCallback).then(card => newCardArray.push(card));
+            
+            setCardArray([...newCardArray]);
+        }
+        populateCardArray();
+    }, [props.refresh]);
+
+    if (cardArray.length < 1) {
+        return (<p>No groups to show</p>);
+    }
+    else return (
+    <div style={{margin: "3% 2% 3% 2%", overflow:"auto", maxHeight:"100%"}}>
+        {cardArray}
     </div>);
 }
 
-function singleCardGenerator(group: Group, currentUserID: string): JSX.Element {
-    console.log(group);
-
+function singleCardGenerator(group: Group, currentUserID: string, displayMessageCallback: (arg0: string) => void): Promise<JSX.Element> {
     // Generate group name and most recent message
     let groupName = groupnameGenerator(group.users, currentUserID);
-    let mostRecentMessage = "most recent chat message";
 
-    return (
-        <Box
-            sx={{
-            }}
-        >
-            <Paper elevation={2} style={{padding: "2% 2% 2% 2%"}}>
-                <b>{groupName}</b>
-                <p>{mostRecentMessage}</p>
-            </Paper>
-        </Box>
-    );
+    let mostRecentMessage = "";
+    let mostRecentMessageTimestamp = "";
+
+    return new Promise((resolve, reject) => {
+        getMostRecentMessage(group).then(message => {
+            mostRecentMessage = message.content;
+
+            // For timestamp, show the time if same day as today, show date otherwise
+            if (message.timestamp) {
+                let mostRecentMessageTimestampDate = new Date(message.timestamp);
+                if (mostRecentMessageTimestampDate.getDate() == new Date().getDate()) {
+                    mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getHours().toLocaleString(undefined, {minimumIntegerDigits: 2}) + ":" + mostRecentMessageTimestampDate.getMinutes().toLocaleString(undefined, {minimumIntegerDigits: 2});
+                }
+                else mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getFullYear() + "/" + mostRecentMessageTimestampDate.getMonth() + "/" + mostRecentMessageTimestampDate.getDate();
+            }
+
+            // Generate card and return
+            resolve(
+            <div onClick={(e) => displayMessageCallback(group.groupID)}>
+                <Box
+                    sx={{
+                        marginTop: "2%",
+                        marginBottom: "2%"
+                    }}
+                    key={group.groupID}
+                >
+                    <Paper elevation={2} style={{padding: "2% 2% 2% 2%"}}>
+                        <div className="group_card_first_line">
+                            <p style={{color:"black"}}><b>{groupName}</b></p>
+                            {!mostRecentMessageTimestamp || mostRecentMessageTimestamp == "0" ?    // Donn't place the timestamp if there was no most recent message
+                                <></> : 
+                                <p style={{color:"black"}}>{mostRecentMessageTimestamp}</p>
+                            }
+                        </div>
+                        <p style={{color:"black", textAlign:"left"}}>{mostRecentMessage}</p>
+                    </Paper>
+                </Box>
+            </div>);
+        }).catch(err => reject(err));
+    });
 }
 
 function groupnameGenerator(users: User[], currentUserID: string): string {
@@ -82,4 +159,31 @@ function groupnameGenerator(users: User[], currentUserID: string): string {
     groupname = groupname.substr(0, groupname.lastIndexOf(","));
 
     return groupname;
+}
+
+function getMostRecentMessage(group: Group): Promise<Message> {
+    const defaultMessage = {
+        messageID: "0",  
+        groupID: group.groupID,    
+        userID: "0",    
+        timestamp: "0", 
+        content: "There are no messages in this group"
+    };
+
+    return new Promise((resolve, reject) => {
+        axios.get(`http://localhost:5000/sources/getLatestMessageByGroup/${group.groupID}`).then(response => {
+            if (response.data == {})
+                resolve(defaultMessage);
+            else resolve(response.data as Message);
+        }).catch(err => {
+            console.error(err);
+            reject({});
+        });
+    });
+}
+
+// Sort the groups based on how recent their most recent message was (more recent => earlier in the list)
+function sortGroup(groupList: GroupList): GroupList {
+    // CHANGE ME
+    return groupList;
 }
