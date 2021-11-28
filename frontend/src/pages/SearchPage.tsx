@@ -80,8 +80,6 @@ function GenerateResults(props: {nameToSearch: string}): JSX.Element {
             <b> <h3 style={{fontFamily: "monospace", color: "white"}}>no user matches :(</h3> </b>
             </div>);
     }
-
-
 }
 
 // search for matching users

@@ -29,7 +29,7 @@
     float:left;
     
     background-color: rgba(255, 255, 255, 0.2);
-    overflow: hidden;
+    overflow: scroll;
     border-top: 1px solid rgba(0, 0, 0, 0.5);
     border-left: 1px solid rgba(0, 0, 0, 0.5);
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
@@ -78,8 +78,9 @@ p {
     color: #FFFFFF;
 }
 
+/* the spacing don't do anything */
 .profile_space_Between_Logo_and_UserProfile {
-    height: 6%;
+    height: 5px;
 }
 
 .profileSpace_middle {
@@ -98,9 +99,10 @@ p {
     height: 9%
 }
 
+
 .profileSearchButton{
-    height: 5%;
-    width: 35%;
+    height: 30px;
+    width: 280px;
     border-radius: 9px;
     margin-left: auto;
     margin-right: auto;
@@ -109,15 +111,15 @@ p {
     text-align: center;
     vertical-align: middle;
     line-height: 195%; /* I dont know why but this centers the text inside the box */
-    font-size: 90%;
+    font-size: 80%;
     transition: box-shadow 0.5s ease-in-out, width 0.5s, height 0.5s, line-height 0.5s, background-color 0.5s ;
     border-right: 2px solid black;
     border-bottom: 3px solid black;
 }
 
 .profileSearchButton:hover{
-    height: 5%;
-    width: 36%;
+    height: 32px;
+    width: 290px;
     line-height: 250%;
     background-color: rgb(3, 3, 161);
     /* -webkit-transition: background-color 500ms linear;
@@ -126,8 +128,8 @@ p {
  }
 
 .profilefriendButton{
-    height: 5%;
-    width: 23%;
+    height: 30px;
+    width: 280px;
     border-radius: 9px;
     margin-left: auto;
     margin-right: auto;
@@ -136,15 +138,15 @@ p {
     text-align: center;
     vertical-align: middle;
     line-height: 195%; /* I dont know why but this centers the text inside the box */
-    font-size: 90%;
+    font-size: 80%;
     transition: box-shadow 0.5s ease-in-out, width 0.5s, height 0.5s, line-height 0.5s, background-color 0.5s ;
     border-right: 2px solid black;
     border-bottom: 3px solid black;
 }
 
 .profilefriendButton:hover{
-   height: 5%;
-   width: 24%;
+    height: 32px;
+    width: 290px;
    line-height: 250%;
    background-color: #4a103d;
    /* -webkit-transition: background-color 500ms linear;
@@ -166,8 +168,6 @@ p {
     margin-top: 10px;
     margin-left: 10px;
     margin-right: auto;
-    border-bottom-left-radius: 50%;
-    border-top-left-radius: 50%;
     background-color: rgba(40,6,33, 0.0);
     text-align: center;
     vertical-align: middle;

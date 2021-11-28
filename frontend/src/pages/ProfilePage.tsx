@@ -164,7 +164,7 @@ const areFriends = () =>{
                 </div>
                 {/* <div className="profileSpaceSmall"></div> */}
                 <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
-                    <img id='123' src= {profileIcon} alt = "Profile Picture" width = "250" />
+                    <img id='123' src= {profileIcon} alt = "Profile Picture" width = "200" />
                 </div>
                 {/* <div className="profileBreak"> */}
                     {/* <p> {name} </p> */}
@@ -178,10 +178,6 @@ const areFriends = () =>{
                 <div className="profileSpaceSmall"></div>
                 <div className="profileSearchButton" onClick = {routeChangeSearch}>
                     <span style={{color:"#ffffff"}} > Search friend </span>
-                </div>
-                <div className="profileSpaceSmall"></div>
-                <div className="profilefriendButton" onClick = {routeChangeProfile}>
-                <span style={{color:"#ffffff"}} >My Profile </span>
                 </div>
             </div>
         </div>
@@ -215,7 +211,7 @@ const areFriends = () =>{
                         </div> 
                         <div className="profileSpaceSmall"></div>
                         <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
-                            <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
+                            <img id='123' src= {imageUrl} alt = "Profile Picture" width = "125" height = "125" />
                         </div>
                         <div className="profileBreak">
                             <p> {name} </p>
@@ -258,7 +254,7 @@ const areFriends = () =>{
                         </div> 
                         <div className="profileSpaceSmall"></div>
                         <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
-                            <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
+                            <img id='123' src= {imageUrl} alt = "Profile Picture" width = "125" height = "125" />
                         </div>
                         <div className="profileBreak">
                             <p> {name} </p>
@@ -294,15 +290,12 @@ const areFriends = () =>{
                 <div className="profilelogoContainer" >
                     <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
                 </div>
-
-
-                    <div className="profile_space_Between_Logo_and_UserProfile">
-                        <p><b>User Profile</b></p>
-                    </div>
-
+                <div className="profile_space_Between_Logo_and_UserProfile">
+                    <p><b>User Profile</b></p>
+                </div>
                 <div className="profileSpaceSmall"></div>
                 <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
-                    <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
+                    <img id='123' src= {imageUrl} alt = "Profile Picture" width = "125" height = "125" />
                 </div>
                 <div className="profileBreak">
                     <p> {name} </p>
