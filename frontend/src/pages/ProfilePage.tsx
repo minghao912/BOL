@@ -94,6 +94,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                 let userids_list: string[] = [];
                 for (let i: number = 0; i < users_list.length; i++){
                     userids_list.push(users_list[i].toUser.userID);
+                    userids_list.push(users_list[i].fromUser.userID);
                 }
                 console.log(userids_list)
                 if (userids_list.includes(profileID)){
@@ -187,6 +188,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     {
         if (areFriends())
         {
+            console.log("ARE FRIENDS!!!!!")
             return (
                 <div className="profileContainer">
                     <div className="profileBox">
@@ -224,6 +226,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
         }
         else
         {
+            console.log("ARENT FRIENDS")
             return (
                 <div className="profileContainer">
                     <div className="profileBox">
