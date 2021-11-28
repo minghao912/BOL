@@ -109,7 +109,7 @@ function singleCardGenerator(message: Message, forceUpdateCallback: () => void):
         getUsernameOfSender(userID).then(username => {
             resolve( 
                 <React.Fragment>
-                    <Card sx={{ maxWidth: "98%", maxHeight: "20%", marginTop: "2%" }}>
+                    <Card sx={{ maxWidth: "98%", height: "20%", marginTop: "2%" }}>
                         <CardContent style ={{backgroundColor: "#06332c"}}>
                             <Typography variant="h6" display="inline" color="white">
                                 {username}{" "}
@@ -117,7 +117,7 @@ function singleCardGenerator(message: Message, forceUpdateCallback: () => void):
                             <Typography variant="subtitle2" display="inline" color="#858d99">
                             {splitTimestamp(message.timestamp)}{" "}
                             </Typography>
-                            <Typography variant="body1" component="div" align='left' color="#c1cad9">
+                            <Typography variant="body1" component="div" align='left' color="#c1cad9" style={{wordBreak: "break-all"}}>
                                 {message.content}
                             </Typography>
                         </CardContent>
