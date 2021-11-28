@@ -1,13 +1,16 @@
 .popup{
     z-index: 100;
     position: fixed;
-    height : 20vh;
+    height : 23vh;
     width : 20vw;
     border-radius: 10px;
     border-right: solid 4px black;
     border-bottom: solid 5px black;
     background-color: #4a103d;
     text-align: center;
+    animation-name: pop;
+    /* box-shadow: 10px 10px 10px;
+    box-shadow: -10px -10px 10px; */
 }
 
 .close{
@@ -19,5 +22,19 @@
 }
 
 .popupText{
-    line-height: 8;
+    margin-left: 10%;
+    margin-right: auto;
+    margin-top: 6%;
+}
+
+.submit{
+    background-color: #280621;
+    width: 23%;
+    height: 18%;
+    margin:auto;
+    margin-top: 4%;
+    border-radius: 5px;
+    border-right: solid 2px black;
+    border-bottom: solid 2px black;
+    line-height: 190%;
 }
