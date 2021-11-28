@@ -62,6 +62,8 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
 function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCallback: () => void}): JSX.Element {
     const [cardArray, setCardArray] = useState<JSX.Element[]>([]);
     const [localRefresh, setLocalRefresh] = useState<boolean>(false);
+    const { OAuthResponse } = useContext(GlobalContext);
+    const [currentUserID, setCurrentUserID] = useState<string>("");
 
     // Marks end of messages, automatically scroll here when all the messages are loaded
     function scrollToBottom() {
@@ -71,6 +73,10 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
     }    
 
     useEffect(() => {
+        setCurrentUserID(OAuthResponse.profileObj.googleId);
+    }, [OAuthResponse])
+
+    useEffect(() => {
         // Create the array of cards for each message. Awaits for the request to finish before setting the card array, which triggers a render
         async function populateCardArray() {
             // Clear out old group messages
@@ -78,7 +84,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
 
             await getMessageList(props.groupID).then(async (list) => {
                 for (let message of list) {
-                    await singleCardGenerator(message, props.forceUpdateCallback).then(async (card) => {
+                    await singleCardGenerator(message, currentUserID, props.forceUpdateCallback).then(async (card) => {
                         newCardArray.push(card);
                     }).catch(err => console.error(err));
                 }
@@ -101,53 +107,78 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
     </div>);
 }
 
-function singleCardGenerator(message: Message, forceUpdateCallback: () => void): Promise<JSX.Element> {
+function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateCallback: () => void): Promise<JSX.Element> {
     let userID = message.sender.userID;
     //let username:string = "DummyUsernameHere"; //Placeholder
-
+    let isSameUser = false;
+    if (CurrentUser == userID) {
+        isSameUser = true;
+    }
     return new Promise((resolve, reject) => {
         getUsernameOfSender(userID).then(username => {
-            resolve( 
-                <React.Fragment>
-                    <Card sx={{ maxWidth: "98%", height: "20%", marginTop: "2%" }}>
-                        <CardContent style ={{backgroundColor: "#06332c"}}>
-                            <Typography variant="h6" display="inline" color="white">
-                                {username}{" "}
-                            </Typography>
-                            <Typography variant="subtitle2" display="inline" color="#858d99">
-                            {splitTimestamp(message.timestamp)}{" "}
-                            </Typography>
-                            <Typography variant="body1" component="div" align='left' color="#c1cad9" style={{wordBreak: "break-all"}}>
-                                {message.content}
-                            </Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small"
-                            onClick={() => {
-                                alert('clicked');
-                            }}>
-                                Edit
-                            </Button>
-                            <Button size="small"
-                                onClick={() =>  navigator.clipboard.writeText(message.content)}
-                                >
-                                Copy
-                            </Button>
-                            <Button size="small"
-                                onClick={() => delete_msg(message.messageID, forceUpdateCallback)}
-                                >
-                                Delete
-                            </Button>
-                            <Button size="small"
-                            onClick={() => {
-                                alert('clicked');
-                            }}>
-                                Report
-                            </Button>
-                        </CardActions>
-                    </Card>
-                </React.Fragment>
-            );
+            if (isSameUser) {
+                resolve( 
+                    <React.Fragment>
+                        <Card sx={{ maxWidth: "98%", height: "20%", marginTop: "2%" }}>
+                            <CardContent style ={{backgroundColor: "#06332c"}}>
+                                <Typography variant="h6" display="inline" color="white">
+                                    {username}{" "}
+                                </Typography>
+                                <Typography variant="subtitle2" display="inline" color="#858d99">
+                                {splitTimestamp(message.timestamp)}{" "}
+                                </Typography>
+                                <Typography variant="body1" component="div" align='left' color="#c1cad9" style={{wordBreak: "break-all"}}>
+                                    {message.content}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small"
+                                    onClick={() =>  navigator.clipboard.writeText(message.content)}
+                                    >
+                                    Copy
+                                </Button>
+                                <Button size="small"
+                                    onClick={() => delete_msg(message.messageID, forceUpdateCallback)}
+                                    >
+                                    Delete
+                                </Button>
+                            </CardActions>
+                        </Card>
+                    </React.Fragment>
+                );
+            }
+            else {
+                resolve( 
+                    <React.Fragment>
+                        <Card sx={{ maxWidth: "98%", height: "20%", marginTop: "2%" }}>
+                            <CardContent style ={{backgroundColor: "#06332c"}}>
+                                <Typography variant="h6" display="inline" color="white">
+                                    {username}{" "}
+                                </Typography>
+                                <Typography variant="subtitle2" display="inline" color="#858d99">
+                                {splitTimestamp(message.timestamp)}{" "}
+                                </Typography>
+                                <Typography variant="body1" component="div" align='left' color="#c1cad9" style={{wordBreak: "break-all"}}>
+                                    {message.content}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                <Button size="small"
+                                    onClick={() =>  navigator.clipboard.writeText(message.content)}
+                                    >
+                                    Copy
+                                </Button>
+                                <Button size="small"
+                                onClick={() => {
+                                    alert('clicked');
+                                }}>
+                                    Report
+                                </Button>
+                            </CardActions>
+                        </Card>
+                    </React.Fragment>
+                );
+            }
         });
     });
 }
