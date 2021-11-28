@@ -1,0 +1,48 @@
+.homeButton{
+    position: absolute;
+    height: 40px;
+    width: 60px;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: auto;
+    background-color: rgba(40,6,33, 0.0);
+    text-align: center;
+    vertical-align: middle;
+    line-height: 195%; /* I dont know why but this centers the text inside the box */
+    font-size: 90%;
+    border: 2px solid black;
+}
+
+.homeButton:hover{
+
+    background-color: rgba(40,6,33, 0.3);
+}
+
+.create-group-button{
+    bottom: 20px;
+    height: 30px;
+    width: 280px;
+    border-radius: 9px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    color: white;
+    background-color: #280621;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 195%; /* I dont know why but this centers the text inside the box */
+    font-size: 80%;
+    transition: box-shadow 0.5s ease-in-out, width 0.5s, height 0.5s, line-height 0.5s, background-color 0.5s ;
+    border-right: 2px solid black;
+    border-bottom: 3px solid black;
+}
+
+.create-group-button:hover{
+    height: 32px;
+    width: 290px;
+   line-height: 220%;
+   background-color: #4a103d;
+   /* -webkit-transition: background-color 500ms linear;
+   -ms-transition: background-color 500ms linear;
+   transition: background-color 500ms linear; */
+}

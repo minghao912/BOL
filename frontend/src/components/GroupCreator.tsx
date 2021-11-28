@@ -1,15 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Box, Checkbox, Button } from '@mui/material';
 
-import { User, Friendship } from '../commons/interfaces';
+
+import { User, Friendship, NewGroup, GroupList } from '../commons/interfaces';
+import { GlobalContext } from '../context/GlobalState';
 import { arrayOf } from 'prop-types';
+import { useHistory } from "react-router-dom";
+import "./GroupCreator.css"
 
 export default function GroupCreator(props: any): JSX.Element {
+    const { OAuthResponse } = useContext(GlobalContext);
+    const [currentUserID, setCurrentUserID] = useState<string>("");
     // List of users to be added to and removed from the group
     const [listOfUsersToAdd, setListOfUsersToAdd] = useState<User[]>([] as User[]);
     const [listOfUsersToRem, setListOfUsersToRem] = useState<User[]>([] as User[]);
     const [finalListOfUsersToAdd, setFinalListOfUsersToAdd] = useState<User[]>([] as User[]);
+
+
+    // redirect back to home page upon group creation
+    const history = useHistory();
+    
+    const routeChange = () =>{ 
+        let path = "/home"; 
+        history.push(path);
+    }
+
+
+    useEffect(() => {
+        setCurrentUserID(OAuthResponse.profileObj.googleId);
+    }, [OAuthResponse])
 
     useEffect(() => {
         console.log("In state: ", listOfUsersToAdd, listOfUsersToRem);
@@ -39,11 +59,43 @@ export default function GroupCreator(props: any): JSX.Element {
     function createGroup(): void {
         // Create the final list of users to add
         // Do the actual db request
+        let final_list: string[] = [];
+        //console.log(listOfUsersToAdd);
+        //console.log(listOfUsersToRem);
+        for (var i = 0; i < listOfUsersToAdd.length; i++){
+            final_list.push(listOfUsersToAdd[i].userID);
+        }
+        
+        for (var i = 0; i < listOfUsersToRem.length; i++){
+            let rem_id: string = listOfUsersToRem[i].userID;
+            for (var j = 0; j < final_list.length; j++){
+                if (final_list[j] == rem_id){
+                    final_list.splice(j,1);
+                    break;
+                }
+            }
+        }
+        
+        //console.log(final_list)
+        final_list.push(currentUserID)
+        axios.post('http://localhost:5000/sources/createNewGroup', {
+            userIDs: final_list,
+        } as NewGroup).then(response => {
+            console.log(response)
+            routeChange();
+        }).catch(err => console.error(err));
+        /*
+        example json:
+        {
+            "userIDs": ["2", "123"]
+        }
+        */
+
     }
 
     return (<Box>
         <FriendDisplay userID={props.userID} addFriendToGroupCallback={changeUserList} />
-        <Button onClick={createGroup} />
+        <div className="create-group-button" onClick={createGroup}> Create Group </div>
         </Box>
     );
 }
