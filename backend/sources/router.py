@@ -33,6 +33,7 @@ urlpatterns = [
     path('sources/getAllUsers', userUtils.getAllUsers),
     path('sources/searchUsers/<str:input_str>', userUtils.searchUsers),
     path('sources/getFriends/<str:userID>', friendUtils.getFriends),
+    path('sources/areFriends/<str:userID1>/<str:userID2>', friendUtils.areFriends),
     path('sources/addFriend', friendUtils.addFriend),
     path('sources/getEmojiReactions/<str:messageID>', emojiUtils.getEmojiReactions),
     path('sources/addEmojiReaction', emojiUtils.addEmojiReaction),

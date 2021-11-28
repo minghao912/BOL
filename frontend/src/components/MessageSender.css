@@ -1,0 +1,20 @@
+.send-msg-box {
+    width: 100%;
+    height: 55%;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    background-color: white;
+    font-family: monospace;
+    font-size:  14pt;
+    border: 3px solid black;
+    border-radius: 15px;
+}
+
+.send-msg-box:hover {
+    border: 5px solid lightblue
+}
+
+.send-msg-box:focus {
+    border: 5px solid lightblue
+}

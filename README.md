@@ -1,5 +1,21 @@
 # BOL
 
+# Launching BOL
+
+## Install necessary modules and programs
+
+1. Install Docker Desktop
+2. Install Node.js
+3. Install npm modules: in the folder `./BOL/frontend` fun `npm install`
+
+## Start backend
+
+1. In the root folder `./BOL`, run `docker-compose up`. The first time you do this it will take a bit of time.
+
+## Start frontend
+
+1. In the folder `./BOL/frontend` run the startup script `start.ps1` (Windows) or `start.sh` (Mac)
+
 # First Time Setup
 
 ## Download the files

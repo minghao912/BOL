@@ -16,6 +16,20 @@ def getFriends(request, userID):
     serializer = FriendshipSerializer(friends, many=True)
     return JsonResponse(serializer.data, safe=False)
 
+# attempt to create a backend function that checks whether two users are friends
+
+@csrf_exempt
+@api_view(['GET'])
+def areFriends(request, userID1, userID2):
+    friends = Friendship.objects.filter(
+        Q(fromUser__userID=userID1) & Q(toUser__userID=userID2)
+        | Q(toUser__userID=userID1) & Q(fromUser__userID=userID2))
+
+    if (len(friends) != 0):
+        return JsonResponse({"areFriends": "1"})
+    return JsonResponse({"areFriends": "0"})
+
+
 @api_view(['POST'])
 def addFriend(request):
     # This function creates a friendship, used later
