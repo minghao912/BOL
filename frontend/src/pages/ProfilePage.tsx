@@ -152,6 +152,9 @@ const areFriends = () =>{
         return(
         <div className="profileContainer">
             <div className="profileBox">
+                <div className="homeButton" style={{float:"left"}} onClick = {routeChange} >
+                    <span style={{color:"#ffffff"}} > Home </span>
+                </div>
                 <div className="profileSpace_top"></div>
                 <div className="profilelogoContainer" >
                     <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
@@ -172,9 +175,6 @@ const areFriends = () =>{
                     {/* <p> Hi! I am {name} and I love BOL! </p> */}
                 {/* </div> */}
                 <div className="profile_space_Between_Logo_and_UserProfile"></div>
-                <div className="profilefriendButton" onClick = {routeChange}>
-                <span style={{color:"#ffffff"}} >Home </span>
-                </div>
                 <div className="profileSpaceSmall"></div>
                 <div className="profileSearchButton" onClick = {routeChangeSearch}>
                     <span style={{color:"#ffffff"}} > Search friend </span>
@@ -203,6 +203,9 @@ const areFriends = () =>{
             return (
                 <div className="profileContainer">
                     <div className="profileBox">
+                        <div className="homeButton" style={{float:"left"}} onClick = {routeChange} >
+                            <span style={{color:"#ffffff"}} > Home </span>
+                        </div>
                         <div className="profileSpace_top"></div>
                         <div className="profilelogoContainer" >
                             <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
@@ -217,12 +220,14 @@ const areFriends = () =>{
                         <div className="profileBreak">
                             <p> {name} </p>
                         </div>
-                        <div className="profileSpaceSmall"></div>
+                        
+                        <div className="profileSpace_middle"></div>
                         <div className="profileBreak">
                             {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
                             <p> Hi! I am {name} and I love BOL! </p>
                         </div>
-                        <div className="profileSpace_middle"></div>
+                        <div className="profileSpace_bottom"></div>
+
                         <div className="profilefriendButton" onClick={friender} >
                         <span style={{color:"#ffffff"}} >Add Friend </span>
                         </div>
@@ -241,6 +246,9 @@ const areFriends = () =>{
             return (
                 <div className="profileContainer">
                     <div className="profileBox">
+                        <div className="homeButton" style={{float:"left"}} onClick = {routeChange} >
+                            <span style={{color:"#ffffff"}} > Home </span>
+                        </div>
                         <div className="profileSpace_top"></div>
                         <div className="profilelogoContainer" >
                             <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
@@ -255,12 +263,13 @@ const areFriends = () =>{
                         <div className="profileBreak">
                             <p> {name} </p>
                         </div>
-                        <div className="profileSpaceSmall"></div>
+                        <div className="profileSpace_middle"></div>
+                        
                         <div className="profileBreak">
                             {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
                             <p> Hi! I am {name} and I love BOL! </p>
                         </div>
-                        <div className="profileSpace_middle"></div>
+                        <div className="profileSpace_bottom"></div>
                         
                         <div className="profilefriendButton" onClick={friender} >
                         <span style={{color:"#ffffff"}} >Add Friend </span>
@@ -269,7 +278,6 @@ const areFriends = () =>{
                         <div className="profileSearchButton" onClick = {routeChangeSearch}>
                             <span style={{color:"#ffffff"}} > Back to search </span>
                         </div>
-                        <div className="profileSpace_bottom"></div>
                     </div>
                 </div>
             );
@@ -279,13 +287,19 @@ const areFriends = () =>{
     return (
         <div className="profileContainer">
             <div className="profileBox">
+                <div className="homeButton" style={{float:"left"}} onClick = {routeChange} >
+                    <span style={{color:"#ffffff"}} > Home </span>
+                </div>
                 <div className="profileSpace_top"></div>
                 <div className="profilelogoContainer" >
                     <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
                 </div>
-                <div className="profile_space_Between_Logo_and_UserProfile">
-                    <p><b>User Profile</b></p>
-                </div>
+
+
+                    <div className="profile_space_Between_Logo_and_UserProfile">
+                        <p><b>User Profile</b></p>
+                    </div>
+
                 <div className="profileSpaceSmall"></div>
                 <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
                     <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
@@ -299,10 +313,11 @@ const areFriends = () =>{
                     <p> Hi! I am {name} and I love BOL! </p>
                 </div>
                 <div className="profileSpace_bottom"></div>
-                
-                <div className="profilefriendButton" onClick = {routeChange}>
-                <span style={{color:"#ffffff"}} >Home </span>
-                </div>
+
+                    <div className="profilefriendButton" onClick = {routeChange} >
+                    <span style={{color:"#ffffff"}} >Edit Profile </span>
+                    </div>
+
                 <div className="profileSpaceSmall"></div>
                 <div className="profileSearchButton" onClick = {routeChangeSearch}>
                     <span style={{color:"#ffffff"}} > Search friend </span>
