@@ -4,7 +4,7 @@ import { Container, Box, TextField, Button, Paper, List } from '@mui/material';
 
 import './Homepage.css';
 import { COLORS } from '../commons/constants';
-import { Message, MessageList } from '../commons/interfaces';
+import { MessageList, MessageToSendBack } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 
 interface HomepageProps {
@@ -26,7 +26,7 @@ export default function DebugHomepage(props: HomepageProps) {
             timestamp: new Date().toISOString(),
             content: content,
             isImage: false
-        } as Message).then(response => {
+        } as MessageToSendBack).then(response => {
             console.log(response)
         }).catch(err => console.error(err));
     }

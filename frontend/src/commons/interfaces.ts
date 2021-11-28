@@ -1,7 +1,15 @@
 export interface Message {
     messageID: string,  
-    groupID: string,    // Group ID
-    userID: string,     // Google ID
+    group: Group,       // Group object
+    sender: User,       // User object
+    timestamp: string,  // Date in ISO format
+    content: string     // Actual content
+}
+
+export interface MessageToSendBack {
+    messageID: string,  
+    groupID: string,    // group ID
+    userID: string,     // google ID
     timestamp: string,  // Date in ISO format
     content: string     // Actual content
 }

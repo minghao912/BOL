@@ -173,7 +173,7 @@ function getMostRecentMessage(group: Group): Promise<Message> {
     return new Promise((resolve, reject) => {
         axios.get(`http://localhost:5000/sources/getLatestMessageByGroup/${group.groupID}`).then(response => {
             if (response.data == {})
-                resolve(defaultMessage);
+                resolve({} as Message);
             else resolve(response.data as Message);
         }).catch(err => {
             console.error(err);

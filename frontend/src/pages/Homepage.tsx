@@ -45,6 +45,7 @@ export default function Homepage(props: HomepageProps) {
     }
 
     function forceUpdateCallback(): void {
+        console.log("Forcing refresh of homepage");
         setRefresh(!refresh);
     }
 
@@ -167,7 +168,7 @@ export default function Homepage(props: HomepageProps) {
             className="right-sidebar"
             style={{backgroundColor: COLORS.BACKGROUND}}
         >
-            <GetMessages groupToDisplay={groupToDisplayMessagesFor} refresh={refresh} forceUpdateCallback={forceUpdateCallback} />
+            <GetMessages groupID={groupToDisplayMessagesFor} refresh={refresh} forceUpdateCallback={forceUpdateCallback} />
         </Box>
     </Box>);
 }

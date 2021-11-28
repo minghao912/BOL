@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useContext } from 'react';
 import { Container, Box, TextField, Button, Paper, List } from '@mui/material';
 
-import { Message, MessageList } from '../commons/interfaces';
+import { MessageToSendBack, MessageList } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 
 import './MessageSender.css';
@@ -34,7 +34,7 @@ export default function MessageSender(props: MessageSenderProps): JSX.Element {
             userID: OAuthResponse.profileObj.googleId,
             timestamp: new Date().toISOString(),
             content: content
-        } as Message).then(response => {
+        } as MessageToSendBack).then(response => {
             console.log(response)
         }).catch(err => console.error(err));
 
@@ -50,8 +50,9 @@ export default function MessageSender(props: MessageSenderProps): JSX.Element {
     }
 
     return (
-        <div className="sub-container" style={{backgroundColor:"gray", padding: "5px", height: "90px"}}>
+        <div className="sub-container" style={{backgroundColor:"gray", padding: "1%", height: "40%"}}>
             <input type="text" id="message-box" className="send-msg-box" value={content} 
+                style={{paddingLeft:"1%"}}
                 placeholder="Type message here... | Press Enter to send"
                 onChange={(e) => setContent(e.target.value)} onKeyDown={handleEnterPress} />
         </div>
