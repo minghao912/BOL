@@ -2,10 +2,12 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Box, Checkbox, Button } from '@mui/material';
 
+
 import { User, Friendship, NewGroup, GroupList } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 import { arrayOf } from 'prop-types';
 import { useHistory } from "react-router-dom";
+import "./GroupCreator.css"
 
 export default function GroupCreator(props: any): JSX.Element {
     const { OAuthResponse } = useContext(GlobalContext);
@@ -80,7 +82,7 @@ export default function GroupCreator(props: any): JSX.Element {
             userIDs: final_list,
         } as NewGroup).then(response => {
             console.log(response)
-            //routeChange();
+            routeChange();
         }).catch(err => console.error(err));
         /*
         example json:
@@ -93,7 +95,7 @@ export default function GroupCreator(props: any): JSX.Element {
 
     return (<Box>
         <FriendDisplay userID={props.userID} addFriendToGroupCallback={changeUserList} />
-        <Button onClick={createGroup}> Create Group </Button>
+        <div className="create-group-button" onClick={createGroup}> Create Group </div>
         </Box>
     );
 }
