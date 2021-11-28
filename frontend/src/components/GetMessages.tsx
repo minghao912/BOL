@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Box } from "@mui/material";
 import { Card } from "@mui/material";
 import { CardContent } from '@mui/material';
+import Button from '@mui/material/Button';
+import CardActions from '@mui/material/CardActions';
 import { Typography } from '@mui/material';
 
 import MessageSender from "./MessageSender";
@@ -90,7 +92,7 @@ function singleCardGenerator(message: Message): Promise<JSX.Element> {
     return new Promise((resolve, reject) => {
         resolve( 
             <React.Fragment>
-                <Card sx={{ maxWidth: 900, maxHeight: 400 }}>
+                <Card sx={{ maxWidth: 700, maxHeight: 400 }}>
                     <CardContent style ={{backgroundColor: "#06332c"}}>
                         <Typography variant="h6" display="inline" color="white">
                             {username}{" "}
@@ -102,6 +104,31 @@ function singleCardGenerator(message: Message): Promise<JSX.Element> {
                             {message.content}
                         </Typography>
                     </CardContent>
+                    <CardActions>
+                        <Button size="small"
+                        onClick={() => {
+                            alert('clicked');
+                        }}>
+                            Edit
+                        </Button>
+                        <Button size="small"
+                            onClick={() =>  navigator.clipboard.writeText(message.content)}
+                            >
+                            Copy
+                        </Button>
+                        <Button size="small"
+                        onClick={() => {
+                            alert('clicked');
+                        }}>
+                            Delete
+                        </Button>
+                        <Button size="small"
+                        onClick={() => {
+                            alert('clicked');
+                        }}>
+                            Report
+                        </Button>
+                    </CardActions>
                 </Card>
             </React.Fragment>
         );
@@ -191,7 +218,7 @@ function splitTimestamp(timestamp: string): string{
     let time:string = hourStr + ":" + timeArray[1];
 
     //create final string
-    var humanReadableTime:string = "on " + date + " at " + time + timeSuffix;
+    var humanReadableTime:string = "on " + date + " at " + time + timeSuffix + " UTC";
 
     return humanReadableTime;
-}
+}   
