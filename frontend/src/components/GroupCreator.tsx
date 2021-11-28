@@ -1,15 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Box, Checkbox, Button } from '@mui/material';
 
 import { User, Friendship, NewGroup, GroupList } from '../commons/interfaces';
+import { GlobalContext } from '../context/GlobalState';
 import { arrayOf } from 'prop-types';
 
 export default function GroupCreator(props: any): JSX.Element {
+    const { OAuthResponse } = useContext(GlobalContext);
+    const [currentUserID, setCurrentUserID] = useState<string>("");
     // List of users to be added to and removed from the group
     const [listOfUsersToAdd, setListOfUsersToAdd] = useState<User[]>([] as User[]);
     const [listOfUsersToRem, setListOfUsersToRem] = useState<User[]>([] as User[]);
     const [finalListOfUsersToAdd, setFinalListOfUsersToAdd] = useState<User[]>([] as User[]);
+
+    useEffect(() => {
+        setCurrentUserID(OAuthResponse.profileObj.googleId);
+    }, [OAuthResponse])
 
     useEffect(() => {
         console.log("In state: ", listOfUsersToAdd, listOfUsersToRem);
@@ -47,6 +54,7 @@ export default function GroupCreator(props: any): JSX.Element {
             let rem_index: number = final_list.indexOf(listOfUsersToRem[i].userID);
             final_list.splice(rem_index, 1);
         }
+        final_list.push(currentUserID)
         axios.post('http://localhost:5000/sources/createNewGroup', {
             userIDs: final_list,
         } as NewGroup).then(response => {
@@ -58,11 +66,12 @@ export default function GroupCreator(props: any): JSX.Element {
             "userIDs": ["2", "123"]
         }
         */
+       
     }
 
     return (<Box>
         <FriendDisplay userID={props.userID} addFriendToGroupCallback={changeUserList} />
-        <Button onClick={createGroup} />
+        <Button onClick={createGroup}> Create Group </Button>
         </Box>
     );
 }
