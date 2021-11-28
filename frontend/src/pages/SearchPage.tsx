@@ -7,11 +7,17 @@ import { GlobalContext } from "../context/GlobalState";
 import "./SearchPage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 export function SearchPage (){
     const {OAuthResponse} = useContext(GlobalContext);
     let [name, setName] = useState<string>("" as string);
     let [showResults, setShowResults] = useState<boolean>(true);
+    let [username, setUsername] = useState<string>("" as string);
+
+    useEffect(() => {
+        setUsername((OAuthResponse.profileObj.email).split("@")[0]);
+    }, [OAuthResponse]);
 
     function handleEnterPress(e: React.KeyboardEvent) {
         if(e.key === 'Enter'){
@@ -20,9 +26,25 @@ export function SearchPage (){
         }
     }
 
+    const history = useHistory();
+    
+    const routeChange = () =>{ 
+        let path = "/home"; 
+        history.push(path);
+    }
+
+    const routeChangeProfile = () =>{ 
+        let path = "/profile/"+username; 
+        history.push(path);
+        history.go(0);
+    }
+
     return (
         <div className="profileContainer">
             <div className="profileBox"> 
+                <div className="homeButton" style={{float:"left"}} onClick = {routeChange} >
+                    <span style={{color:"#ffffff"}} > Home </span>
+                </div>
                 <div className="profileSpace_top"></div>
                 <div className="profilelogoContainer" > 
                     <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
@@ -38,6 +60,9 @@ export function SearchPage (){
                 </div>
                 <div style={{margin: "2% 2% 2% 2%"}}>
                     {showResults ? <GenerateResults nameToSearch={name} /> : <></>}
+                </div>
+                <div className="profileSearchButton" onClick = {routeChangeProfile}>
+                            <span style={{color:"#ffffff"}} > Back to Profile </span>
                 </div>
             </div>
         </div>
@@ -118,6 +143,7 @@ function createEntry(match: User){
             <div className="user-search-profile" >
                 <a href={u_profile}> Profile </a>
             </div>
+            
         </div>
     );
 }
