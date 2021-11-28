@@ -4,7 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import { BrowserRouter} from 'react-router-dom';
 import { RouteChildrenProps } from 'react-router';
 import { COLORS } from '../commons/constants';
-import { User } from '../commons/interfaces';
+import { User, Friendship } from '../commons/interfaces';
 import { GlobalContext } from "../context/GlobalState";
 import "./ProfilePage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
@@ -87,6 +87,24 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
             }).catch(err => console.error(err))
     }
 
+    const areFriends = () =>{
+        Axios.get(`http://localhost:5000/sources/getFriends/${newGoogleID}`, {
+            }).then(response => {
+                let users_list :Friendship[] = response.data;
+                let userids_list: string[] = [];
+                for (let i: number = 0; i < users_list.length; i++){
+                    userids_list.push(users_list[i].toUser.userID);
+                }
+                console.log(userids_list)
+                if (userids_list.includes(profileID)){
+                    console.log("are friends")    
+                    return true;
+                }
+            }).catch(err => console.error(err))
+            console.log("not friends")    
+        return false;
+    }
+
     if (!props.hasID)
     {
         //console.log("Reached redirect statement 2");
@@ -108,6 +126,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     // console.log("Reached redirect statement 1");
     // console.log(OAuthResponse.profileObj.googleId);
     // console.log(newGoogleID);
+    
     
     
 
@@ -166,39 +185,80 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
 
     if(newGoogleID != profileID)
     {
-        return (
-            <div className="profileContainer">
-                <div className="profileBox">
-                    <div className="profileSpace_top"></div>
-                    <div className="profilelogoContainer" >
-                        <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
-                    </div>
-                    <div className="profile_space_Between_Logo_and_UserProfile">
-                        <p><b>User Profile</b></p>
-                    </div> 
-                    <div className="profileSpaceSmall"></div>
-                    <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
-                        <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
-                    </div>
-                    <div className="profileBreak">
-                        <p> {name} </p>
-                    </div>
-                    <div className="profileSpace_middle"></div>
-                    <div className="profileBreak">
-                        {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
-                        <p> Hi! I am {name} and I love BOL! </p>
-                    </div>
-                    <div className="profileSpace_bottom"></div>
-                    <div className="profilefriendButton" onClick={friender} >
-                    <span style={{color:"#ffffff"}} >Add Friend </span>
-                    </div>
-                    <div className="profileSpaceSmall"></div>
-                    <div className="profileSearchButton" onClick = {routeChangeSearch}>
-                        <span style={{color:"#ffffff"}} > Back to search </span>
+        if (areFriends())
+        {
+            return (
+                <div className="profileContainer">
+                    <div className="profileBox">
+                        <div className="profileSpace_top"></div>
+                        <div className="profilelogoContainer" >
+                            <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
+                        </div>
+                        <div className="profile_space_Between_Logo_and_UserProfile">
+                            <p><b>User Profile</b></p>
+                        </div> 
+                        <div className="profileSpaceSmall"></div>
+                        <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
+                            <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
+                        </div>
+                        <div className="profileBreak">
+                            <p> {name} </p>
+                        </div>
+                        <div className="profileSpace_middle"></div>
+                        <div className="profileBreak">
+                            {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
+                            <p> Hi! I am {name} and I love BOL! </p>
+                        </div>
+                        <div className="profileSpaceSmall"></div>
+                        <div className="profilefriendButton" onClick={friender} >
+                        <span style={{color:"#ffffff"}} >Add Friend </span>
+                        </div>
+                        <div className="profileSpaceSmall"></div>
+                        <div className="profileSearchButton" onClick = {routeChangeSearch}>
+                            <span style={{color:"#ffffff"}} > Back to search </span>
+                        </div>
+                        <div className="profileSpace_bottom"></div>
                     </div>
                 </div>
-            </div>
-        );
+            );
+        }
+        else
+        {
+            return (
+                <div className="profileContainer">
+                    <div className="profileBox">
+                        <div className="profileSpace_top"></div>
+                        <div className="profilelogoContainer" >
+                            <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
+                        </div>
+                        <div className="profile_space_Between_Logo_and_UserProfile">
+                            <p><b>User Profile</b></p>
+                        </div> 
+                        <div className="profileSpaceSmall"></div>
+                        <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
+                            <img id='123' src= {imageUrl} alt = "Profile Picture" width = "150" height = "150" />
+                        </div>
+                        <div className="profileBreak">
+                            <p> {name} </p>
+                        </div>
+                        <div className="profileSpace_middle"></div>
+                        <div className="profileBreak">
+                            {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
+                            <p> Hi! I am {name} and I love BOL! </p>
+                        </div>
+                        <div className="profileSpaceSmall"></div>
+                        <div className="profilefriendButton" onClick={friender} >
+                        <span style={{color:"#ffffff"}} >Add Friend </span>
+                        </div>
+                        <div className="profileSpaceSmall"></div>
+                        <div className="profileSearchButton" onClick = {routeChangeSearch}>
+                            <span style={{color:"#ffffff"}} > Back to search </span>
+                        </div>
+                        <div className="profileSpace_bottom"></div>
+                    </div>
+                </div>
+            );
+        }
     }
 
     return (
