@@ -102,7 +102,8 @@ export default function Homepage(props: HomepageProps) {
                     width: '100%',
                     height: '8%',
                     paddingTop: '0 0 0 0',
-                    display: 'flex'
+                    display: 'flex',
+                    zIndex: '999'
                 }}
                 className="homepage-bottom-button-bar"
             >

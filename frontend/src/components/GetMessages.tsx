@@ -43,7 +43,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
             className="get-messages-message-display"
         >
             <GroupNameHeader groupID={groupID} />
-            <CardsGenerator groupID={groupID} refresh={props.refresh} />
+            <CardsGenerator groupID={groupID} refresh={props.refresh} forceUpdateCallback={props.forceUpdateCallback} />
         </Box>
         <Box
             sx={{
@@ -59,8 +59,9 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
     );
 }
 
-function CardsGenerator(props: {groupID: string, refresh: boolean}): JSX.Element {
+function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCallback: () => void}): JSX.Element {
     const [cardArray, setCardArray] = useState<JSX.Element[]>([]);
+    const [localRefresh, setLocalRefresh] = useState<boolean>(false);
 
     // Marks end of messages, automatically scroll here when all the messages are loaded
     function scrollToBottom() {
@@ -77,7 +78,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean}): JSX.Element
 
             await getMessageList(props.groupID).then(async (list) => {
                 for (let message of list) {
-                    await singleCardGenerator(message).then(async (card) => {
+                    await singleCardGenerator(message, props.forceUpdateCallback).then(async (card) => {
                         newCardArray.push(card);
                     }).catch(err => console.error(err));
                 }
@@ -100,7 +101,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean}): JSX.Element
     </div>);
 }
 
-function singleCardGenerator(message: Message): Promise<JSX.Element> {
+function singleCardGenerator(message: Message, forceUpdateCallback: () => void): Promise<JSX.Element> {
     let userID = message.sender.userID;
     //let username:string = "DummyUsernameHere"; //Placeholder
 
@@ -133,7 +134,7 @@ function singleCardGenerator(message: Message): Promise<JSX.Element> {
                                 Copy
                             </Button>
                             <Button size="small"
-                                onClick={() =>  delete_msg(message)}
+                                onClick={() => delete_msg(message.messageID, forceUpdateCallback)}
                                 >
                                 Delete
                             </Button>
@@ -151,9 +152,10 @@ function singleCardGenerator(message: Message): Promise<JSX.Element> {
     });
 }
 
-function delete_msg(message: Message) {
-    axios.delete(`http://localhost:5000/sources/deleteMessage/${message.messageID}`).then(response => {
-        console.log(response)
+function delete_msg(messageID: string, forceUpdateCallback: () => void) {
+    axios.delete(`http://localhost:5000/sources/deleteMessage/${messageID}`).then(response => {
+        console.log(response);
+        forceUpdateCallback();
     }).catch(err => console.error(err));
 }
 
@@ -182,6 +184,10 @@ function GroupNameHeader(props: {groupID: string}): JSX.Element {
 
     useEffect(() => {
         async function getGroupAndSetName(groupID: string) {
+            // Don't run this if there is no group selected
+            if (!groupID || groupID == "default")
+                return;
+
             let groupname = "";
             await axios.get(`http://localhost:5000/sources/getUsersInGroup/${groupID}`).then(response => {
                 groupname = groupnameGenerator((response.data as User[]), OAuthResponse.profileObj.googleId);
@@ -242,5 +248,4 @@ function splitTimestamp(timestamp: string): string{
     //create final string
     var humanReadableTime:string = "on " + dateYMD + " at " + time24H.split(':').slice(0, 2).join(':');
     return humanReadableTime;
-
 }   
