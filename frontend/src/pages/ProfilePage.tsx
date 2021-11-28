@@ -65,13 +65,17 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     const routeChange = () =>{ 
         let path = "/home"; 
         history.push(path);
-        
     }
 
     const routeChangeProfile = () =>{ 
         let path = "/profile/"+username; 
         history.push(path);
         history.go(0);
+    }
+
+    const routeChangeSearch = () => {
+        let path = "/search";
+        history.push(path);
     }
 
     const friender = () =>{
@@ -141,6 +145,10 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                 <span style={{color:"#ffffff"}} >Home </span>
                 </div>
                 <div className="profileSpaceSmall"></div>
+                <div className="profileSearchButton" onClick = {routeChangeSearch}>
+                    <span style={{color:"#ffffff"}} > Search friend </span>
+                </div>
+                <div className="profileSpaceSmall"></div>
                 <div className="profilefriendButton" onClick = {routeChangeProfile}>
                 <span style={{color:"#ffffff"}} >My Profile </span>
                 </div>
@@ -184,6 +192,10 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                     <div className="profilefriendButton" onClick={friender} >
                     <span style={{color:"#ffffff"}} >Add Friend </span>
                     </div>
+                    <div className="profileSpaceSmall"></div>
+                    <div className="profileSearchButton" onClick = {routeChangeSearch}>
+                        <span style={{color:"#ffffff"}} > Back to search </span>
+                    </div>
                 </div>
             </div>
         );
@@ -215,6 +227,10 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                 
                 <div className="profilefriendButton" onClick = {routeChange}>
                 <span style={{color:"#ffffff"}} >Home </span>
+                </div>
+                <div className="profileSpaceSmall"></div>
+                <div className="profileSearchButton" onClick = {routeChangeSearch}>
+                    <span style={{color:"#ffffff"}} > Search friend </span>
                 </div>
                                 
             </div>

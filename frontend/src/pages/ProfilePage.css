@@ -98,6 +98,33 @@ p {
     height: 9%
 }
 
+.profileSearchButton{
+    height: 5%;
+    width: 35%;
+    border-radius: 9px;
+    margin-left: auto;
+    margin-right: auto;
+    
+    background-color: darkblue;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 195%; /* I dont know why but this centers the text inside the box */
+    font-size: 90%;
+    transition: box-shadow 0.5s ease-in-out, width 0.5s, height 0.5s, line-height 0.5s, background-color 0.5s ;
+    border-right: 2px solid black;
+    border-bottom: 3px solid black;
+}
+
+.profileSearchButton:hover{
+    height: 5%;
+    width: 36%;
+    line-height: 250%;
+    background-color: rgb(3, 3, 161);
+    /* -webkit-transition: background-color 500ms linear;
+    -ms-transition: background-color 500ms linear;
+    transition: background-color 500ms linear; */
+ }
+
 .profilefriendButton{
     height: 5%;
     width: 23%;
@@ -116,9 +143,9 @@ p {
 }
 
 .profilefriendButton:hover{
-   height: 7%;
-   width: 25%;
-   line-height: 290%;
+   height: 5%;
+   width: 24%;
+   line-height: 250%;
    background-color: #4a103d;
    /* -webkit-transition: background-color 500ms linear;
    -ms-transition: background-color 500ms linear;
