@@ -1,0 +1,23 @@
+.popup{
+    z-index: 100;
+    position: fixed;
+    height : 20vh;
+    width : 20vw;
+    border-radius: 10px;
+    border-right: solid 4px black;
+    border-bottom: solid 5px black;
+    background-color: #4a103d;
+    text-align: center;
+}
+
+.close{
+    float: right;
+    margin-right: 5%;
+    margin-top: 2%;
+    font-size: 150%;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+
+.popupText{
+    line-height: 8;
+}

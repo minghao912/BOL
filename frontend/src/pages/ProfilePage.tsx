@@ -11,6 +11,7 @@ import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo i
 import profileIcon from '../images/homepage-profile-icon-white.png'
 import Axios from 'axios';
 import { useHistory } from "react-router-dom";
+import Popup from "../components/Popup";
 
 interface RouteParams {
     //id from link that was passed by router
@@ -21,6 +22,8 @@ interface ProfilepageProps{
     match: any,
     hasID: boolean
 }
+
+
 
 export function ProfilePage (props: ProfilepageProps, param: RouteParams){
 
@@ -42,6 +45,8 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     let [profileID, setProfileID] = useState<string>("" as string);
 
     let [bio, setBio] = useState<string>("" as string);
+
+    const [buttonPopup, setbuttonPopup] = useState(false);
 
     useEffect(() => {
         setImageUrl("not found");
@@ -89,6 +94,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                 console.log(response.data)
             }).catch(err => console.error(err))
     }
+
 /*
     const areFriends = () =>{
         Axios.get(`http://localhost:5000/sources/getFriends/${newGoogleID}`, {
@@ -142,9 +148,6 @@ const areFriends = () =>{
     // console.log(OAuthResponse.profileObj.googleId);
     // console.log(newGoogleID);
     
-    
-    
-
     console.log(imageUrl);
     if (imageUrl === "Error")
     {
@@ -287,6 +290,9 @@ const areFriends = () =>{
 
     return (
         <div className="profileContainer">
+            <Popup trigger={buttonPopup} setTrigger={setbuttonPopup}>
+                <h3> </h3>
+            </Popup>
             <div className="profileBox">
                 <div className="homeButton" style={{float:"left"}} onClick = {routeChange} >
                     <span style={{color:"#ffffff"}} > Home </span>
@@ -313,18 +319,19 @@ const areFriends = () =>{
                 </div>
                 <div className="profileSpace_bottom"></div>
 
-                    <div className="profilefriendButton" onClick = {routeChange} >
-                    <span style={{color:"#ffffff"}} >Edit Profile </span>
-                    </div>
-
+                <div className="profilefriendButton" onClick= {() => setbuttonPopup(true)} >
+                <span style={{color:"#ffffff"}} >Edit Profile </span>
+                </div>
                 <div className="profileSpaceSmall"></div>
                 <div className="profileSearchButton" onClick = {routeChangeSearch}>
-                    <span style={{color:"#ffffff"}} > Search friend </span>
+                    <span style= {{color:"#ffffff"}} > Search friend </span>
                 </div>
                                 
             </div>
         </div>
     );
 }
+
+
 
 export default ProfilePage;
