@@ -96,30 +96,31 @@ p {
 .profileSpace_bottom{
     height: 9%
 }
-.profilefriendButton{
-    height: 5%;
-    width: 23%;
-    border-radius: 9px;
-    margin: 0 auto;
-    background-color: #280621;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 195%; /* I dont know why but this centers the text inside the box */
-    font-size: 90%;
-    transition: box-shadow 0.5s ease-in-out, width 0.5s, height 0.5s, line-height 0.5s, background-color 0.5s ;
-    border-right: 2px solid black;
-    border-bottom: 3px solid black;
 
+.user-search-entry {
+    height: 50px;
+    background-color: rgba(165, 208, 223, 0.6);
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 7px;
 }
 
-.profilefriendButton:hover{
-   height: 7%;
-   width: 25%;
-   line-height: 290%;
-   background-color: #4a103d;
-   /* -webkit-transition: background-color 500ms linear;
-   -ms-transition: background-color 500ms linear;
-   transition: background-color 500ms linear; */
+.user-search-entry:hover {
+    background-color: rgba(165, 208, 223, 0.8);
 }
 
+.user-search-image {
+    float: left;
+    margin-right: 10px;
+}
 
+.user-search-name {
+    font-family: monospace;
+}
+
+.user-search-profile {
+    float: right;
+}

@@ -4,7 +4,7 @@ import { RouteChildrenProps } from 'react-router';
 import { COLORS } from '../commons/constants';
 import { User } from '../commons/interfaces';
 import { GlobalContext } from "../context/GlobalState";
-import "./ProfilePage.css";
+import "./SearchPage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 import axios from 'axios';
 
@@ -93,13 +93,23 @@ function getUsers(name: string): Promise<User[]> {
 function createEntry(match: User){
     let u_username : string;
     let u_userID: string;
+    let u_userpic: string;
     let u_profile: string;
     u_username = match.username;
     u_userID = match.userID;
+    u_userpic = match.profilePicPath;
     u_profile = "/profile/" + u_username;
     return (
-        <div style={{backgroundColor:"white"}}>
-            <a href={u_profile}> {u_username} </a>
+        <div className="user-search-entry">
+            <div className="user-search-image">
+                <img src={u_userpic} alt ="Profile Picture" width = "40" height = "40"/>
+            </div>
+            <div className="user-search-name" >
+                <span> {u_username} </span>
+            </div>
+            <div className="user-search-profile" >
+                <a href={u_profile}> Profile </a>
+            </div>
         </div>
     );
 }
