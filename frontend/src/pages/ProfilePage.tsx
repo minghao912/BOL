@@ -41,6 +41,8 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     //google id of person on page
     let [profileID, setProfileID] = useState<string>("" as string);
 
+    let [bio, setBio] = useState<string>("" as string);
+
     useEffect(() => {
         setImageUrl("not found");
         setnewGoogleID(OAuthResponse.profileObj.googleId);
@@ -51,6 +53,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
             setImageUrl(userObj.profilePicPath)
             setName(userObj.username)
             setProfileID(userObj.userID)
+            setBio(userObj.bio)
         }).catch(err => {
             //console.log("Reached error block");
             //console.error(err);
@@ -220,7 +223,8 @@ const areFriends = () =>{
                         <div className="profileSpace_middle"></div>
                         <div className="profileBreak">
                             {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
-                            <p> Hi! I am {name} and I love BOL! </p>
+                            {/* <p> Hi! I am {name} and I love BOL! </p> */}
+                            <p> {bio} </p>
                         </div>
                         <div className="profileSpace_bottom"></div>
 
@@ -263,7 +267,8 @@ const areFriends = () =>{
                         
                         <div className="profileBreak">
                             {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
-                            <p> Hi! I am {name} and I love BOL! </p>
+                            {/* <p> Hi! I am {name} and I love BOL! </p> */}
+                            <p> {bio} </p>
                         </div>
                         <div className="profileSpace_bottom"></div>
                         
@@ -303,7 +308,8 @@ const areFriends = () =>{
                 <div className="profileSpace_middle"></div>
                 <div className="profileBreak">
                     {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
-                    <p> Hi! I am {name} and I love BOL! </p>
+                    {/* <p> Hi! I am {name} and I love BOL! </p> */}
+                    <p> {bio} </p>
                 </div>
                 <div className="profileSpace_bottom"></div>
 
