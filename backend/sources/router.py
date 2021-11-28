@@ -18,7 +18,7 @@ urlpatterns = [
     # GAMERS
     path('sources/getMessagesOfUser/<str:userID>', messaging.getMessagesOfUser),
     path('sources/addMessage', messaging.addMessage),
-    path('sources/deleteMessage', messaging.deleteMessage),
+    path('sources/deleteMessage/<str:messageID>', messaging.deleteMessage),
     path('sources/getMessagesOfGroup/<str:groupID>', messaging.getMessagesOfGroup),
     path('sources/getLatestMessageByGroup/<str:groupID>', messaging.getLatestMessageByGroup),
     path('sources/getGroupsOfUser/<str:userID>', groupmsg.getGroupsOfUser),
