@@ -26,8 +26,8 @@ def areFriends(request, userID1, userID2):
         | Q(toUser__userID=userID1) & Q(fromUser__userID=userID2))
 
     if (len(friends) != 0):
-        return JsonResponse({"areFriends": "1"}, status=500)
-    return JsonResponse({"areFriends": "0"}, status=500)
+        return JsonResponse({"areFriends": "1"})
+    return JsonResponse({"areFriends": "0"})
 
 
 @api_view(['POST'])

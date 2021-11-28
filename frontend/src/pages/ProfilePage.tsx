@@ -86,7 +86,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                 console.log(response.data)
             }).catch(err => console.error(err))
     }
-
+/*
     const areFriends = () =>{
         Axios.get(`http://localhost:5000/sources/getFriends/${newGoogleID}`, {
             }).then(response => {
@@ -105,6 +105,17 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
             console.log("not friends")    
         return false;
     }
+*/
+const areFriends = () =>{
+        Axios.get(`http://localhost:5000/sources/areFriends/${newGoogleID}/${profileID}`).then(response => {
+            if (response.data.areFriends == '1'){
+                console.log("response: are friends")
+                return true;
+            }
+        }).catch(err => {console.error(err)});
+        return false;
+    }
+
 
     if (!props.hasID)
     {
@@ -186,9 +197,9 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
 
     if(newGoogleID != profileID)
     {
-        if (areFriends())
+        if (!areFriends())
         {
-            console.log("ARE FRIENDS!!!!!")
+            console.log("ARE NOT FRIENDS!!!!!")
             return (
                 <div className="profileContainer">
                     <div className="profileBox">
@@ -206,12 +217,12 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                         <div className="profileBreak">
                             <p> {name} </p>
                         </div>
-                        <div className="profileSpace_middle"></div>
+                        <div className="profileSpaceSmall"></div>
                         <div className="profileBreak">
                             {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
                             <p> Hi! I am {name} and I love BOL! </p>
                         </div>
-                        <div className="profileSpaceSmall"></div>
+                        <div className="profileSpace_middle"></div>
                         <div className="profilefriendButton" onClick={friender} >
                         <span style={{color:"#ffffff"}} >Add Friend </span>
                         </div>
@@ -226,7 +237,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
         }
         else
         {
-            console.log("ARENT FRIENDS")
+            console.log("ARE FRIENDS")
             return (
                 <div className="profileContainer">
                     <div className="profileBox">
@@ -244,12 +255,13 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                         <div className="profileBreak">
                             <p> {name} </p>
                         </div>
-                        <div className="profileSpace_middle"></div>
+                        <div className="profileSpaceSmall"></div>
                         <div className="profileBreak">
                             {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
                             <p> Hi! I am {name} and I love BOL! </p>
                         </div>
-                        <div className="profileSpaceSmall"></div>
+                        <div className="profileSpace_middle"></div>
+                        
                         <div className="profilefriendButton" onClick={friender} >
                         <span style={{color:"#ffffff"}} >Add Friend </span>
                         </div>
