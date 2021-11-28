@@ -22,7 +22,8 @@ export interface User {
     id: string,
     profilePicPath: string,
     userID: string,
-    username: string
+    username: string,
+    bio: string
 }
 
 export interface Group {

@@ -15,12 +15,25 @@ export function EditProfilePage (){
     let [new_bio, setBio] = useState<string>("" as string);
     let [showResults, setShowResults] = useState<boolean>(true);
 
-    console.log(OAuthResponse);
-    const google_id: string = OAuthResponse.profileObj.googleID;
+    //console.log(OAuthResponse);
+    const google_id: string = OAuthResponse.profileObj.googleId;
     const imageUrl:  string = OAuthResponse.profileObj.imageUrl;
-    //console.log(new_name);
     //console.log(new_bio);
+    //console.log(new_name);
 
+    let prevname : string = "";
+    let prevbio : string = "";
+    let s = 'http://localhost:5000/sources/getUser/' + google_id;
+    axios.get(s).then(response => {
+        let userObj = response.data as User;
+        prevname = (userObj.username);
+        prevbio = (userObj.bio);
+        //console.log(prevname);
+        //console.log(prevbio);
+    }).catch(err => {
+        console.log(err);
+    }
+    );
 
     const history = useHistory();
     
@@ -49,12 +62,14 @@ export function EditProfilePage (){
                     <img id='123' src= {imageUrl} alt = "Profile Picture" width = "125" height = "125" />
                 </div>
 
-                <input type="text" id="message-box" className="username-change-bar" autoComplete="off"
+                <input type="text" id="message-box" value={new_name} 
+                    className="username-change-bar" autoComplete="off"
                     placeholder="Enter a username here"
                     onChange={(e) => setName(e.target.value)}
                 />
 
-                <textarea rows={3} id="message-box" className="bio-change-bar" autoComplete="off"
+                <textarea rows={3} id="message-box" value={new_bio} 
+                    className="bio-change-bar" autoComplete="off"
                     placeholder="Enter your bio here"
                     onChange={(e) => setBio(e.target.value)}
                 ></textarea>
