@@ -8,6 +8,7 @@ import "./EditProfilePage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
+import { resourceUsage } from 'process';
 
 export function EditProfilePage (){
     const {OAuthResponse} = useContext(GlobalContext);
@@ -70,6 +71,10 @@ export function EditProfilePage (){
         }
 
         console.log("save changes clicked");
+        console.log("new name: " + new_name)
+        console.log("new bio: " + new_bio)
+        console.log("old name: " + name)
+        console.log("old bio: " + bio)
         if (new_name == "" && new_bio == ""){
             alert("no changes made")
             routeChangeProfile(name);
@@ -77,6 +82,7 @@ export function EditProfilePage (){
         }
 
         if (new_name == "" && new_bio != ""){
+            console.log("new name empty, new bio not empty")
             axios.put('http://localhost:5000/sources/updateUser/' + google_id, {
                 id: id,
                 profilePicPath: pfp,
@@ -87,10 +93,12 @@ export function EditProfilePage (){
                 console.log(response)
                 //alert("Success!")
                 routeChangeProfile(name);
+                return;
             }).catch(err => console.error(err));
         }
 
         if (new_name != "" && new_bio == ""){
+            console.log("new name not empty, new bio empty")
             axios.put('http://localhost:5000/sources/updateUser/' + google_id, {
                 id: id,
                 profilePicPath: pfp,
@@ -101,9 +109,13 @@ export function EditProfilePage (){
                 console.log(response)
                 //alert("Success!")
                 routeChangeProfile(new_name);
+                return;
             }).catch(err => console.error(err));
         }
 
+        console.log("new name not empty, new bio not empty")
+        if (new_bio == "")
+            return;
         axios.put('http://localhost:5000/sources/updateUser/' + google_id, {
             id: id,
             profilePicPath: pfp,
@@ -113,6 +125,7 @@ export function EditProfilePage (){
         } as User).then(response => {
             console.log(response)
             routeChangeProfile(new_name);
+            return;
         }).catch(err => console.error(err));
     }
 
