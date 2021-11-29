@@ -77,26 +77,6 @@ p {
     color: #FFFFFF;
 }
 
-.profile_space_Between_Logo_and_UserProfile {
-    height: 6%;
-}
-
-.profileSpace_middle {
-    height: 10%;
-}
-
-.profileSpace_top{
-    height: 5%;
-}
-
-.profileSpaceSmall{
-    height: 1%;
-}
-
-.profileSpace_bottom{
-    height: 9%
-}
-
 .user-search-bar {
     border: none;
     background-color: silver;
