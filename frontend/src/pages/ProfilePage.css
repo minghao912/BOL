@@ -83,8 +83,8 @@ p {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 2px;
-    margin-bottom: 2px;
+    margin-top: 4px;
+    margin-bottom: 4px;
     font-family: sans-serif;
     color: #FFFFFF;
 }
@@ -125,6 +125,7 @@ p {
     transition: box-shadow 0.5s ease-in-out, width 0.5s, height 0.5s, line-height 0.5s, background-color 0.5s ;
     border-right: 2px solid black;
     border-bottom: 3px solid black;
+    cursor: pointer;
 }
 
 .profileSearchButton:hover{
@@ -152,6 +153,7 @@ p {
     transition: box-shadow 0.5s ease-in-out, width 0.5s, height 0.5s, line-height 0.5s, background-color 0.5s ;
     border-right: 2px solid black;
     border-bottom: 3px solid black;
+    cursor: pointer;
 }
 
 .profilefriendButton:hover{
@@ -187,6 +189,7 @@ p {
     border-bottom: 2px solid black;
     border-radius: 10px;
     transition: background-color 0.5s;
+    cursor: pointer;
 }
 
 .homeButton:hover{
