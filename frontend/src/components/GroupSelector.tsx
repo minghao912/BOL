@@ -22,7 +22,9 @@ export default function GroupSelector(props: GroupSelectorProps) {
     const DEBUG_MODE = true;
     let defaultUserID: string;
     if (DEBUG_MODE)
+    {
         defaultUserID = "2";
+    }
     else if (!OAuthResponse.profileObj || !OAuthResponse.profileObj.googleId)
         defaultUserID = "";
     else defaultUserID = OAuthResponse.profileObj.googleId;
@@ -53,16 +55,18 @@ export default function GroupSelector(props: GroupSelectorProps) {
 
         // Retreive the user's list of groups from backend
         axios.get(`http://localhost:5000/sources/getGroupsOfUser/${userID}?timestamp=${(new Date()).getTime()}`).then(response => {
-            console.log(response.data);
             setGroupList(response.data as GroupList);
         }).catch(err => console.error(err));
     }, [OAuthResponse]);
 
     if (groupList.length < 1)
         return <></>;
-    else return(
-        <CardsGenerator groupList={groupList} currentUserID={userID} displayMessageCallback={props.setGroupToDisplayMessagesFor} refresh={props.refresh}></CardsGenerator>
-    );
+    else 
+    {
+        const sortedGroup = sortGroup(groupList);
+        return(
+            <CardsGenerator groupList={sortedGroup} currentUserID={userID} displayMessageCallback={props.setGroupToDisplayMessagesFor} refresh={props.refresh}></CardsGenerator>);
+    }
 }
 
 function CardsGenerator(props: {
@@ -184,6 +188,23 @@ function getMostRecentMessage(group: Group): Promise<Message> {
 
 // Sort the groups based on how recent their most recent message was (more recent => earlier in the list)
 function sortGroup(groupList: GroupList): GroupList {
-    // CHANGE ME
+    console.log("Sort group is called");
+    var intList: number[] = [];
+    var sortedList: GroupList = [];
+    console.log("grouplist is " + groupList + " and has length " + groupList.length)
+    for (let i = 0; i < groupList.length; i++)
+    {
+        getMostRecentMessage(groupList[i]).then(message=> {
+            const timeStamp = message.timestamp;
+            const timeString =  timeStamp.slice(0,4) + timeStamp.slice(5,7) 
+            + timeStamp.slice(8,10) + timeStamp.slice(11,13) + timeStamp.slice(14, 16) + 
+            timeStamp.slice(17,19) + timeStamp.slice(20, 23);
+            const timeValue = parseInt(timeString);
+            // TimeValue is the time as an int
+            console.log(timeValue + " is timeValue for i = " + i);
+            console.log(intList.push(timeValue));
+        })
+    }
+    console.log("intlist is " + intList)
     return groupList;
 }
