@@ -8,6 +8,7 @@ import PageNotFoundPage from './pages/PageNotFoundPage';
 import SearchPage from './pages/SearchPage';
 import CreateGroup from './pages/CreateGroup';
 import EditProfilePage from './pages/EditProfilePage';
+import ReportPage from './pages/ReportPage';
 
 // Handles which URLs go to which pages
 function AppRouter() {
@@ -21,6 +22,7 @@ function AppRouter() {
         <Route path="/editprofile" exact component={ EditProfilePage } />
         <Route path="/search" exact component={ SearchPage } />
         <Route path="/creategroup" exact component={ CreateGroup } />
+        <Route path="/report" exact component={ ReportPage } />
         {/*<Route path="/profile/:username" component={ ProfilePage } />*/}        
 
         {/* This is the default case */}

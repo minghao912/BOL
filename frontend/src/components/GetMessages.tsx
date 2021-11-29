@@ -6,6 +6,7 @@ import { CardContent } from '@mui/material';
 import Button from '@mui/material/Button';
 import CardActions from '@mui/material/CardActions';
 import { Typography } from '@mui/material';
+import { useHistory } from "react-router-dom";
 
 import MessageSender from "./MessageSender";
 import { Message, MessageList, User } from '../commons/interfaces';
@@ -19,11 +20,18 @@ interface GetMessagesProps {
 
 export default function GetMessages(props: GetMessagesProps): JSX.Element {
     let [groupID, setGroupID] = useState("");
+    const history = useHistory();
 
     useEffect(() => {
         console.log("Group ID: " + props.groupID);
         setGroupID(props.groupID);
     }, [props.groupID, props.refresh]);
+
+    const routeChangeReport = () =>{ 
+        let path = "/report/"; 
+        history.push(path);
+        history.go(0);
+    }
 
     return (
     <Box
@@ -43,7 +51,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
             className="get-messages-message-display"
         >
             <GroupNameHeader groupID={groupID} />
-            <CardsGenerator groupID={groupID} refresh={props.refresh} forceUpdateCallback={props.forceUpdateCallback} />
+            <CardsGenerator groupID={groupID} refresh={props.refresh} forceUpdateCallback={props.forceUpdateCallback} routeChangeCallback={routeChangeReport} />
         </Box>
         <Box
             sx={{
@@ -59,7 +67,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
     );
 }
 
-function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCallback: () => void}): JSX.Element {
+function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCallback: () => void, routeChangeCallback: () => void}): JSX.Element {
     const [cardArray, setCardArray] = useState<JSX.Element[]>([]);
     const [localRefresh, setLocalRefresh] = useState<boolean>(false);
     const { OAuthResponse } = useContext(GlobalContext);
@@ -84,7 +92,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
 
             await getMessageList(props.groupID).then(async (list) => {
                 for (let message of list) {
-                    await singleCardGenerator(message, currentUserID, props.forceUpdateCallback).then(async (card) => {
+                    await singleCardGenerator(message, currentUserID, props.forceUpdateCallback, props.routeChangeCallback).then(async (card) => {
                         newCardArray.push(card);
                     }).catch(err => console.error(err));
                 }
@@ -94,7 +102,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
 
             scrollToBottom();
         }
-        setTimeout(populateCardArray, 20); // Timeout to let the backend update first
+        setTimeout(populateCardArray, 50); // Timeout to let the backend update first
     }, [props.groupID, props.refresh]);
 
     if (cardArray.length < 1) {
@@ -107,7 +115,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
     </div>);
 }
 
-function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateCallback: () => void): Promise<JSX.Element> {
+function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateCallback: () => void, routeChangeCallback: () => void): Promise<JSX.Element> {
     let userID = message.sender.userID;
     //let username:string = "DummyUsernameHere"; //Placeholder
     let isSameUser = false;
@@ -169,9 +177,7 @@ function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateC
                                     Copy
                                 </Button>
                                 <Button size="small"
-                                onClick={() => {
-                                    alert('clicked');
-                                }}>
+                                onClick= {routeChangeCallback}>
                                     Report
                                 </Button>
                             </CardActions>
