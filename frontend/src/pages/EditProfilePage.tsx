@@ -60,6 +60,14 @@ export function EditProfilePage (){
 
     function saveChanges(){
 
+        if (new_name.length > 32){
+            alert("username is too long :(")
+            return;
+        }
+        if (new_bio.length > 64){
+            alert("bio is too long :(")
+            return;
+        }
 
         console.log("save changes clicked");
         if (new_name == "" && new_bio == ""){
@@ -129,13 +137,13 @@ export function EditProfilePage (){
 
                 <input type="text" id="message-box" value={new_name} 
                     className="username-change-bar" autoComplete="off"
-                    placeholder="Enter a username here"
+                    placeholder={name}
                     onChange={(e) => setNewName(e.target.value)}
                 />
 
                 <textarea rows={3} id="message-box" value={new_bio} 
                     className="bio-change-bar" autoComplete="off"
-                    placeholder="Enter your bio here"
+                    placeholder={bio}
                     onChange={(e) => setNewBio(e.target.value)}
                 ></textarea>
 
