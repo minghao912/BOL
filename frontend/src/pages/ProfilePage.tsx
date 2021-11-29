@@ -23,8 +23,6 @@ interface ProfilepageProps{
     hasID: boolean
 }
 
-
-
 export function ProfilePage (props: ProfilepageProps, param: RouteParams){
 
     const {OAuthResponse} = useContext(GlobalContext);
@@ -84,6 +82,12 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     const routeChangeSearch = () => {
         let path = "/search";
         history.push(path);
+    }
+
+    const routeChangeEditProfile = () =>{ 
+        let path = "/editprofile"; 
+        history.push(path);
+        history.go(0);
     }
 
     const friender = () =>{
@@ -319,7 +323,8 @@ const areFriends = () =>{
                 </div>
                 <div className="profileSpace_bottom"></div>
 
-                <div className="profilefriendButton" onClick= {() => setbuttonPopup(true)} >
+                {/* <div className="profilefriendButton" onClick= {() => setbuttonPopup(true)} > */}
+                <div className="profilefriendButton" onClick= {routeChangeEditProfile} >
                 <span style={{color:"#ffffff"}} >Edit Profile </span>
                 </div>
                 <div className="profileSpaceSmall"></div>
