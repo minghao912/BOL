@@ -11,8 +11,14 @@ import { useHistory } from "react-router-dom";
 
 export function EditProfilePage (){
     const {OAuthResponse} = useContext(GlobalContext);
-    let [new_name, setName] = useState<string>("" as string);
-    let [new_bio, setBio] = useState<string>("" as string);
+    let [id, setId] = useState<string>("" as string);
+    let [userId, setUserId] = useState<string>("" as string);
+    let [name, setName] = useState<string>("" as string);
+    let [bio, setBio] = useState<string>("" as string);
+    let [pfp, setPfp] = useState<string>("" as string);
+
+    let [new_name, setNewName] = useState<string>("" as string);
+    let [new_bio, setNewBio] = useState<string>("" as string);
     let [showResults, setShowResults] = useState<boolean>(true);
 
     //console.log(OAuthResponse);
@@ -21,19 +27,23 @@ export function EditProfilePage (){
     //console.log(new_bio);
     //console.log(new_name);
 
-    let prevname : string = "";
-    let prevbio : string = "";
-    let s = 'http://localhost:5000/sources/getUser/' + google_id;
-    axios.get(s).then(response => {
+
+    axios.get('http://localhost:5000/sources/getUser/' + google_id).then(response => {
         let userObj = response.data as User;
-        prevname = (userObj.username);
-        prevbio = (userObj.bio);
-        //console.log(prevname);
-        //console.log(prevbio);
+        setId(userObj.id);
+        setUserId(userObj.userID);
+        setName(userObj.username);
+        setBio(userObj.bio);
+        setPfp(userObj.profilePicPath);
+        
     }).catch(err => {
         console.log(err);
     }
     );
+
+    
+    //console.log(name);
+    //console.log(bio);
 
     const history = useHistory();
     
@@ -42,6 +52,19 @@ export function EditProfilePage (){
         history.push(path);
     }
 
+
+    function saveChanges(){
+        console.log("save changes clicked");
+        axios.put('http://localhost:5000/sources/updateUser/' + google_id, {
+            id: id,
+            profilePicPath: pfp,
+            userID: userId,
+            username: new_name,
+            bio: new_bio
+        } as User).then(response => {
+            console.log(response)
+        }).catch(err => console.error(err));
+    }
 
     return (
         <div className="profileContainer">
@@ -65,16 +88,16 @@ export function EditProfilePage (){
                 <input type="text" id="message-box" value={new_name} 
                     className="username-change-bar" autoComplete="off"
                     placeholder="Enter a username here"
-                    onChange={(e) => setName(e.target.value)}
+                    onChange={(e) => setNewName(e.target.value)}
                 />
 
                 <textarea rows={3} id="message-box" value={new_bio} 
                     className="bio-change-bar" autoComplete="off"
                     placeholder="Enter your bio here"
-                    onChange={(e) => setBio(e.target.value)}
+                    onChange={(e) => setNewBio(e.target.value)}
                 ></textarea>
 
-                <div className="profilefriendButton" onClick = {routeChange} >
+                <div className="profilefriendButton" onClick = {saveChanges} >
                     <span style={{color:"#ffffff"}} >Save Changes </span>
                 </div>
             </div>
