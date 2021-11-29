@@ -43,10 +43,11 @@ export default function CreateGroup(props: any): JSX.Element {
                 <Box
                     sx={{
                         height: '60%',
-                        marginBottom: '10%',
                         paddingLeft: '2%',
                         paddingRight: '2%',
-                        backgroundColor: COLORS.BACKGROUND2
+                        backgroundColor: 'rgba(50,0,30,0.1)',
+                        marginTop: '30px',
+
                     }}
                 >
                     <GroupCreator userID={currentUserID}/>

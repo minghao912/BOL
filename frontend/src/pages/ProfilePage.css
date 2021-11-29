@@ -92,6 +92,7 @@ p {
 /* the spacing don't do anything */
 .profile_space_Between_Logo_and_UserProfile {
     height: 5px;
+    margin-bottom: 10px;
 }
 
 .profileSpace_middle {
