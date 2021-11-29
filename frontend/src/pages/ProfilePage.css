@@ -71,16 +71,28 @@ transition:
     margin: 0 auto;
 }
 
+.bio-text {
+    width: 90%;
+    margin-top : 0px;
+    word-break: break-all;
+    white-space: normal;
+    font-family: monospace;
+}
+
 p {
     text-align: center;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    font-family: sans-serif;
     color: #FFFFFF;
 }
 
 /* the spacing don't do anything */
 .profile_space_Between_Logo_and_UserProfile {
     height: 5px;
+    margin-bottom: 10px;
 }
 
 .profileSpace_middle {
@@ -114,6 +126,7 @@ p {
     transition: box-shadow 0.5s ease-in-out, width 0.5s, height 0.5s, line-height 0.5s, background-color 0.5s ;
     border-right: 2px solid black;
     border-bottom: 3px solid black;
+    cursor: pointer;
 }
 
 .profileSearchButton:hover{
@@ -141,6 +154,7 @@ p {
     transition: box-shadow 0.5s ease-in-out, width 0.5s, height 0.5s, line-height 0.5s, background-color 0.5s ;
     border-right: 2px solid black;
     border-bottom: 3px solid black;
+    cursor: pointer;
 }
 
 .profilefriendButton:hover{
@@ -176,6 +190,7 @@ p {
     border-bottom: 2px solid black;
     border-radius: 10px;
     transition: background-color 0.5s;
+    cursor: pointer;
 }
 
 .homeButton:hover{

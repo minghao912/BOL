@@ -52,7 +52,7 @@ export function SearchPage (){
                 <div className="profile_space_Between_Logo_and_UserProfile">
                     <p><b>User Search</b></p>
                 </div>
-                <div className="sub-container" style={{backgroundColor:"silver", padding: "10px"}}>
+                <div className="sub-container" style={{backgroundColor:"silver", padding: "10px", marginTop: "30px"}}>
                 <input type="text" id="message-box" className="user-search-bar" autoComplete="off"
                     placeholder="Enter a username here"
                     onChange={(e) => setName(e.target.value)} onKeyDown={handleEnterPress}

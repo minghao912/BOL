@@ -231,7 +231,7 @@ const areFriends = () =>{
                         <div className="profileBreak">
                             {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
                             {/* <p> Hi! I am {name} and I love BOL! </p> */}
-                            <p> {bio} </p>
+                            <p className="bio-text"> {bio} </p>
                         </div>
                         <div className="profileSpace_bottom"></div>
 
@@ -319,7 +319,7 @@ const areFriends = () =>{
                 <div className="profileBreak">
                     {/* <p> Hi! I am {(props.match!.params as RouteParams).googleID} and I love BOL! </p> */}
                     {/* <p> Hi! I am {name} and I love BOL! </p> */}
-                    <p> {bio} </p>
+                    <p className="bio-text"> {bio} </p>
                 </div>
                 <div className="profileSpace_bottom"></div>
 

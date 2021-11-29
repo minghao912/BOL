@@ -144,7 +144,7 @@ function singleCardGenerator(friend: User, addFriendToGroupCallback: (friend: Us
                     textAlign: 'left'
                 }}
             >
-                <Checkbox onChange={(e, checked) => addFriendToGroupCallback(friend, checked)} />
+                <Checkbox style={{color: "white"}} onChange={(e, checked) => addFriendToGroupCallback(friend, checked)} />
                 <img id='123' src={friend.profilePicPath} alt="Profile Picture" style={{maxWidth: '20%', marginLeft: '3%'}} />
                 <div 
                     style={{
