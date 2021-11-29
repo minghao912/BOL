@@ -52,7 +52,7 @@ export default function MessageSender(props: MessageSenderProps): JSX.Element {
     return (
         <div className="sub-container" style={{backgroundColor:"gray", padding: "1%", height: "40%"}}>
             <input type="text" id="message-box" className="send-msg-box" value={content} 
-                style={{paddingLeft:"1%"}}
+                style={{paddingLeft:"1%"}} autoComplete="off"
                 placeholder="Type message here... | Press Enter to send"
                 onChange={(e) => setContent(e.target.value)} onKeyDown={handleEnterPress} />
         </div>
