@@ -52,9 +52,50 @@ export function EditProfilePage (){
         history.push(path);
     }
 
+    const routeChangeProfile = (namepath:string) =>{ 
+        let path = "/profile/" + namepath; 
+        history.push(path);
+    }
+
 
     function saveChanges(){
+
+
         console.log("save changes clicked");
+        if (new_name == "" && new_bio == ""){
+            alert("no changes made")
+            routeChangeProfile(name);
+            return;
+        }
+
+        if (new_name == "" && new_bio != ""){
+            axios.put('http://localhost:5000/sources/updateUser/' + google_id, {
+                id: id,
+                profilePicPath: pfp,
+                userID: userId,
+                username: name,
+                bio: new_bio
+            } as User).then(response => {
+                console.log(response)
+                //alert("Success!")
+                routeChangeProfile(name);
+            }).catch(err => console.error(err));
+        }
+
+        if (new_name != "" && new_bio == ""){
+            axios.put('http://localhost:5000/sources/updateUser/' + google_id, {
+                id: id,
+                profilePicPath: pfp,
+                userID: userId,
+                username: new_name,
+                bio: bio
+            } as User).then(response => {
+                console.log(response)
+                //alert("Success!")
+                routeChangeProfile(new_name);
+            }).catch(err => console.error(err));
+        }
+
         axios.put('http://localhost:5000/sources/updateUser/' + google_id, {
             id: id,
             profilePicPath: pfp,
@@ -63,6 +104,7 @@ export function EditProfilePage (){
             bio: new_bio
         } as User).then(response => {
             console.log(response)
+            routeChangeProfile(new_name);
         }).catch(err => console.error(err));
     }
 
