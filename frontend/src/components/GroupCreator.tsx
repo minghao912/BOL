@@ -63,7 +63,7 @@ export default function GroupCreator(props: any): JSX.Element {
             final_list.push(listOfUsersToAdd[i].userID);
         }
         
-        for (i = 0; i < listOfUsersToRem.length; i++){
+        for (var i = 0; i < listOfUsersToRem.length; i++){
             let rem_id: string = listOfUsersToRem[i].userID;
             for (var j = 0; j < final_list.length; j++){
                 if (final_list[j] === rem_id){
@@ -118,7 +118,7 @@ function FriendDisplay(props: {
             setCardArray([...newCardArray]);
         }
         setTimeout(populateCardArray, 500); // Timeout to let the backend update first
-    }, [props.userID, props.addFriendToGroupCallback]);
+    }, [props.userID]);
 
     if (cardArray.length < 1) {
         return (<p>You have no friends.</p>);

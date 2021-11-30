@@ -104,7 +104,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
             scrollToBottom();
         }
         setTimeout(populateCardArray, 100); // Timeout to let the backend update first, adjusted so it works more consistently
-    }, [props.groupID, props.refresh, currentUserID, props.forceUpdateCallback, props.routeChangeCallback]);
+    }, [props.groupID, props.refresh, currentUserID]);
 
     if (cardArray.length < 1) {
         return (<p>There are no messages in this chat.</p>);
@@ -227,7 +227,7 @@ function GroupNameHeader(props: {groupID: string}): JSX.Element {
         }
 
         getGroupAndSetName(props.groupID);
-    }, [props.groupID, OAuthResponse.profileObj.googleId])
+    }, [props.groupID, OAuthResponse])
 
     return(
         <Box

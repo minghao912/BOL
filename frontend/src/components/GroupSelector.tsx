@@ -56,7 +56,7 @@ export default function GroupSelector(props: GroupSelectorProps) {
         axios.get(`http://localhost:5000/sources/getGroupsOfUser/${userID}?timestamp=${(new Date()).getTime()}`).then(response => {
             setGroupList(response.data as GroupList);
         }).catch(err => console.error(err));
-    }, [OAuthResponse, DEBUG_MODE, userID]);
+    }, [OAuthResponse, userID]);
 
     if (groupList.length < 1)
         return <></>;
@@ -88,7 +88,7 @@ function CardsGenerator(props: {
         }
         populateCardArray();
         setTimeout(populateCardArray, 500);
-    }, [props.refresh, props.currentUserID, props.displayMessageCallback, props.groupList]);
+    }, [props.refresh, props.currentUserID, props.groupList]);
 
     if (cardArray.length < 1) {
         return (<p>No groups to show</p>);
