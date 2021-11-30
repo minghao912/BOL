@@ -117,7 +117,7 @@ function singleCardGenerator(group: Group, currentUserID: string, displayMessage
                 if (mostRecentMessageTimestampDate.getDate() == new Date().getDate()) {
                     mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getHours().toLocaleString(undefined, {minimumIntegerDigits: 2}) + ":" + mostRecentMessageTimestampDate.getMinutes().toLocaleString(undefined, {minimumIntegerDigits: 2});
                 }
-                else mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getFullYear() + "/" + mostRecentMessageTimestampDate.getMonth() + "/" + mostRecentMessageTimestampDate.getDate();
+                else mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getFullYear() + "/" + (mostRecentMessageTimestampDate.getMonth() + 1) + "/" + mostRecentMessageTimestampDate.getDate();
             }
 
             // Generate card and return
