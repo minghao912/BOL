@@ -1,0 +1,13 @@
+Create a default screen for when there is no group selected (home page)
+
+Make the messages the user sends a different color :ooo (home page)
+
+When you click add friend, send some different message (search page?)
+
+When you send a message and have no group selected, it brings up an error (home page)
+
+Change button from "create a new group" to "direct message" if only one person is selected (home page)
+
+Remove group feature (home page)
+
+When loading, instead of just showing "no groups to show", it shows "waiting for groups to load (home page)

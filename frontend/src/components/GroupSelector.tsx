@@ -18,7 +18,7 @@ export default function GroupSelector(props: GroupSelectorProps) {
     const { OAuthResponse } = useContext(GlobalContext);
 
     // Set up user's googleID
-    const DEBUG_MODE = true;
+    const DEBUG_MODE = false;
     let defaultUserID: string;
     if (DEBUG_MODE)
     {
@@ -188,40 +188,50 @@ function getMostRecentMessage(group: Group): Promise<Message> {
 // Sort the groups based on how recent their most recent message was (more recent => earlier in the list)
 function sortGroup(groupList: GroupList): Promise<GroupList> {
     return new Promise(async (resolve, reject) => {
+        console.log(groupList + " is grouplist");
         var intList: number[] = [];
         var sortedList: GroupList = [];
         for (let i = 0; i < groupList.length; i++)
         {
             await getMostRecentMessage(groupList[i]).then(message => {
                 const timeStamp = message.timestamp;
-                const timeString =  timeStamp.slice(0,4) + timeStamp.slice(5,7) 
-                + timeStamp.slice(8,10) + timeStamp.slice(11,13) + timeStamp.slice(14, 16) + 
-                timeStamp.slice(17,19) + timeStamp.slice(20, 23);
-                const timeValue = parseInt(timeString);
-                // TimeValue is the time as an int
-                if (sortedList === [])
+                if (timeStamp !== undefined)
                 {
-                    intList.push(timeValue);
-                    sortedList.push(groupList[i]); 
+                    const timeString =  timeStamp.slice(0,4) + timeStamp.slice(5,7) 
+                    + timeStamp.slice(8,10) + timeStamp.slice(11,13) + timeStamp.slice(14, 16) + 
+                    timeStamp.slice(17,19) + timeStamp.slice(20, 23);
+                    const timeValue = parseInt(timeString);
+                    console.log(timeValue);
+                    // TimeValue is the time as an int
+                    if (sortedList === [])
+                    {
+                        intList.push(timeValue);
+                        sortedList.push(groupList[i]); 
+                    }
+                    else
+                    {
+                        let inserted = false;
+                        for (let n = 0; n < sortedList.length; n++)
+                        {
+                            if (timeValue > intList[n])
+                            {
+                                intList.splice(n, 0, timeValue);
+                                sortedList.splice(n, 0, groupList[i]);
+                                inserted = true;
+                                break;
+                            }
+                        }
+                        if (inserted === false)
+                        {
+                            intList.push(timeValue);
+                            sortedList.push(groupList[i]);
+                        }
+                    }
                 }
                 else
                 {
-                    let inserted = false;
-                    for (let n = 0; n < sortedList.length; n++)
-                    {
-                        if (timeValue > intList[n])
-                        {
-                            intList.splice(n, 0, timeValue);
-                            sortedList.splice(n, 0, groupList[i]);
-                            inserted = true;
-                            break;
-                        }
-                    }
-                    if (inserted === false)
-                    {
-                        intList.push(timeValue);
-                        sortedList.push(groupList[i]);
-                    }
+                    sortedList.splice(0, 0, groupList[i]);
+                    intList.splice(0, 0, 100000000000000000);
                 }
             }).catch(err => {
                 console.error(err);
