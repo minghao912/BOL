@@ -29,7 +29,7 @@ export default function CreateGroup(props: any): JSX.Element {
 
     return (
         <div className="profileContainer">
-            <div className="profileBox"> 
+            <div className="profileBox" style={{overflow: "hidden"}}> 
                 <div className="homeButton" style={{float:"left"}} onClick = {routeChange} >
                     <span style={{color:"#ffffff"}} > Home </span>
                 </div>
