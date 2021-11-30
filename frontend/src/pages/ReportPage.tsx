@@ -1,14 +1,8 @@
 import React from 'react';
-<<<<<<< HEAD
-import { Box, Container } from "@mui/material";
-import { Card } from "@mui/material";
-import { CardContent } from '@mui/material';
-=======
 import { Box } from "@mui/material";
->>>>>>> 0ea2bd7998e0e0485da141b43093f8d19466b674
 import Button from '@mui/material/Button';
 import { Typography } from '@mui/material';
-
+import { useHistory } from "react-router-dom";
 import BOL from '../images/BOL_light.png';
 import { COLORS } from '../commons/constants';
 

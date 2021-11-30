@@ -3,7 +3,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Box } from "@mui/material";
 import { Card } from "@mui/material";
 import { CardContent } from '@mui/material';
-import Button from '@mui/material/Button';
 import CardActions from '@mui/material/CardActions';
 import { Typography } from '@mui/material';
 import { useHistory } from "react-router-dom";
@@ -105,7 +104,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
             scrollToBottom();
         }
         setTimeout(populateCardArray, 100); // Timeout to let the backend update first, adjusted so it works more consistently
-    }, [props.groupID, props.refresh]);
+    }, [props.groupID, props.refresh, currentUserID, props.forceUpdateCallback, props.routeChangeCallback]);
 
     if (cardArray.length < 1) {
         return (<p>There are no messages in this chat.</p>);

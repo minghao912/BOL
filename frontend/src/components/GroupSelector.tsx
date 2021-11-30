@@ -88,7 +88,7 @@ function CardsGenerator(props: {
         }
         populateCardArray();
         setTimeout(populateCardArray, 500);
-    }, [props.refresh]);
+    }, [props.refresh, props.currentUserID, props.displayMessageCallback, props.groupList]);
 
     if (cardArray.length < 1) {
         return (<p>No groups to show</p>);

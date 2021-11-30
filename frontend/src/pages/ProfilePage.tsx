@@ -71,14 +71,8 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
                 return <Redirect to={{pathname: "/profile/"+username}} />;
             });
         }
-<<<<<<< HEAD
-        );
-    }, [OAuthResponse, props.match.params.googleID, username]);
-=======
-
         unnamed_function();
-    }, [OAuthResponse]);
->>>>>>> 0ea2bd7998e0e0485da141b43093f8d19466b674
+    }, [OAuthResponse, props.match, username]);
 
     const history = useHistory();
     
@@ -87,15 +81,6 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
         history.push(path);
     }
 
-<<<<<<< HEAD
-=======
-    const routeChangeProfile = () =>{ 
-        let path = "/profile/"+ username; 
-        history.push(path);
-        history.go(0);
-    }
-
->>>>>>> 0ea2bd7998e0e0485da141b43093f8d19466b674
     const routeChangeSearch = () => {
         let path = "/search";
         history.push(path);
@@ -145,31 +130,20 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
         return false;
     }
 */
-<<<<<<< HEAD
-const areFriends = () =>{
-        Axios.get(`http://localhost:5000/sources/areFriends/${newGoogleID}/${profileID}`).then(response => {
-            if (response.data.areFriends === '1'){
-                console.log("response: are friends")
-                return true;
-            }
-        }).catch(err => {console.error(err)});
-        return false;
-=======
     const checkIfFriends = async (userID1: string, userID2: string): Promise<boolean> => {
         return new Promise((resolve, reject) => {
             Axios.get(`http://localhost:5000/sources/areFriends/${userID1}/${userID2}`).then(response => {
-                if (response.data.areFriends == '1'){
+                if (response.data.areFriends === '1'){
                     console.log("response: are friends")
                     resolve(true);
                 }
                 else resolve(false);
             }).catch(err => {console.error(err)});
         });
->>>>>>> 0ea2bd7998e0e0485da141b43093f8d19466b674
     }
 
 
-    if (!props.hasID && username != "")
+    if (!props.hasID && username !== "")
     {
         //console.log("Reached redirect statement 2");
         // console.log(name);
