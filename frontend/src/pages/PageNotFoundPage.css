@@ -1,0 +1,13 @@
+.errorPage {
+    background-image: url("../images/Background_Error.jpg");
+    background-size: cover;
+    display: flex; 
+    flex-wrap: wrap;
+    justify-self: center;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /*replaced min-width: 100vw with width: 100% to get rid of horizonral scrollbar */
+    width: 100%;
+    margin: 0 0 0 0
+}
