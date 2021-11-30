@@ -51,8 +51,6 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
                 height: '10%',
                 paddingTop: '0%',
                 paddingBottom: '0%',
-                borderBottom: 4,
-                borderColor: COLORS.OFF_BLACK,
             }}
             style={{
                 alignItems: 'center'
@@ -66,7 +64,9 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
                 width: '100%',
                 height: '70%',
                 paddingTop: '0%',
-                paddingBottom: '3%'
+                paddingBottom: '3%',
+                borderTop: 4,
+                borderColor: COLORS.OFF_BLACK,
             }}
             className="get-messages-message-display"
         >
