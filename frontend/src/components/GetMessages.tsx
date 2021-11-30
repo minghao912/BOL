@@ -12,7 +12,7 @@ import MessageSender from "./MessageSender";
 import { Message, MessageList, User } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 
-
+import "./GetMessages.css"
 
 interface GetMessagesProps {
     groupID: string,
@@ -170,11 +170,11 @@ function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateC
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                            <input type="button" value="Copy" className="message-button"
+                                <input type="button" value="Copy" className="message-button"
                                     onClick={() =>  navigator.clipboard.writeText(message.content)}
                                 />
-                                <input type="button" value="Delete" className="message-button"
-                                    onClick={() => delete_msg(message.messageID, forceUpdateCallback)}
+                                <input type="button" value="Report" className="message-button"
+                                    onClick={() => routeChangeCallback()}
                                 />
                             </CardActions>
                         </Card>
