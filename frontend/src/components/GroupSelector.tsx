@@ -83,7 +83,7 @@ function CardsGenerator(props: {
             let newCardArray = [] as JSX.Element[];
             const sortedGroup = await sortGroup(props.groupList);
             for (let iterator of Object.keys(sortedGroup))
-                await singleCardGenerator(props.groupList[iterator as any], props.currentUserID, props.displayMessageCallback).then(card => newCardArray.push(card));
+                await singleCardGenerator(sortedGroup[iterator as any], props.currentUserID, props.displayMessageCallback).then(card => newCardArray.push(card));
             
             setCardArray([...newCardArray]);
         }
@@ -194,10 +194,8 @@ function sleep(milliseconds: number) {
 // Sort the groups based on how recent their most recent message was (more recent => earlier in the list)
 function sortGroup(groupList: GroupList): Promise<GroupList> {
     return new Promise(async (resolve, reject) => {
-        console.log("Sort group is called");
         var intList: number[] = [];
         var sortedList: GroupList = [];
-        console.log("grouplist is " + groupList + " and has length " + groupList.length)
         for (let i = 0; i < groupList.length; i++)
         {
             await getMostRecentMessage(groupList[i]).then(message => {
@@ -207,7 +205,6 @@ function sortGroup(groupList: GroupList): Promise<GroupList> {
                 timeStamp.slice(17,19) + timeStamp.slice(20, 23);
                 const timeValue = parseInt(timeString);
                 // TimeValue is the time as an int
-                console.log(timeValue + " is timeValue for i = " + i);
                 if (sortedList == [])
                 {
                     intList.push(timeValue);
@@ -221,9 +218,7 @@ function sortGroup(groupList: GroupList): Promise<GroupList> {
                         if (timeValue > intList[n])
                         {
                             intList.splice(n, 0, timeValue);
-                            console.log(intList)
                             sortedList.splice(n, 0, groupList[i]);
-                            console.log(sortedList)
                             inserted = true;
                             break;
                         }
@@ -234,10 +229,11 @@ function sortGroup(groupList: GroupList): Promise<GroupList> {
                         sortedList.push(groupList[i]);
                     }
                 }
+            }).catch(err => {
+                console.error(err);
+                reject(groupList);
             });
         }
-        console.log(intList);
-        console.log(sortedList);
         // Returns GroupList objects sorted from newest to oldest
         resolve(sortedList);
         reject(groupList);
