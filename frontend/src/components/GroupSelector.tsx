@@ -63,9 +63,8 @@ export default function GroupSelector(props: GroupSelectorProps) {
         return <></>;
     else 
     {
-        const sortedGroup = sortGroup(groupList);
         return(
-            <CardsGenerator groupList={sortedGroup} currentUserID={userID} displayMessageCallback={props.setGroupToDisplayMessagesFor} refresh={props.refresh}></CardsGenerator>);
+            <CardsGenerator groupList={groupList} currentUserID={userID} displayMessageCallback={props.setGroupToDisplayMessagesFor} refresh={props.refresh}></CardsGenerator>);
     }
 }
 
@@ -82,9 +81,9 @@ function CardsGenerator(props: {
         // Create the array of cards for each group. Awaits for the request to finish before setting the card array, which triggers a render
         async function populateCardArray() {
             let newCardArray = [] as JSX.Element[];
-
-            for (let iterator of Object.keys(props.groupList))
-                await singleCardGenerator(props.groupList[iterator as any], props.currentUserID, props.displayMessageCallback).then(card => newCardArray.push(card));
+            const sortedGroup = await sortGroup(props.groupList);
+            for (let iterator of Object.keys(sortedGroup))
+                await singleCardGenerator(sortedGroup[iterator as any], props.currentUserID, props.displayMessageCallback).then(card => newCardArray.push(card));
             
             setCardArray([...newCardArray]);
         }
@@ -185,26 +184,58 @@ function getMostRecentMessage(group: Group): Promise<Message> {
         });
     });
 }
-
+function sleep(milliseconds: number) {
+    const date = Date.now();
+    let currentDate = null;
+    do {
+      currentDate = Date.now();
+    } while (currentDate - date < milliseconds);
+  }
 // Sort the groups based on how recent their most recent message was (more recent => earlier in the list)
-function sortGroup(groupList: GroupList): GroupList {
-    console.log("Sort group is called");
-    var intList: number[] = [];
-    var sortedList: GroupList = [];
-    console.log("grouplist is " + groupList + " and has length " + groupList.length)
-    for (let i = 0; i < groupList.length; i++)
-    {
-        getMostRecentMessage(groupList[i]).then(message=> {
-            const timeStamp = message.timestamp;
-            const timeString =  timeStamp.slice(0,4) + timeStamp.slice(5,7) 
-            + timeStamp.slice(8,10) + timeStamp.slice(11,13) + timeStamp.slice(14, 16) + 
-            timeStamp.slice(17,19) + timeStamp.slice(20, 23);
-            const timeValue = parseInt(timeString);
-            // TimeValue is the time as an int
-            console.log(timeValue + " is timeValue for i = " + i);
-            console.log(intList.push(timeValue));
-        })
-    }
-    console.log("intlist is " + intList)
-    return groupList;
+function sortGroup(groupList: GroupList): Promise<GroupList> {
+    return new Promise(async (resolve, reject) => {
+        var intList: number[] = [];
+        var sortedList: GroupList = [];
+        for (let i = 0; i < groupList.length; i++)
+        {
+            await getMostRecentMessage(groupList[i]).then(message => {
+                const timeStamp = message.timestamp;
+                const timeString =  timeStamp.slice(0,4) + timeStamp.slice(5,7) 
+                + timeStamp.slice(8,10) + timeStamp.slice(11,13) + timeStamp.slice(14, 16) + 
+                timeStamp.slice(17,19) + timeStamp.slice(20, 23);
+                const timeValue = parseInt(timeString);
+                // TimeValue is the time as an int
+                if (sortedList == [])
+                {
+                    intList.push(timeValue);
+                    sortedList.push(groupList[i]); 
+                }
+                else
+                {
+                    let inserted = false;
+                    for (let n = 0; n < sortedList.length; n++)
+                    {
+                        if (timeValue > intList[n])
+                        {
+                            intList.splice(n, 0, timeValue);
+                            sortedList.splice(n, 0, groupList[i]);
+                            inserted = true;
+                            break;
+                        }
+                    }
+                    if (inserted == false)
+                    {
+                        intList.push(timeValue);
+                        sortedList.push(groupList[i]);
+                    }
+                }
+            }).catch(err => {
+                console.error(err);
+                reject(groupList);
+            });
+        }
+        // Returns GroupList objects sorted from newest to oldest
+        resolve(sortedList);
+        reject(groupList);
+    });
 }
