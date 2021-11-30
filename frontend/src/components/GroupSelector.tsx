@@ -88,6 +88,7 @@ function CardsGenerator(props: {
             setCardArray([...newCardArray]);
         }
         populateCardArray();
+        setTimeout(populateCardArray, 500);
     }, [props.refresh]);
 
     if (cardArray.length < 1) {

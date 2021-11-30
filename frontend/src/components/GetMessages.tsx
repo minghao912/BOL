@@ -12,6 +12,8 @@ import MessageSender from "./MessageSender";
 import { Message, MessageList, User } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 
+
+
 interface GetMessagesProps {
     groupID: string,
     refresh: boolean,
@@ -141,16 +143,12 @@ function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateC
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small"
+                                <input type="button" value="Copy" className="message-button"
                                     onClick={() =>  navigator.clipboard.writeText(message.content)}
-                                    >
-                                    Copy
-                                </Button>
-                                <Button size="small"
+                                />
+                                <input type="button" value="Delete" className="message-button"
                                     onClick={() => delete_msg(message.messageID, forceUpdateCallback)}
-                                    >
-                                    Delete
-                                </Button>
+                                />
                             </CardActions>
                         </Card>
                     </React.Fragment>
@@ -172,15 +170,12 @@ function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateC
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small"
+                            <input type="button" value="Copy" className="message-button"
                                     onClick={() =>  navigator.clipboard.writeText(message.content)}
-                                    >
-                                    Copy
-                                </Button>
-                                <Button size="small"
-                                onClick= {routeChangeCallback}>
-                                    Report
-                                </Button>
+                                />
+                                <input type="button" value="Delete" className="message-button"
+                                    onClick={() => delete_msg(message.messageID, forceUpdateCallback)}
+                                />
                             </CardActions>
                         </Card>
                     </React.Fragment>
