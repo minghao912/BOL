@@ -69,7 +69,6 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
 
 function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCallback: () => void, routeChangeCallback: () => void}): JSX.Element {
     const [cardArray, setCardArray] = useState<JSX.Element[]>([]);
-    const [localRefresh, setLocalRefresh] = useState<boolean>(false);
     const { OAuthResponse } = useContext(GlobalContext);
     const [currentUserID, setCurrentUserID] = useState<string>("");
 
@@ -103,7 +102,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
             scrollToBottom();
         }
         setTimeout(populateCardArray, 50); // Timeout to let the backend update first
-    }, [props.groupID, props.refresh]);
+    }, [props.groupID, props.refresh, currentUserID, props.forceUpdateCallback, props.routeChangeCallback]);
 
     if (cardArray.length < 1) {
         return (<p>There are no messages in this chat.</p>);
@@ -119,7 +118,7 @@ function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateC
     let userID = message.sender.userID;
     //let username:string = "DummyUsernameHere"; //Placeholder
     let isSameUser = false;
-    if (CurrentUser == userID) {
+    if (CurrentUser === userID) {
         isSameUser = true;
     }
     return new Promise((resolve, reject) => {
@@ -222,7 +221,7 @@ function GroupNameHeader(props: {groupID: string}): JSX.Element {
     useEffect(() => {
         async function getGroupAndSetName(groupID: string) {
             // Don't run this if there is no group selected
-            if (!groupID || groupID == "default")
+            if (!groupID || groupID === "default")
                 return;
 
             let groupname = "";
@@ -233,7 +232,7 @@ function GroupNameHeader(props: {groupID: string}): JSX.Element {
         }
 
         getGroupAndSetName(props.groupID);
-    }, [props.groupID])
+    }, [props.groupID, OAuthResponse.profileObj.googleId])
 
     return(
         <Box
@@ -251,7 +250,7 @@ function GroupNameHeader(props: {groupID: string}): JSX.Element {
 function getMessageList(groupID: string): Promise<MessageList>{
     return new Promise((resolve, reject) => {
         // Don't make request if no group selected
-        if (!groupID || groupID == "default")
+        if (!groupID || groupID === "default")
             reject([] as MessageList);
 
         axios.get(`http://localhost:5000/sources/getMessagesOfGroup/${groupID}`).then(response => {

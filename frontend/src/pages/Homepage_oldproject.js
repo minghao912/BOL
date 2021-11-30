@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './Homepage.css';
 
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Container, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faUserFriends } from '@fortawesome/free-solid-svg-icons';

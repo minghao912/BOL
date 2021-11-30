@@ -1,20 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from 'axios';
+import { useState, useEffect, useContext } from 'react';
 import { Box } from '@mui/material';
 
 import GroupCreator from '../components/GroupCreator';
 import { GlobalContext } from '../context/GlobalState';
 import { useHistory } from "react-router-dom";
-import { User } from '../commons/interfaces';
-import { COLORS } from '../commons/constants';
 import "./CreateGroup.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 
 export default function CreateGroup(props: any): JSX.Element {
     const { OAuthResponse } = useContext(GlobalContext);
-    const [currentUserID, setCurrentUserID] = useState<string>("");
-    const [listOfUsersToCreateAGroupWith, setListOfUsersToCreateAGroupWith] = useState<User[]>([] as User[]);
-    
+    const [currentUserID, setCurrentUserID] = useState<string>("");    
 
     useEffect(() => {
         setCurrentUserID(OAuthResponse.profileObj.googleId);

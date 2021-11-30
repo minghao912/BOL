@@ -1,10 +1,9 @@
 import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Box, Paper } from '@mui/material';
 
 import { User, Group, Message, GroupList } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
-import { COLORS } from '../commons/constants';
 
 import './GroupSelector.css';
 
@@ -37,7 +36,7 @@ export default function GroupSelector(props: GroupSelectorProps) {
             return;
 
         // Make sure the user has logged in and it is working
-        if (OAuthResponse == {}) {
+        if (OAuthResponse === {}) {
             console.error("There was an error with the Google OAuth JSON");
             return;
         }
@@ -57,7 +56,7 @@ export default function GroupSelector(props: GroupSelectorProps) {
         axios.get(`http://localhost:5000/sources/getGroupsOfUser/${userID}?timestamp=${(new Date()).getTime()}`).then(response => {
             setGroupList(response.data as GroupList);
         }).catch(err => console.error(err));
-    }, [OAuthResponse]);
+    }, [OAuthResponse, DEBUG_MODE, userID]);
 
     if (groupList.length < 1)
         return <></>;
@@ -88,7 +87,7 @@ function CardsGenerator(props: {
             setCardArray([...newCardArray]);
         }
         populateCardArray();
-    }, [props.refresh]);
+    }, [props.refresh, props.currentUserID, props.displayMessageCallback, props.groupList]);
 
     if (cardArray.length < 1) {
         return (<p>No groups to show</p>);
@@ -113,7 +112,7 @@ function singleCardGenerator(group: Group, currentUserID: string, displayMessage
             // For timestamp, show the time if same day as today, show date otherwise
             if (message.timestamp) {
                 let mostRecentMessageTimestampDate = new Date(message.timestamp);
-                if (mostRecentMessageTimestampDate.getDate() == new Date().getDate()) {
+                if (mostRecentMessageTimestampDate.getDate() === new Date().getDate()) {
                     mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getHours().toLocaleString(undefined, {minimumIntegerDigits: 2}) + ":" + mostRecentMessageTimestampDate.getMinutes().toLocaleString(undefined, {minimumIntegerDigits: 2});
                 }
                 else mostRecentMessageTimestamp = mostRecentMessageTimestampDate.getFullYear() + "/" + mostRecentMessageTimestampDate.getMonth() + "/" + mostRecentMessageTimestampDate.getDate();
@@ -132,7 +131,7 @@ function singleCardGenerator(group: Group, currentUserID: string, displayMessage
                     <Paper elevation={2} style={{padding: "2% 2% 2% 2%"}}>
                         <div className="group_card_first_line">
                             <p style={{color:"black"}}><b>{groupName}</b></p>
-                            {!mostRecentMessageTimestamp || mostRecentMessageTimestamp == "0" ?    // Donn't place the timestamp if there was no most recent message
+                            {!mostRecentMessageTimestamp || mostRecentMessageTimestamp === "0" ?    // Donn't place the timestamp if there was no most recent message
                                 <></> : 
                                 <p style={{color:"black"}}>{mostRecentMessageTimestamp}</p>
                             }
@@ -165,17 +164,17 @@ function groupnameGenerator(users: User[], currentUserID: string): string {
 }
 
 function getMostRecentMessage(group: Group): Promise<Message> {
-    const defaultMessage = {
-        messageID: "0",  
-        groupID: group.groupID,    
-        userID: "0",    
-        timestamp: "0", 
-        content: "There are no messages in this group"
-    };
+    // const defaultMessage = {
+    //     messageID: "0",  
+    //     groupID: group.groupID,    
+    //     userID: "0",    
+    //     timestamp: "0", 
+    //     content: "There are no messages in this group"
+    // };
 
     return new Promise((resolve, reject) => {
         axios.get(`http://localhost:5000/sources/getLatestMessageByGroup/${group.groupID}`).then(response => {
-            if (response.data == {})
+            if (response.data === {})
                 resolve({} as Message);
             else resolve(response.data as Message);
         }).catch(err => {
@@ -184,13 +183,7 @@ function getMostRecentMessage(group: Group): Promise<Message> {
         });
     });
 }
-function sleep(milliseconds: number) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
+
 // Sort the groups based on how recent their most recent message was (more recent => earlier in the list)
 function sortGroup(groupList: GroupList): Promise<GroupList> {
     return new Promise(async (resolve, reject) => {
@@ -205,7 +198,7 @@ function sortGroup(groupList: GroupList): Promise<GroupList> {
                 timeStamp.slice(17,19) + timeStamp.slice(20, 23);
                 const timeValue = parseInt(timeString);
                 // TimeValue is the time as an int
-                if (sortedList == [])
+                if (sortedList === [])
                 {
                     intList.push(timeValue);
                     sortedList.push(groupList[i]); 
@@ -223,7 +216,7 @@ function sortGroup(groupList: GroupList): Promise<GroupList> {
                             break;
                         }
                     }
-                    if (inserted == false)
+                    if (inserted === false)
                     {
                         intList.push(timeValue);
                         sortedList.push(groupList[i]);

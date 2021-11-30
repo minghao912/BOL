@@ -1,12 +1,9 @@
-import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
+import React from 'react';
 import { Box, Container } from "@mui/material";
 import { Card } from "@mui/material";
 import { CardContent } from '@mui/material';
 import Button from '@mui/material/Button';
-import CardActions from '@mui/material/CardActions';
 import { Typography } from '@mui/material';
-import { useHistory } from "react-router-dom";
 
 
 export default function ReportPage(props: any): JSX.Element {

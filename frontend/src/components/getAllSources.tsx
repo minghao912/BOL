@@ -17,7 +17,7 @@ export default function GetAllSources(props: SubProps) {
             
             console.log("Got all sources:\n" + JSON.stringify(data));
         }).catch(err => alert(err));
-    }, []);
+    }, [data]);
 
     return (
         <Container className={`${classesFromParent} justify-content-md-center`}>

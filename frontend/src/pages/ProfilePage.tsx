@@ -1,10 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, useParams } from 'react-router';
-import { Route, Switch } from 'react-router-dom';
-import { BrowserRouter} from 'react-router-dom';
-import { RouteChildrenProps } from 'react-router';
+import { useContext, useEffect, useState } from 'react';
+import { Redirect} from 'react-router';
 import { COLORS } from '../commons/constants';
-import { User, Friendship } from '../commons/interfaces';
+import { User} from '../commons/interfaces';
 import { GlobalContext } from "../context/GlobalState";
 import "./ProfilePage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
@@ -64,19 +61,13 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
             return <Redirect to={{pathname: "/profile/"+username}} />;
         }
         );
-    }, [OAuthResponse]);
+    }, [OAuthResponse, props.match.params.googleID, username]);
 
     const history = useHistory();
     
     const routeChange = () =>{ 
         let path = "/home"; 
         history.push(path);
-    }
-
-    const routeChangeProfile = () =>{ 
-        let path = "/profile/"+username; 
-        history.push(path);
-        history.go(0);
     }
 
     const routeChangeSearch = () => {
@@ -121,7 +112,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
 */
 const areFriends = () =>{
         Axios.get(`http://localhost:5000/sources/areFriends/${newGoogleID}/${profileID}`).then(response => {
-            if (response.data.areFriends == '1'){
+            if (response.data.areFriends === '1'){
                 console.log("response: are friends")
                 return true;
             }
@@ -174,7 +165,7 @@ const areFriends = () =>{
                 </div>
                 {/* <div className="profileSpaceSmall"></div> */}
                 <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
-                    <img id='123' src= {profileIcon} alt = "Profile Picture" width = "200" />
+                    <img id='123' src= {profileIcon} alt = "Profile" width = "200" />
                 </div>
                 {/* <div className="profileBreak"> */}
                     {/* <p> {name} </p> */}
@@ -201,7 +192,7 @@ const areFriends = () =>{
 
     document.body.style.background = COLORS.BACKGROUND3;
 
-    if(newGoogleID != profileID)
+    if(newGoogleID !== profileID)
     {
         if (!areFriends())
         {
@@ -221,7 +212,7 @@ const areFriends = () =>{
                         </div> 
                         <div className="profileSpaceSmall"></div>
                         <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
-                            <img id='123' src= {imageUrl} alt = "Profile Picture" width = "125" height = "125" />
+                            <img id='123' src= {imageUrl} alt = "Profile" width = "125" height = "125" />
                         </div>
                         <div className="profileBreak">
                             <p> {name} </p>
@@ -265,7 +256,7 @@ const areFriends = () =>{
                         </div> 
                         <div className="profileSpaceSmall"></div>
                         <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
-                            <img id='123' src= {imageUrl} alt = "Profile Picture" width = "125" height = "125" />
+                            <img id='123' src= {imageUrl} alt = "Profile" width = "125" height = "125" />
                         </div>
                         <div className="profileBreak">
                             <p> {name} </p>
@@ -310,7 +301,7 @@ const areFriends = () =>{
                 </div>
                 <div className="profileSpaceSmall"></div>
                 <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
-                    <img id='123' src= {imageUrl} alt = "Profile Picture" width = "125" height = "125" />
+                    <img id='123' src= {imageUrl} alt = "Profile" width = "125" height = "125" />
                 </div>
                 <div className="profileBreak">
                     <p> {name} </p>

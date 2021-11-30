@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
-import { Container, Box, TextField, Button, Paper, List } from '@mui/material';
+import { Box, TextField, Button, Paper, List } from '@mui/material';
 
 import './Homepage.css';
-import { COLORS } from '../commons/constants';
 import { MessageList, MessageToSendBack } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 

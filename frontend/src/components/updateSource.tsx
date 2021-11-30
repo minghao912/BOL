@@ -19,7 +19,7 @@ export default function UpdateSource(props: UpdateProps): JSX.Element {
     // Automatically get source information
     useEffect(() => {
         get(sourceToEdit);
-    }, []);
+    }, [get, sourceToEdit]);
 
     // Gets source to prepopulate values
     function get(id: number) {

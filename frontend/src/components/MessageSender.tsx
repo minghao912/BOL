@@ -1,8 +1,7 @@
 import axios from 'axios';
-import React, { useState, useEffect, useContext } from 'react';
-import { Container, Box, TextField, Button, Paper, List } from '@mui/material';
+import React, { useState, useContext } from 'react';
 
-import { MessageToSendBack, MessageList } from '../commons/interfaces';
+import { MessageToSendBack } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 
 import './MessageSender.css';
@@ -15,8 +14,6 @@ interface MessageSenderProps {
 export default function MessageSender(props: MessageSenderProps): JSX.Element {
     const { OAuthResponse } = useContext(GlobalContext);
     const [content, setContent] = useState<string>("");
-    const [userIDtoSearch, setUserIDtoSearch] = useState<string>(OAuthResponse.profileObj.googleId);
-    const [response, setResponse] = useState<MessageList>([] as MessageList);
 
 /*  SAMPLE message
     {

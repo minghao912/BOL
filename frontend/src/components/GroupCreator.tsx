@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Box, Checkbox, Button } from '@mui/material';
+import { Box, Checkbox } from '@mui/material';
 
 
-import { User, Friendship, NewGroup, GroupList } from '../commons/interfaces';
+import { User, Friendship, NewGroup } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
-import { arrayOf } from 'prop-types';
 import { useHistory } from "react-router-dom";
 import "./GroupCreator.css"
 
@@ -15,8 +14,6 @@ export default function GroupCreator(props: any): JSX.Element {
     // List of users to be added to and removed from the group
     const [listOfUsersToAdd, setListOfUsersToAdd] = useState<User[]>([] as User[]);
     const [listOfUsersToRem, setListOfUsersToRem] = useState<User[]>([] as User[]);
-    const [finalListOfUsersToAdd, setFinalListOfUsersToAdd] = useState<User[]>([] as User[]);
-
 
     // redirect back to home page upon group creation
     const history = useHistory();
@@ -36,7 +33,7 @@ export default function GroupCreator(props: any): JSX.Element {
     }, [listOfUsersToAdd, listOfUsersToRem])
 
     // Wait until the props are populated with values
-    if (props.userID == "")
+    if (props.userID === "")
         return <></>;
 
     // Change the list of users, if add is true, add; if it is false, remove the passed user
@@ -66,10 +63,10 @@ export default function GroupCreator(props: any): JSX.Element {
             final_list.push(listOfUsersToAdd[i].userID);
         }
         
-        for (var i = 0; i < listOfUsersToRem.length; i++){
+        for (i = 0; i < listOfUsersToRem.length; i++){
             let rem_id: string = listOfUsersToRem[i].userID;
             for (var j = 0; j < final_list.length; j++){
-                if (final_list[j] == rem_id){
+                if (final_list[j] === rem_id){
                     final_list.splice(j,1);
                     break;
                 }
@@ -121,7 +118,7 @@ function FriendDisplay(props: {
             setCardArray([...newCardArray]);
         }
         setTimeout(populateCardArray, 500); // Timeout to let the backend update first
-    }, [props.userID]);
+    }, [props.userID, props.addFriendToGroupCallback]);
 
     if (cardArray.length < 1) {
         return (<p>You have no friends.</p>);
@@ -145,7 +142,7 @@ function singleCardGenerator(friend: User, addFriendToGroupCallback: (friend: Us
                 }}
             >
                 <Checkbox style={{color: "white"}} onChange={(e, checked) => addFriendToGroupCallback(friend, checked)} />
-                <img id='123' src={friend.profilePicPath} alt="Profile Picture" style={{maxWidth: '20%', marginLeft: '3%'}} />
+                <img id='123' src={friend.profilePicPath} alt="Profile" style={{maxWidth: '20%', marginLeft: '3%'}} />
                 <div 
                     style={{
                         flex: '0 1 auto',
@@ -177,7 +174,7 @@ function getFriendsList(userID: string): Promise<User[]> {
 
 // Returns the "other person" in the friendship
 function getFriendObject(currentUserID: string, friendship: Friendship): User {
-    if (friendship.fromUser.userID == currentUserID)
+    if (friendship.fromUser.userID === currentUserID)
         return friendship.toUser;
     else return friendship.fromUser;
 }

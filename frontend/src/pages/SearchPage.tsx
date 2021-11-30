@@ -1,7 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, useParams } from 'react-router';
-import { RouteChildrenProps } from 'react-router';
-import { COLORS } from '../commons/constants';
 import { User } from '../commons/interfaces';
 import { GlobalContext } from "../context/GlobalState";
 import "./SearchPage.css";
@@ -91,11 +88,11 @@ function GenerateResults(props: {nameToSearch: string}): JSX.Element {
     }, [props.nameToSearch])
 
     // if that array is empty, we know there is no match
-    if (props.nameToSearch == "")
+    if (props.nameToSearch === "")
         return (<div></div>);
 
     // otherwise render the list of elemments
-    if (user_elements.length != 0){
+    if (user_elements.length !== 0){
         return (<div style={{margin: "3% 2% 3% 2%", overflow:"auto", maxHeight:"100%"}}> 
             {user_elements};
             </div>);
@@ -111,7 +108,7 @@ function GenerateResults(props: {nameToSearch: string}): JSX.Element {
 function getUsers(name: string): Promise<User[]> {
     return new Promise((resolve, reject) => {
         // If the user doesn't have a search, don't make the request
-        if (name == "")
+        if (name === "")
             resolve([]);
         else {  // Actually make the request
             axios.get(`http://localhost:5000/sources/searchUsers/${name}`).then(response => {
@@ -125,17 +122,15 @@ function getUsers(name: string): Promise<User[]> {
 // this contains the matched user's username and their profile link
 function createEntry(match: User){
     let u_username : string;
-    let u_userID: string;
     let u_userpic: string;
     let u_profile: string;
     u_username = match.username;
-    u_userID = match.userID;
     u_userpic = match.profilePicPath;
     u_profile = "/profile/" + u_username;
     return (
         <div className="user-search-entry">
             <div className="user-search-image">
-                <img src={u_userpic} alt ="Profile Picture" width = "40" height = "40"/>
+                <img src={u_userpic} alt ="Profile" width = "40" height = "40"/>
             </div>
             <div className="user-search-name" >
                 <span> {u_username} </span>

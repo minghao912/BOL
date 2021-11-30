@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Container, Box, Button} from '@mui/material';
+import React, {useState} from 'react';
+import { Box, Button} from '@mui/material';
 
 import './Homepage.css';
 import BOL from '../images/BOL_light.png';
@@ -8,7 +7,6 @@ import ProfilePageButtonIcon from '../images/homepage-profile-icon-white.png';
 import NewGroupButtonIcon from '../images/plus-square-regular-white.png';
 
 import { COLORS } from '../commons/constants';
-import { MessageList } from '../commons/interfaces'
 import GetMessages from '../components/GetMessages';
 import GroupSelector from '../components/GroupSelector';
 import { useHistory } from "react-router-dom";
@@ -128,7 +126,7 @@ export default function Homepage(props: HomepageProps) {
                             display:'block'
                         }}
                     >
-                        <img src={ProfilePageButtonIcon} style={{maxHeight: '100%'}} />
+                        <img src={ProfilePageButtonIcon} alt = "" style={{maxHeight: '100%'}} />
                     </Button>
                 </Box>
                 <Box
@@ -152,7 +150,7 @@ export default function Homepage(props: HomepageProps) {
                             display:'block'
                         }}
                     >
-                        <img src={NewGroupButtonIcon} style={{maxHeight: '50%'}} />
+                        <img src={NewGroupButtonIcon} alt = "" style={{maxHeight: '50%'}} />
                     </Button>
                 </Box>
             </Box>

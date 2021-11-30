@@ -16,7 +16,7 @@ export default function DeleteSource(props: UpdateProps): JSX.Element {
         try {
             get(sourceToDelete);
         } catch(err) {}
-    }, []);
+    }, [sourceToDelete]);
 
     function get(id: number) {
         axios.get(`http://localhost:5000/sources/get/${id}`).then(response => {

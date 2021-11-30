@@ -1,6 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Redirect, useParams } from 'react-router';
-import { RouteChildrenProps } from 'react-router';
+import { useContext, useState } from 'react';
 import { COLORS } from '../commons/constants';
 import { User } from '../commons/interfaces';
 import { GlobalContext } from "../context/GlobalState";
@@ -8,7 +6,6 @@ import "./EditProfilePage.css";
 import BOL from '../images/BOL_light.png' //dimensions are 1280*511, keep logo in this aspect ratio
 import axios from 'axios';
 import { useHistory } from "react-router-dom";
-import { resourceUsage } from 'process';
 
 export function EditProfilePage (){
     const {OAuthResponse} = useContext(GlobalContext);
@@ -20,7 +17,6 @@ export function EditProfilePage (){
 
     let [new_name, setNewName] = useState<string>("" as string);
     let [new_bio, setNewBio] = useState<string>("" as string);
-    let [showResults, setShowResults] = useState<boolean>(true);
 
     //console.log(OAuthResponse);
     const google_id: string = OAuthResponse.profileObj.googleId;
@@ -75,13 +71,13 @@ export function EditProfilePage (){
         console.log("new bio: " + new_bio)
         console.log("old name: " + name)
         console.log("old bio: " + bio)
-        if (new_name == "" && new_bio == ""){
+        if (new_name === "" && new_bio === ""){
             alert("no changes made")
             routeChangeProfile(name);
             return;
         }
 
-        if (new_name == "" && new_bio != ""){
+        if (new_name === "" && new_bio !== ""){
             console.log("new name empty, new bio not empty")
             axios.put('http://localhost:5000/sources/updateUser/' + google_id, {
                 id: id,
@@ -97,7 +93,7 @@ export function EditProfilePage (){
             }).catch(err => console.error(err));
         }
 
-        if (new_name != "" && new_bio == ""){
+        if (new_name !== "" && new_bio === ""){
             console.log("new name not empty, new bio empty")
             axios.put('http://localhost:5000/sources/updateUser/' + google_id, {
                 id: id,
@@ -114,7 +110,7 @@ export function EditProfilePage (){
         }
 
         console.log("new name not empty, new bio not empty")
-        if (new_bio == "")
+        if (new_bio === "")
             return;
         axios.put('http://localhost:5000/sources/updateUser/' + google_id, {
             id: id,
@@ -145,7 +141,7 @@ export function EditProfilePage (){
                 </div>
 
                 <div className="profilelogoContainer" style={{color: COLORS.FULL_WHITE}}>
-                    <img id='123' src= {imageUrl} alt = "Profile Picture" width = "125" height = "125" />
+                    <img id='123' src= {imageUrl} alt = "Profile" width = "125" height = "125" />
                 </div>
 
                 <input type="text" id="message-box" value={new_name} 
