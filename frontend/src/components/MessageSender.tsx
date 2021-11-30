@@ -5,6 +5,7 @@ import { MessageToSendBack } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 
 import './MessageSender.css';
+import './GetMessages.tsx'
 
 interface MessageSenderProps {
     groupID: string,

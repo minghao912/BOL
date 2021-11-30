@@ -39,29 +39,46 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     //google id of person on page
     let [profileID, setProfileID] = useState<string>("" as string);
 
+    // boolean if the current user and the page user are friends
+    let [areFriends, setAreFriends] = useState<boolean>(false);
+
     let [bio, setBio] = useState<string>("" as string);
 
     const [buttonPopup, setbuttonPopup] = useState(false);
 
     useEffect(() => {
-        setImageUrl("not found");
-        setnewGoogleID(OAuthResponse.profileObj.googleId);
-        setUsername((OAuthResponse.profileObj.email).split("@")[0]);
-        let s = 'http://localhost:5000/sources/getUserByUsername/' + props.match.params.googleID;
-        Axios.get(s).then(response => {
-            let userObj = response.data as User;
-            setImageUrl(userObj.profilePicPath)
-            setName(userObj.username)
-            setProfileID(userObj.userID)
-            setBio(userObj.bio)
-        }).catch(err => {
-            //console.log("Reached error block");
-            //console.error(err);
-            setImageUrl("Error")
-            return <Redirect to={{pathname: "/profile/"+username}} />;
+        async function unnamed_function() {
+            setImageUrl("not found");
+            setnewGoogleID(OAuthResponse.profileObj.googleId);
+
+            setUsername(await getUsername(OAuthResponse.profileObj.googleId))
+
+            console.log(props.match)
+
+            let s = 'http://localhost:5000/sources/getUserByUsername/' + props.match.params.googleID;
+            await Axios.get(s).then(async (response) => {
+                let userObj = response.data as User;
+                setImageUrl(userObj.profilePicPath)
+                setName(userObj.username)
+                setProfileID(userObj.userID)
+                setBio(userObj.bio)
+
+                setAreFriends(await checkIfFriends(userObj.userID, OAuthResponse.profileObj.googleId));
+            }).catch(err => {
+                //console.log("Reached error block");
+                //console.error(err);
+                setImageUrl("Error")
+                return <Redirect to={{pathname: "/profile/"+username}} />;
+            });
         }
+<<<<<<< HEAD
         );
     }, [OAuthResponse, props.match.params.googleID, username]);
+=======
+
+        unnamed_function();
+    }, [OAuthResponse]);
+>>>>>>> 0ea2bd7998e0e0485da141b43093f8d19466b674
 
     const history = useHistory();
     
@@ -70,6 +87,15 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
         history.push(path);
     }
 
+<<<<<<< HEAD
+=======
+    const routeChangeProfile = () =>{ 
+        let path = "/profile/"+ username; 
+        history.push(path);
+        history.go(0);
+    }
+
+>>>>>>> 0ea2bd7998e0e0485da141b43093f8d19466b674
     const routeChangeSearch = () => {
         let path = "/search";
         history.push(path);
@@ -88,6 +114,15 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
             }).then(response => {
                 console.log(response.data)
             }).catch(err => console.error(err))
+    }
+
+    async function getUsername(userID: string): Promise<string> {
+        return new Promise((resolve, reject) => {
+            Axios.get('http://localhost:5000/sources/getUser/' + userID).then(response => {
+                let userObj = response.data as User;
+                resolve(userObj.username);
+            });
+        });
     }
 
 /*
@@ -110,6 +145,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
         return false;
     }
 */
+<<<<<<< HEAD
 const areFriends = () =>{
         Axios.get(`http://localhost:5000/sources/areFriends/${newGoogleID}/${profileID}`).then(response => {
             if (response.data.areFriends === '1'){
@@ -118,10 +154,22 @@ const areFriends = () =>{
             }
         }).catch(err => {console.error(err)});
         return false;
+=======
+    const checkIfFriends = async (userID1: string, userID2: string): Promise<boolean> => {
+        return new Promise((resolve, reject) => {
+            Axios.get(`http://localhost:5000/sources/areFriends/${userID1}/${userID2}`).then(response => {
+                if (response.data.areFriends == '1'){
+                    console.log("response: are friends")
+                    resolve(true);
+                }
+                else resolve(false);
+            }).catch(err => {console.error(err)});
+        });
+>>>>>>> 0ea2bd7998e0e0485da141b43093f8d19466b674
     }
 
 
-    if (!props.hasID)
+    if (!props.hasID && username != "")
     {
         //console.log("Reached redirect statement 2");
         // console.log(name);
@@ -194,7 +242,7 @@ const areFriends = () =>{
 
     if(newGoogleID !== profileID)
     {
-        if (!areFriends())
+        if (!areFriends)
         {
             console.log("ARE NOT FRIENDS!!!!!")
             return (
@@ -269,10 +317,7 @@ const areFriends = () =>{
                             <p> {bio} </p>
                         </div>
                         <div className="profileSpace_bottom"></div>
-                        
-                        <div className="profilefriendButton" onClick={friender} >
-                        <span style={{color:"#ffffff"}} >Add Friend </span>
-                        </div>
+
                         <div className="profileSpaceSmall"></div>
                         <div className="profileSearchButton" onClick = {routeChangeSearch}>
                             <span style={{color:"#ffffff"}} > Back to search </span>

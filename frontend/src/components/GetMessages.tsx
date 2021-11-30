@@ -12,6 +12,8 @@ import MessageSender from "./MessageSender";
 import { Message, MessageList, User } from '../commons/interfaces';
 import { GlobalContext } from '../context/GlobalState';
 
+import "./GetMessages.css"
+
 interface GetMessagesProps {
     groupID: string,
     refresh: boolean,
@@ -22,6 +24,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
     let [groupID, setGroupID] = useState("");
     const history = useHistory();
 
+    console.log("Getting Messages...")
     useEffect(() => {
         console.log("Group ID: " + props.groupID);
         setGroupID(props.groupID);
@@ -101,8 +104,8 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
 
             scrollToBottom();
         }
-        setTimeout(populateCardArray, 50); // Timeout to let the backend update first
-    }, [props.groupID, props.refresh, currentUserID, props.forceUpdateCallback, props.routeChangeCallback]);
+        setTimeout(populateCardArray, 100); // Timeout to let the backend update first, adjusted so it works more consistently
+    }, [props.groupID, props.refresh]);
 
     if (cardArray.length < 1) {
         return (<p>There are no messages in this chat.</p>);
@@ -139,16 +142,12 @@ function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateC
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small"
+                                <input type="button" value="Copy" className="message-button"
                                     onClick={() =>  navigator.clipboard.writeText(message.content)}
-                                    >
-                                    Copy
-                                </Button>
-                                <Button size="small"
+                                />
+                                <input type="button" value="Delete" className="message-button"
                                     onClick={() => delete_msg(message.messageID, forceUpdateCallback)}
-                                    >
-                                    Delete
-                                </Button>
+                                />
                             </CardActions>
                         </Card>
                     </React.Fragment>
@@ -170,15 +169,12 @@ function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateC
                                 </Typography>
                             </CardContent>
                             <CardActions>
-                                <Button size="small"
+                                <input type="button" value="Copy" className="message-button"
                                     onClick={() =>  navigator.clipboard.writeText(message.content)}
-                                    >
-                                    Copy
-                                </Button>
-                                <Button size="small"
-                                onClick= {routeChangeCallback}>
-                                    Report
-                                </Button>
+                                />
+                                <input type="button" value="Report" className="message-button"
+                                    onClick={() => routeChangeCallback()}
+                                />
                             </CardActions>
                         </Card>
                     </React.Fragment>
