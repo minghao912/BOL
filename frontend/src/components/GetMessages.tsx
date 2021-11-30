@@ -22,6 +22,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
     let [groupID, setGroupID] = useState("");
     const history = useHistory();
 
+    console.log("Getting Messages...")
     useEffect(() => {
         console.log("Group ID: " + props.groupID);
         setGroupID(props.groupID);
@@ -102,7 +103,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
 
             scrollToBottom();
         }
-        setTimeout(populateCardArray, 50); // Timeout to let the backend update first
+        setTimeout(populateCardArray, 100); // Timeout to let the backend update first, adjusted so it works more consistently
     }, [props.groupID, props.refresh]);
 
     if (cardArray.length < 1) {
