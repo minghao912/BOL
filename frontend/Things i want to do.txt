@@ -11,3 +11,5 @@ Change button from "create a new group" to "direct message" if only one person i
 Remove group feature (home page)
 
 When loading, instead of just showing "no groups to show", it shows "waiting for groups to load (home page)
+
+Don't allow duplicate groups, as in if two groups have the same people in it, don't allow another one to be created (group creation)

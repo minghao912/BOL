@@ -107,7 +107,15 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
     }, [props.groupID, props.refresh, currentUserID]);
 
     if (cardArray.length < 1) {
-        return (<p>There are no messages in this chat.</p>);
+        if (props.groupID === "default")
+        {
+            return (<p> Welcome to BOL! Click a chat to view its messages, or press the "+" button to create a group. </p>)
+        }
+        else
+        {
+            return (<p>There are no messages in this chat.</p>);
+
+        }
     }
     else return (
     <div style={{margin: "3% 2% 3% 2%", overflow:"auto", maxHeight:"95%"}}>

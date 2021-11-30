@@ -19,7 +19,6 @@ export default function Homepage(props: HomepageProps) {
     const [groupToDisplayMessagesFor, setGroupToDisplayMessagesFor] = useState<string>("default" as string);
     const [refresh, setRefresh] = useState<boolean>(false); // For the message sender to change whenever it sends a message - forces rerender
 
-    console.log("Group is " + groupToDisplayMessagesFor);
     // For the redirect buttons:
     enum REDIRECT_DESTINATIONS {
         PROFILE_PAGE,

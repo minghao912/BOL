@@ -188,7 +188,6 @@ function getMostRecentMessage(group: Group): Promise<Message> {
 // Sort the groups based on how recent their most recent message was (more recent => earlier in the list)
 function sortGroup(groupList: GroupList): Promise<GroupList> {
     return new Promise(async (resolve, reject) => {
-        console.log(groupList + " is grouplist");
         var intList: number[] = [];
         var sortedList: GroupList = [];
         for (let i = 0; i < groupList.length; i++)
