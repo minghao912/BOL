@@ -1,0 +1,12 @@
+.message-button{
+    border: 1px solid black;
+    width: 70px;
+    height: 20px;
+    border-radius: 12px;
+    background-color: snow;
+    cursor: pointer;
+}
+
+.message-button:hover{
+    background-color: silver;
+}

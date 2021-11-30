@@ -140,7 +140,7 @@ export function EditProfilePage (){
                     <img src={BOL} alt= 'BOL logo' width = "360" height = "153.3"/>
                 </div>
 
-                <div className="profile_space_Between_Logo_and_UserProfile">
+                <div className="profile_space_Between_Logo_and_UserProfile" style={{marginBottom: "30px"}}>
                     <p><b>Edit Profile</b></p>
                 </div>
 
