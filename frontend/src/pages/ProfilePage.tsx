@@ -49,7 +49,9 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     useEffect(() => {
         setImageUrl("not found");
         setnewGoogleID(OAuthResponse.profileObj.googleId);
+
         setUsername((OAuthResponse.profileObj.email).split("@")[0]);
+        console.log(props.match)
         let s = 'http://localhost:5000/sources/getUserByUsername/' + props.match.params.googleID;
         Axios.get(s).then(response => {
             let userObj = response.data as User;
@@ -74,7 +76,7 @@ export function ProfilePage (props: ProfilepageProps, param: RouteParams){
     }
 
     const routeChangeProfile = () =>{ 
-        let path = "/profile/"+username; 
+        let path = "/profile/"+ username; 
         history.push(path);
         history.go(0);
     }
