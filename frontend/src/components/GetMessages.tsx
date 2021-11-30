@@ -6,6 +6,8 @@ import { CardContent } from '@mui/material';
 import CardActions from '@mui/material/CardActions';
 import { Typography } from '@mui/material';
 import { useHistory } from "react-router-dom";
+import { COLORS } from '../commons/constants';
+
 
 import MessageSender from "./MessageSender";
 import { Message, MessageList, User } from '../commons/interfaces';
@@ -46,13 +48,28 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
         <Box
             sx={{
                 width: '100%',
-                height: '80%',
+                height: '10%',
+                paddingTop: '0%',
+                paddingBottom: '0%',
+                borderBottom: 4,
+                borderColor: COLORS.OFF_BLACK,
+            }}
+            style={{
+                alignItems: 'center'
+            }}
+            className="get-messages-group-names"
+        >
+            <GroupNameHeader groupID={groupID} />
+        </Box>
+        <Box
+            sx={{
+                width: '100%',
+                height: '70%',
                 paddingTop: '0%',
                 paddingBottom: '3%'
             }}
             className="get-messages-message-display"
         >
-            <GroupNameHeader groupID={groupID} />
             <CardsGenerator groupID={groupID} refresh={props.refresh} forceUpdateCallback={props.forceUpdateCallback} routeChangeCallback={routeChangeReport} />
         </Box>
         <Box
@@ -109,11 +126,11 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
     if (cardArray.length < 1) {
         if (props.groupID === "default")
         {
-            return (<p> Welcome to BOL! Click a chat to view its messages, or press the "+" button to create a group. </p>)
+            return (<p> <br></br> Welcome to BOL! Click a chat to view its messages, or press the "+" button to create a group. </p>)
         }
         else
         {
-            return (<p>There are no messages in this chat.</p>);
+            return (<p> <br></br> There are no messages in this chat.</p>);
 
         }
     }
@@ -223,10 +240,12 @@ function GroupNameHeader(props: {groupID: string}): JSX.Element {
 
     useEffect(() => {
         async function getGroupAndSetName(groupID: string) {
-            // Don't run this if there is no group selected
+            // Display "No group selected" if there is no group selected
             if (!groupID || groupID === "default")
+            {
+                setGroupName("No group selected")
                 return;
-
+            }
             let groupname = "";
             await axios.get(`http://localhost:5000/sources/getUsersInGroup/${groupID}`).then(response => {
                 groupname = groupnameGenerator((response.data as User[]), OAuthResponse.profileObj.googleId);
