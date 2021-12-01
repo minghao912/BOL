@@ -88,7 +88,7 @@ export default function Homepage(props: HomepageProps) {
             <Box
                 sx={{
                     width: '100%',
-                    height: '77%',
+                    height: '73%',
                     paddingTop: '2%',
                 }}
                 className="homepage-chat-selection-bar"
@@ -99,7 +99,7 @@ export default function Homepage(props: HomepageProps) {
                 sx={{
                     width: '100%',
                     height: '8%',
-                    paddingTop: '0 0 0 0',
+                    paddingTop: '10%',
                     display: 'flex',
                     zIndex: '999'
                 }}
@@ -133,7 +133,7 @@ export default function Homepage(props: HomepageProps) {
                     sx={{
                         width: '50%',
                         height: '100%',
-                        paddingTop: '0 0 0 0',
+                        paddingTop: '1%',
                     }}
                     className="homepage-new-group-button-wrapper"
                     style = {{backgroundColor: COLORS.BACKGROUND4}}
