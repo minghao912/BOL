@@ -1,5 +1,4 @@
 from django.urls import path, include
-from . import views
 from . import messaging
 from . import groupmsg
 from . import userUtils
@@ -7,14 +6,6 @@ from . import friendUtils
 from . import emojiUtils
 
 urlpatterns = [
-    path('test/', views.test),
-    path('sources/', views.sources),
-    path('sources/get/<int:id>', views.getSource),
-    path('sources/get/all', views.getAll),
-    path('sources/create/', views.createSource),
-    path('sources/update/<int:id>', views.updateSource),
-    path('sources/delete/<int:id>', views.deleteSource),
-
     # GAMERS
     path('sources/getMessagesOfUser/<str:userID>', messaging.getMessagesOfUser),
     path('sources/addMessage', messaging.addMessage),
