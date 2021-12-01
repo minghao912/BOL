@@ -9,4 +9,5 @@ export enum COLORS {
     BACKGROUND2 = "#4b3e4b", //lighter purple
     BACKGROUND3 = "#020518", //slighty darker purple 
     BACKGROUND4 = "#004646", //cyan 
+    COOL_RED = '#42070d',
 }

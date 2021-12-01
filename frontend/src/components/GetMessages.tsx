@@ -67,6 +67,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
                 paddingBottom: '3%',
                 borderTop: 4,
                 borderColor: COLORS.OFF_BLACK,
+                backgroundColor: COLORS.OFF_BLACK
             }}
             className="get-messages-message-display"
         >
@@ -76,7 +77,7 @@ export default function GetMessages(props: GetMessagesProps): JSX.Element {
             sx={{
                 width: '100%',
                 height: '20%',
-                marginTop: '2%',
+                marginTop: '0%',
             }}
             className="get-messages-message-sender"
         >
@@ -143,6 +144,7 @@ function CardsGenerator(props: {groupID: string, refresh: boolean, forceUpdateCa
 
 function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateCallback: () => void, routeChangeCallback: () => void): Promise<JSX.Element> {
     let userID = message.sender.userID;
+
     //let username:string = "DummyUsernameHere"; //Placeholder
     let isSameUser = false;
     if (CurrentUser === userID) {
@@ -154,7 +156,7 @@ function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateC
                 resolve( 
                     <React.Fragment>
                         <Card sx={{ maxWidth: "98%", height: "20%", marginTop: "2%" }}>
-                            <CardContent style ={{backgroundColor: "#06332c"}}>
+                            <CardContent style ={{backgroundColor: "#004646"}}>
                                 <Typography variant="h6" display="inline" color="white">
                                     {username}{" "}
                                 </Typography>
@@ -181,7 +183,7 @@ function singleCardGenerator(message: Message, CurrentUser: string, forceUpdateC
                 resolve( 
                     <React.Fragment>
                         <Card sx={{ maxWidth: "98%", height: "20%", marginTop: "2%" }}>
-                            <CardContent style ={{backgroundColor: "#06332c"}}>
+                            <CardContent style ={{backgroundColor: "#42070d"}}>
                                 <Typography variant="h6" display="inline" color="white">
                                     {username}{" "}
                                 </Typography>
