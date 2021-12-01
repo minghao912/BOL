@@ -26,7 +26,7 @@ export default function MessageSender(props: MessageSenderProps): JSX.Element {
 */
 
     function send_msg() {
-        console.log(props.groupID)
+        console.log(props.groupID + " is message group")
         axios.post('http://localhost:5000/sources/addMessage', {
             groupID: props.groupID,
             userID: OAuthResponse.profileObj.googleId,
@@ -48,7 +48,7 @@ export default function MessageSender(props: MessageSenderProps): JSX.Element {
     }
 
     return (
-        <div className="sub-container" style={{backgroundColor:"gray", padding: "1%", height: "40%"}}>
+        <div className="sub-container" style={{backgroundColor:"gray", padding: "1%", height: "50%"}}>
             <input type="text" id="message-box" className="send-msg-box" value={content} 
                 style={{paddingLeft:"1%"}} autoComplete="off"
                 placeholder="Type message here... | Press Enter to send"

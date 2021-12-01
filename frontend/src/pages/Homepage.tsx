@@ -72,11 +72,11 @@ export default function Homepage(props: HomepageProps) {
         >
             <Box
                 sx={{
-                    width: '96%',
+                    width: '100%',
                     height: '13%',
                     paddingTop: '3%',
                     display: 'inline-block',
-                    border: 6,
+                    border: '20%',
                     borderColor: COLORS.COOL_RED,
                 }}
                 style={{
