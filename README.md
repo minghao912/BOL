@@ -1,4 +1,5 @@
 # BOL
+by Minghao Chen, Stanley Lim, Mike Qu, Prateik Sinha, Ken Zhou
 
 # Launching BOL
 
